@@ -5,9 +5,14 @@ import com.digital.rewe.academy.printinghouse.publication.Publication;
 import java.time.LocalDate;
 
 public record Order(long id, Publication publication, long numberOfCopies, LocalDate dateOfOrder) {
+
     public Order {
         if (publication == null) {
             throw new IllegalArgumentException("The argument for application cannot be null");
+        }
+
+        if (numberOfCopies <= 0) {
+            throw new IllegalArgumentException("The argument for number of copies must be positive");
         }
 
         if (dateOfOrder.isAfter(LocalDate.now())) {
