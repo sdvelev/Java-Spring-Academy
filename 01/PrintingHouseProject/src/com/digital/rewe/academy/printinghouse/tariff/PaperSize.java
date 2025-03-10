@@ -2,6 +2,10 @@ package com.digital.rewe.academy.printinghouse.tariff;
 
 import java.math.BigDecimal;
 
+/**
+ * Enum, representing the chosen size of the sheet of paper and its price,
+ * related to the expenses of the printing house.
+ */
 public enum PaperSize {
 
     A1_SHEET_SIZE(BigDecimal.valueOf(1)),

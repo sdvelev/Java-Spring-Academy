@@ -2,6 +2,10 @@ package com.digital.rewe.academy.printinghouse.tariff;
 
 import java.math.BigDecimal;
 
+/**
+ * Enum, representing the price for a printed sheet of paper,
+ * related to the income of the printing house.
+ */
 public enum PriceList {
 
     A1_PRINT_PAGE_PRICE(BigDecimal.valueOf(1.5)),

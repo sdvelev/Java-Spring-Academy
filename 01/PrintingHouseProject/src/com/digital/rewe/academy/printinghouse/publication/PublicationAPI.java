@@ -5,7 +5,7 @@ import com.digital.rewe.academy.printinghouse.tariff.PaperSize;
 import java.time.LocalDate;
 
 /**
- * Interface representing the API for a publication.
+ * Interface, representing the API for a publication.
  */
 public interface PublicationAPI {
 
@@ -27,9 +27,9 @@ public interface PublicationAPI {
     String getTitle();
 
     /**
-     * Retrieves the publication date of the publication.
+     * Retrieves the publishing date of the publication.
      *
-     * @return the publication date of the publication.
+     * @return the publishing date of the publication.
      */
     LocalDate getPublishingDate();
 
@@ -56,9 +56,9 @@ public interface PublicationAPI {
     void setTitle(String title);
 
     /**
-     * Sets the publication date of the publication.
+     * Sets the publishing date of the publication.
      *
-     * @param publishingDate the new publication date of the publication.
+     * @param publishingDate the new publishing date of the publication.
      * @throws IllegalArgumentException if the publishing date is null.
      */
     void setPublishingDate(LocalDate publishingDate);
