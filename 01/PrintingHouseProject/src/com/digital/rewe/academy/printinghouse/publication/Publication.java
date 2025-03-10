@@ -65,7 +65,7 @@ public abstract class Publication implements PublicationAPI {
 
     private void checkTitle(String title) {
         if (title == null || title.isBlank()) {
-            throw new IllegalArgumentException("The title of the publication cannot be null or blank");
+            throw new IllegalArgumentException("The title of the publication cannot be null, empty or blank");
         }
     }
 
