@@ -46,4 +46,36 @@ public interface PublicationAPI {
      * @return the size of the paper used for the publication.
      */
     PaperSize getSizeOfPaper();
+
+    /**
+     * Sets the title of the publication.
+     *
+     * @param title the new title of the publication.
+     * @throws IllegalArgumentException if the title is null, empty or blank.
+     */
+    void setTitle(String title);
+
+    /**
+     * Sets the publication date of the publication.
+     *
+     * @param publishingDate the new publication date of the publication.
+     * @throws IllegalArgumentException if the publishing date is null.
+     */
+    void setPublishingDate(LocalDate publishingDate);
+
+    /**
+     * Sets the number of pages of the publication.
+     *
+     * @param numberOfPages the new number of pages of the publication.
+     * @throws IllegalArgumentException if the number of pages of the publication is not positive.
+     */
+    void setNumberOfPages(long numberOfPages);
+
+    /**
+     * Sets the size of the paper used for the publication.
+     *
+     * @param paperSize the new size of the paper used for the publication.
+     * @throws IllegalArgumentException if the paper size of the publication is null.
+     */
+    void setPaperSize(PaperSize paperSize);
 }
