@@ -8,7 +8,7 @@ public class Book extends Publication {
     private static final String identifier = "BOOK-";
     private static int counterOfInstances = 0;
 
-    private final int id;
+    private final long id;
 
     public Book(String title, LocalDate publishingDate, long numberOfPages, PaperSize paperSize) {
         super(title, publishingDate, numberOfPages, paperSize);

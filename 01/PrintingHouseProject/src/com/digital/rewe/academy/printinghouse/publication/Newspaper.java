@@ -8,7 +8,7 @@ public class Newspaper extends Publication{
     private static final String identifier = "NEWS-";
     private static int counterOfInstances = 0;
 
-    private final int id;
+    private final long id;
 
     public Newspaper(String title, LocalDate publishingDate, long numberOfPages, PaperSize paperSize) {
         super(title, publishingDate, numberOfPages, paperSize);

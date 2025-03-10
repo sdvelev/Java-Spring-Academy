@@ -8,7 +8,7 @@ public class Poster extends Publication {
     private static final String identifier = "POST-";
     private static int counterOfInstances = 0;
 
-    private final int id;
+    private final long id;
 
     public Poster(String title, LocalDate publishingDate, long numberOfPages, PaperSize paperSize) {
         super(title, publishingDate, numberOfPages, paperSize);
