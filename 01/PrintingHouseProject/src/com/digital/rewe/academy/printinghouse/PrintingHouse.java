@@ -15,7 +15,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class PrintingHouse implements PrintingHouseAPI {
-    private static final double PROFIT_TAX_PERCENTAGE = 0.1;
+    private static double PROFIT_TAX_PERCENTAGE = 0.1;
 
     private final long id;
     private String houseName;
