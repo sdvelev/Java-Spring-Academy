@@ -8,7 +8,7 @@ public class TariffCalculator {
 
     public static BigDecimal calculatePaperExpenses(Publication publication) {
 
-        return publication.getSizeOfPaper().getPrice().multiply(BigDecimal.valueOf(publication.getNumberOfPages()));
+        return publication.getSizeOfPaper().getPrice().multiply(BigDecimal.valueOf(publication.getNumberOfPages() / 2));
     }
 
     public static BigDecimal calculatePrintPrice(Publication publication) {
