@@ -1,5 +1,9 @@
 package com.digital.rewe.academy.smarthome;
 
+import com.digital.rewe.academy.smarthome.exception.EmptyValueException;
+import com.digital.rewe.academy.smarthome.exception.NegativeValueException;
+import com.digital.rewe.academy.smarthome.exception.NullValueException;
+
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
@@ -12,6 +16,7 @@ public abstract class Device {
     private Placement placement;
 
     public Device(String model, LocalDate productionDate, BigDecimal powerConsumption, Placement placement) {
+        validateConstructorFields(model, productionDate, powerConsumption, placement);
         this.model = model;
         this.productionDate = productionDate;
         this.powerConsumption = powerConsumption;
@@ -43,18 +48,65 @@ public abstract class Device {
     }
 
     public void setModel(String model) {
+        validateModel(model);
         this.model = model;
     }
 
     public void setProductionDate(LocalDate productionDate) {
+        validateProductionDate(productionDate);
         this.productionDate = productionDate;
     }
 
     public void setPowerConsumption(BigDecimal powerConsumption) {
+        validatePowerConsumption(powerConsumption);
         this.powerConsumption = powerConsumption;
     }
 
     public void setPlacement(Placement placement) {
+        validatePlacement(placement);
         this.placement = placement;
+    }
+
+    private void validateConstructorFields(String model, LocalDate productionDate, BigDecimal powerConsumption, Placement placement) {
+        validateModel(model);
+        validateProductionDate(productionDate);
+        validatePowerConsumption(powerConsumption);
+        validatePlacement(placement);
+    }
+
+    private void validateModel(String model) {
+        if (model == null) {
+            throw new NullValueException("The model argument cannot be null");
+        }
+
+        if (model.isBlank()) {
+            throw new EmptyValueException("The model argument cannot be empty or blank");
+        }
+    }
+
+    private void validateProductionDate(LocalDate productionDate) {
+        if (productionDate == null) {
+            throw new NullValueException("The production date argument cannot be null");
+        }
+
+        if (productionDate.isAfter(LocalDate.now())) {
+            throw new IllegalArgumentException("The production date argument cannot be in the future");
+        }
+    }
+
+    private void validatePowerConsumption(BigDecimal powerConsumption) throws NegativeValueException {
+        if (powerConsumption == null) {
+            throw new NullValueException("The power consumption argument cannot be null");
+        }
+
+        if (powerConsumption.compareTo(BigDecimal.ZERO) < 0) {
+            throw new NegativeValueException("The power consumption argument cannot be negative");
+        }
+    }
+
+    private void validatePlacement(Placement placement) {
+        if (placement == null) {
+            throw new NullValueException("The placement argument cannot be null");
+        }
     }
 }

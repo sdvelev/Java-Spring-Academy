@@ -1,6 +1,8 @@
 package com.digital.rewe.academy.smarthome;
 
 import com.digital.rewe.academy.smarthome.api.SmartLightAPI;
+import com.digital.rewe.academy.smarthome.exception.NegativeValueException;
+import com.digital.rewe.academy.smarthome.exception.NullValueException;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -18,6 +20,7 @@ public class SmartLight extends Device implements SmartLightAPI {
     public SmartLight(String model, LocalDate productionDate, BigDecimal powerConsumption,
                       Placement placement, BigDecimal maximumLumen) {
         super(model, productionDate, powerConsumption, placement);
+        validateMaximumLumen(maximumLumen);
         this.lightingMode = LightingMode.OFF;
         this.maximumLumen = maximumLumen;
         setId(IDENTIFIER + ++counterOfInstances);
@@ -32,21 +35,45 @@ public class SmartLight extends Device implements SmartLightAPI {
     }
 
     public void setLightingMode(LightingMode lightingMode) {
+        validateLightingMode(lightingMode);
         this.lightingMode = lightingMode;
     }
 
     public void setMaximumLumen(BigDecimal maximumLumen) {
+        validateMaximumLumen(maximumLumen);
         this.maximumLumen = maximumLumen;
     }
 
     @Override
     public BigDecimal getLumenOutput(LightingMode lightingMode) {
-        setLightingMode(lightingMode);
+        try {
+            setLightingMode(lightingMode);
+        } catch (NullValueException e) {
+            System.out.println(e.getMessage());
+            return BigDecimal.ZERO;
+        }
+
         return switch (lightingMode) {
             case OFF -> BigDecimal.ZERO;
             case STRONG -> this.maximumLumen;
             case MEDIUM -> this.maximumLumen.multiply(BigDecimal.ONE.subtract(MEDIUM_BRIGHTNESS_REDUCTION_PERCENTAGE));
             case DIM -> this.maximumLumen.multiply(BigDecimal.ONE.subtract(DIM_BRIGHTNESS_REDUCTION_PERCENTAGE));
         };
+    }
+
+    private void validateLightingMode(LightingMode lightingMode) {
+        if (lightingMode == null) {
+            throw new NullValueException("The lighting mode argument cannot be null");
+        }
+    }
+
+    private void validateMaximumLumen(BigDecimal maximumLumen) {
+        if (maximumLumen == null) {
+            throw new NullValueException("The maximum lumen argument cannot be null");
+        }
+
+        if (maximumLumen.compareTo(BigDecimal.ZERO) < 0) {
+            throw new NegativeValueException("The maximum lumen argument cannot be negative");
+        }
     }
 }
