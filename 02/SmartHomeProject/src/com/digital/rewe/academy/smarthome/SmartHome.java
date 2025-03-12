@@ -9,7 +9,7 @@ public class SmartHome {
 
     private final long id;
     private String ownerName;
-    private Set<Device> devices;
+    private final Set<Device> devices;
 
     public SmartHome(long id, String ownerName) {
         this.id = id;
@@ -44,10 +44,17 @@ public class SmartHome {
     }
 
     private void validateOwnerName(String ownerName) {
+        validateOwnerNameForNullPointer(ownerName);
+        validateOwnerNameForEmptyValue(ownerName);
+    }
+
+    private void validateOwnerNameForNullPointer(String ownerName) {
         if (ownerName == null) {
             throw new NullPointerException("The name of the owner cannot be null");
         }
+    }
 
+    private void validateOwnerNameForEmptyValue(String ownerName) {
         if (ownerName.isBlank()) {
             throw new EmptyValueException("The name of the owner cannot be empty or blank");
         }
