@@ -105,17 +105,26 @@ public class RecordingStudio implements RecordingStudioAPI, Comparable<Recording
     }
 
     @Override
+    public double getRentedHours() {
+        return rentedHours.getOrDefault(LocalDate.now(), 0.0);
+    }
+
+    @Override
     public double getRentedHoursForDay(LocalDate dayForRent) {
+        validateLocalDateNotNull(dayForRent);
         return rentedHours.getOrDefault(dayForRent, 0.0);
     }
 
     @Override
     public int compareTo(RecordingStudio recordingStudio, LocalDate dayForRent) {
+        validateRecordingStudioNotNull(recordingStudio);
+        validateLocalDateNotNull(dayForRent);
         return this.getIncomeInBGN(dayForRent).compareTo(recordingStudio.getIncomeInBGN(dayForRent));
     }
 
     @Override
     public int compareTo(RecordingStudio recordingStudio) {
+        validateRecordingStudioNotNull(recordingStudio);
         return this.getIncomeInBGN(LocalDate.now()).compareTo(recordingStudio.getIncomeInBGN(LocalDate.now()));
     }
 
@@ -156,6 +165,12 @@ public class RecordingStudio implements RecordingStudioAPI, Comparable<Recording
     private void validateLocalDateNotNull(LocalDate dateToValidate) {
         if (dateToValidate == null) {
             throw new NullValueException("The provided date cannot be null");
+        }
+    }
+
+    private void validateRecordingStudioNotNull(RecordingStudio recordingStudioToValidate) {
+        if (recordingStudioToValidate == null) {
+            throw new NullValueException("The provided recording studio cannot be null");
         }
     }
 }
