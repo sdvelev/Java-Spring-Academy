@@ -9,16 +9,16 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 /**
- * Interface for Recording Studio operations.
+ * Interface that models a recording studio.
  */
 public interface RecordingStudioAPI {
 
     /**
-     * Sets the price of the recording studio.
+     * Updates the hourly rental price of the recording studio.
      *
-     * @param newPriceInBGNToUpdate the new price in BGN
-     * @throws NullValueException if the provided price is null
-     * @throws NegativeValueException if the provided price is negative
+     * @param newPriceInBGNToUpdate the new hourly rental price in BGN
+     * @throws NullValueException if the provided hourly rental price is null
+     * @throws NegativeValueException if the provided hourly rental price is negative
      */
     void setPrice(BigDecimal newPriceInBGNToUpdate);
 
@@ -31,7 +31,7 @@ public interface RecordingStudioAPI {
     void setMaxHoursPerDay(double maxHoursPerDay);
 
     /**
-     * Sets the rented hours for the current day.
+     * Sets the number of hours the studio is rented for the current day.
      *
      * @param rentedHoursToUpdate the rented hours to update
      * @throws MaxHoursExceededException if the rented hours exceed the maximum allowed hours per day
@@ -40,7 +40,7 @@ public interface RecordingStudioAPI {
     void setRentedHours(double rentedHoursToUpdate) throws MaxHoursExceededException;
 
     /**
-     * Sets the rented hours for a specific day.
+     * Sets the number of hours the studio is rented for a specific day.
      *
      * @param dayForRent the day for which the hours are being set
      * @param rentedHoursToUpdate the rented hours to update
@@ -51,7 +51,7 @@ public interface RecordingStudioAPI {
     void setRentedHours(LocalDate dayForRent, double rentedHoursToUpdate) throws MaxHoursExceededException;
 
     /**
-     * Gets the income in BGN for a specific day.
+     * Returns the total income in BGN for a specific day.
      *
      * @param dayForRent the day for which the income is being calculated
      * @return the income in BGN
@@ -60,14 +60,14 @@ public interface RecordingStudioAPI {
     BigDecimal getIncomeInBGN(LocalDate dayForRent);
 
     /**
-     * Gets the income in BGN for the current day.
+     * Returns the total income in BGN for the current day.
      *
      * @return the income in BGN
      */
     BigDecimal getIncomeInBGN();
 
     /**
-     * Gets the income in EUR for a specific day.
+     * Returns the total income in EUR for a specific day.
      *
      * @param dayForRent the day for which the income is being calculated
      * @return the income in EUR
@@ -76,7 +76,7 @@ public interface RecordingStudioAPI {
     BigDecimal getIncomeInEur(LocalDate dayForRent);
 
     /**
-     * Gets the income in EUR for the current day.
+     * Returns the total income in EUR for the current day.
      *
      * @return the income in EUR
      */
@@ -90,18 +90,25 @@ public interface RecordingStudioAPI {
     long getId();
 
     /**
-     * Gets the price in BGN.
+     * Gets the hourly rental price in BGN of the recording studio.
      *
      * @return the price in BGN
      */
     BigDecimal getPriceInBGN();
 
     /**
-     * Gets the maximum hours per day the studio can be rented.
+     * Gets the maximum hours the studio can be rented per day.
      *
      * @return the maximum hours per day
      */
     double getMaxHoursPerDay();
+
+    /**
+     * Gets the rented hours for the current day.
+     *
+     * @return the rented hours for the current day
+     */
+    double getRentedHours();
 
     /**
      * Gets the rented hours for a specific day.
@@ -118,6 +125,7 @@ public interface RecordingStudioAPI {
      * @param recordingStudio the other recording studio to compare with
      * @param dayForRent the day for which the income is being compared
      * @return a negative integer, zero, or a positive integer as this recording studio's income is less than, equal to, or greater than the other recording studio's income
+     * @throws NullValueException if the provided recording studio is null
      * @throws NullValueException if the provided date is null
      */
     int compareTo(RecordingStudio recordingStudio, LocalDate dayForRent);
