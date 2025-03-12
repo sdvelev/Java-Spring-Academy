@@ -3,6 +3,7 @@ package com.digital.rewe.academy.smarthome;
 import com.digital.rewe.academy.smarthome.api.VacuumCleanerAPI;
 import com.digital.rewe.academy.smarthome.exception.MaximumCleaningAreaExceededException;
 import com.digital.rewe.academy.smarthome.exception.NegativeValueException;
+import com.digital.rewe.academy.smarthome.exception.NullValueException;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -13,7 +14,6 @@ public class VacuumCleaner extends Device implements VacuumCleanerAPI {
     private static final int ROUNDING_SCALE_FACTOR = 2;
 
     private static BigDecimal batteryConsumptionPercentageWithoutMop;
-    private static BigDecimal batteryConsumptionPercentageWithMop;
     private static BigDecimal maximumCleaningArea;
 
     private static long counterOfInstances = 0;
@@ -21,10 +21,6 @@ public class VacuumCleaner extends Device implements VacuumCleanerAPI {
      static {
         maximumCleaningArea = new BigDecimal("100");
         batteryConsumptionPercentageWithoutMop = new BigDecimal("0.1");
-        batteryConsumptionPercentageWithMop =
-            batteryConsumptionPercentageWithoutMop.multiply(BigDecimal.TWO).compareTo(BigDecimal.ONE) <= 0
-            ? batteryConsumptionPercentageWithoutMop.multiply(BigDecimal.TWO)
-            : BigDecimal.ONE;
     }
 
     private boolean isMop;
@@ -89,7 +85,7 @@ public class VacuumCleaner extends Device implements VacuumCleanerAPI {
                 }
             }
             return cleanedArea.setScale(ROUNDING_SCALE_FACTOR, RoundingMode.HALF_UP);
-        } catch (NullPointerException | NegativeValueException | MaximumCleaningAreaExceededException e) {
+        } catch (NullValueException | NegativeValueException | MaximumCleaningAreaExceededException e) {
             System.out.println(e.getMessage());
             return BigDecimal.ZERO;
         }
@@ -97,13 +93,13 @@ public class VacuumCleaner extends Device implements VacuumCleanerAPI {
 
     private BigDecimal calculateBatteryConsumptionRate() {
         return isMop
-            ? getBatteryLevel().multiply(batteryConsumptionPercentageWithoutMop).multiply(BigDecimal.TWO)
-            : getBatteryLevel().multiply(batteryConsumptionPercentageWithoutMop);
+            ? this.batteryLevel.multiply(batteryConsumptionPercentageWithoutMop).multiply(BigDecimal.TWO)
+            : this.batteryLevel.multiply(batteryConsumptionPercentageWithoutMop);
     }
 
     private boolean compareBatteryConsumptionWithTotalBattery(BigDecimal batteryConsumptionRate) {
         return batteryConsumptionRate.setScale(ROUNDING_SCALE_FACTOR, RoundingMode.HALF_UP)
-            .compareTo(getBatteryLevel().setScale(ROUNDING_SCALE_FACTOR, RoundingMode.HALF_UP)) >= 0;
+            .compareTo(getBatteryLevel()) >= 0;
     }
 
     private void decreaseBatteryLevel(BigDecimal batteryConsumptionRate) {
@@ -119,7 +115,7 @@ public class VacuumCleaner extends Device implements VacuumCleanerAPI {
 
     private void validateTargetAreToBeCleanedForNullPointer(BigDecimal targetAreaToBeCleaned) {
         if (targetAreaToBeCleaned == null) {
-            throw new NullPointerException("The target area cannot be null");
+            throw new NullValueException("The target area cannot be null");
         }
     }
 
@@ -129,7 +125,7 @@ public class VacuumCleaner extends Device implements VacuumCleanerAPI {
         }
     }
 
-    private void validateTargetAreaToBeCleanedForNegativeValue(BigDecimal targetAreaToBeCleaned) throws NegativeValueException {
+    private void validateTargetAreaToBeCleanedForNegativeValue(BigDecimal targetAreaToBeCleaned) {
         if (targetAreaToBeCleaned.compareTo(BigDecimal.ZERO) < 0) {
             throw new NegativeValueException("The target area cannot be negative value");
         }
