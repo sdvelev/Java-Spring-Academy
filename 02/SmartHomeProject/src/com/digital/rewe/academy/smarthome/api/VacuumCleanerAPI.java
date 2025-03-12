@@ -13,7 +13,7 @@ public interface VacuumCleanerAPI {
      * Cleans the specified target area. The vacuum cleaner will stop cleaning if
      * the battery is exhausted before reaching the target.
      * Exceptions that are handled by the method:
-     * NullPointerException - if the target area is null;
+     * NullValueException - if the target area is null;
      * NegativeValueException - if the target area is negative;
      * MaximumCleaningAreaExceededException - if the target area exceeds the maximum cleaning area.
      *

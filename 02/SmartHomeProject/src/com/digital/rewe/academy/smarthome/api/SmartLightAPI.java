@@ -15,6 +15,8 @@ public interface SmartLightAPI {
         /**
         * Retrieves the lumen output for a given lighting mode.
         * The method also sets the current lighting mode of the smart light.
+        * Exceptions that are handled by the method:
+        * NullValueException - if the lighting mode is null;
         *
         * @param lightingMode the lighting mode for which to calculate the lumen output
         * @return the lumen output as a BigDecimal
