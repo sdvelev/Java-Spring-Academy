@@ -6,6 +6,7 @@ import com.digital.rewe.academy.smarthome.exception.NullValueException;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.Objects;
 
 public abstract class Device {
 
@@ -67,7 +68,8 @@ public abstract class Device {
         this.placement = placement;
     }
 
-    private void validateConstructorFields(String model, LocalDate productionDate, BigDecimal powerConsumption, Placement placement) {
+    private void validateConstructorFields(String model, LocalDate productionDate, BigDecimal powerConsumption,
+                                           Placement placement) {
         validateModel(model);
         validateProductionDate(productionDate);
         validatePowerConsumption(powerConsumption);
@@ -94,7 +96,7 @@ public abstract class Device {
         }
     }
 
-    private void validatePowerConsumption(BigDecimal powerConsumption) throws NegativeValueException {
+    private void validatePowerConsumption(BigDecimal powerConsumption) {
         if (powerConsumption == null) {
             throw new NullValueException("The power consumption argument cannot be null");
         }
@@ -108,5 +110,17 @@ public abstract class Device {
         if (placement == null) {
             throw new NullValueException("The placement argument cannot be null");
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Device device = (Device) o;
+        return Objects.equals(id, device.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(id);
     }
 }
