@@ -9,12 +9,12 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 /**
- * Interface that models a recording studio.
+ * Interface that models premises that can be rented.
  */
-public interface RecordingStudioAPI {
+public interface RentablePremiseAPI {
 
     /**
-     * Updates the hourly rental price of the recording studio.
+     * Updates the hourly rental price of the studio.
      *
      * @param newPriceInBGNToUpdate the new hourly rental price in BGN
      * @throws NullValueException if the provided hourly rental price is null
@@ -73,24 +73,24 @@ public interface RecordingStudioAPI {
      * @return the income in EUR
      * @throws NullValueException if the provided date is null
      */
-    BigDecimal getIncomeInEur(LocalDate dayForRent);
+    BigDecimal getIncomeInEUR(LocalDate dayForRent);
 
     /**
      * Returns the total income in EUR for the current day.
      *
      * @return the income in EUR
      */
-    BigDecimal getIncomeInEur();
+    BigDecimal getIncomeInEUR();
 
     /**
-     * Gets the ID of the recording studio.
+     * Gets the ID of the studio.
      *
-     * @return the ID of the recording studio
+     * @return the ID of the studio
      */
     long getId();
 
     /**
-     * Gets the hourly rental price in BGN of the recording studio.
+     * Gets the hourly rental price in BGN of the studio.
      *
      * @return the price in BGN
      */
@@ -118,15 +118,4 @@ public interface RecordingStudioAPI {
      * @throws NullValueException if the provided date is null
      */
     double getRentedHoursForDay(LocalDate dayForRent);
-
-    /**
-     * Compares the income of this recording studio with another for a specific day.
-     *
-     * @param recordingStudio the other recording studio to compare with
-     * @param dayForRent the day for which the income is being compared
-     * @return a negative integer, zero, or a positive integer as this recording studio's income is less than, equal to, or greater than the other recording studio's income
-     * @throws NullValueException if the provided recording studio is null
-     * @throws NullValueException if the provided date is null
-     */
-    int compareTo(RecordingStudio recordingStudio, LocalDate dayForRent);
 }
