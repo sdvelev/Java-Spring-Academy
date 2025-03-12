@@ -11,13 +11,13 @@ import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
 
-public class RecordingStudio implements RecordingStudioAPI, Comparable<RecordingStudio> {
+public class RecordingStudio implements RentablePremiseAPI, Comparable<RecordingStudio> {
     private final static BigDecimal minPriceInBGN = new BigDecimal("10");
     private final static int HOURS_PERIOD_START = 0;
     private final static int HOURS_PERIOD_END = 24;
     private static final int ROUNDING_SCALE_FACTOR = 2;
 
-    private static BigDecimal exchangeRateBGNtoEUR = new BigDecimal("0.51129188");
+    private static BigDecimal exchangeRateBGNtoEUR = ExchangeRate.FROM_BGN_TO_EUR.getExchangeRate();
 
     private final long id;
     private BigDecimal priceInBGN;
@@ -66,25 +66,25 @@ public class RecordingStudio implements RecordingStudioAPI, Comparable<Recording
     @Override
     public BigDecimal getIncomeInBGN(LocalDate dayForRent) {
         validateLocalDateNotNull(dayForRent);
-        return priceInBGN.multiply(BigDecimal.valueOf(rentedHours.getOrDefault(dayForRent, 0.0)))
+        return getPriceInBGN().multiply(BigDecimal.valueOf(rentedHours.getOrDefault(dayForRent, 0.0)))
             .setScale(ROUNDING_SCALE_FACTOR, RoundingMode.HALF_UP);
     }
 
     @Override
     public BigDecimal getIncomeInBGN() {
-        return priceInBGN.multiply(BigDecimal.valueOf(rentedHours.getOrDefault(LocalDate.now(), 0.0)))
+        return getPriceInBGN().multiply(BigDecimal.valueOf(rentedHours.getOrDefault(LocalDate.now(), 0.0)))
             .setScale(ROUNDING_SCALE_FACTOR, RoundingMode.HALF_UP);
     }
 
     @Override
-    public BigDecimal getIncomeInEur(LocalDate dayForRent) {
+    public BigDecimal getIncomeInEUR(LocalDate dayForRent) {
         validateLocalDateNotNull(dayForRent);
         return getIncomeInBGN(dayForRent).multiply(exchangeRateBGNtoEUR)
             .setScale(ROUNDING_SCALE_FACTOR, RoundingMode.HALF_UP);
     }
 
     @Override
-    public BigDecimal getIncomeInEur() {
+    public BigDecimal getIncomeInEUR() {
         return getIncomeInBGN().multiply(exchangeRateBGNtoEUR)
             .setScale(ROUNDING_SCALE_FACTOR, RoundingMode.HALF_UP);
     }
@@ -116,16 +116,25 @@ public class RecordingStudio implements RecordingStudioAPI, Comparable<Recording
     }
 
     @Override
+    public int compareTo(RecordingStudio recordingStudio) {
+        validateRecordingStudioNotNull(recordingStudio);
+        return this.getIncomeInBGN(LocalDate.now()).compareTo(recordingStudio.getIncomeInBGN(LocalDate.now()));
+    }
+
+    /**
+     * Compares the income of this recording studio with another for a specific day.
+     *
+     * @param recordingStudio the other recording studio to compare with
+     * @param dayForRent the day for which the income is being compared
+     * @return -1, 0, or 1 as this recording studio's income is less than, equal to,
+     *                            or greater than the other recording studio's income
+     * @throws NullValueException if the provided recording studio is null
+     * @throws NullValueException if the provided date is null
+     */
     public int compareTo(RecordingStudio recordingStudio, LocalDate dayForRent) {
         validateRecordingStudioNotNull(recordingStudio);
         validateLocalDateNotNull(dayForRent);
         return this.getIncomeInBGN(dayForRent).compareTo(recordingStudio.getIncomeInBGN(dayForRent));
-    }
-
-    @Override
-    public int compareTo(RecordingStudio recordingStudio) {
-        validateRecordingStudioNotNull(recordingStudio);
-        return this.getIncomeInBGN(LocalDate.now()).compareTo(recordingStudio.getIncomeInBGN(LocalDate.now()));
     }
 
     public static BigDecimal getExchangeRateBGNtoEUR() {
