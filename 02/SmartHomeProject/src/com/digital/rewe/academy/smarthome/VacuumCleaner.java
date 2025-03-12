@@ -13,15 +13,10 @@ public class VacuumCleaner extends Device implements VacuumCleanerAPI {
     private static final String IDENTIFIER = "VACUUMCLEANER-";
     private static final int ROUNDING_SCALE_FACTOR = 2;
 
-    private static BigDecimal batteryConsumptionPercentageWithoutMop;
-    private static BigDecimal maximumCleaningArea;
+    private static BigDecimal batteryConsumptionPercentageWithoutMop = new BigDecimal("0.1");;
+    private static BigDecimal maximumCleaningArea = new BigDecimal("100");
 
     private static long counterOfInstances = 0;
-
-     static {
-        maximumCleaningArea = new BigDecimal("100");
-        batteryConsumptionPercentageWithoutMop = new BigDecimal("0.1");
-    }
 
     private boolean isMop;
     private BigDecimal batteryLevel;
@@ -47,6 +42,8 @@ public class VacuumCleaner extends Device implements VacuumCleanerAPI {
     }
 
     public void setBatteryLevel(BigDecimal batteryLevel) {
+        validateBatteryLevelForNullPointer(batteryLevel);
+        validateBatteryLevelForNegativeValue(batteryLevel);
         this.batteryLevel = batteryLevel;
     }
 
@@ -55,6 +52,8 @@ public class VacuumCleaner extends Device implements VacuumCleanerAPI {
     }
 
     public static void setMaximumCleaningArea(BigDecimal maximumCleaningArea) {
+        validateMaximumCleaningAreaForNullPointer(maximumCleaningArea);
+        validateMaximumCleaningAreaForNegativeValue(maximumCleaningArea);
         VacuumCleaner.maximumCleaningArea = maximumCleaningArea;
     }
 
@@ -107,7 +106,7 @@ public class VacuumCleaner extends Device implements VacuumCleanerAPI {
     }
 
     private void validateTargetAreaToBeCleaned(BigDecimal targetAreaToBeCleaned)
-        throws MaximumCleaningAreaExceededException, NegativeValueException {
+        throws MaximumCleaningAreaExceededException {
         validateTargetAreToBeCleanedForNullPointer(targetAreaToBeCleaned);
         validateTargetAreaToBeCleanedForExcess(targetAreaToBeCleaned);
         validateTargetAreaToBeCleanedForNegativeValue(targetAreaToBeCleaned);
@@ -128,6 +127,30 @@ public class VacuumCleaner extends Device implements VacuumCleanerAPI {
     private void validateTargetAreaToBeCleanedForNegativeValue(BigDecimal targetAreaToBeCleaned) {
         if (targetAreaToBeCleaned.compareTo(BigDecimal.ZERO) < 0) {
             throw new NegativeValueException("The target area cannot be negative value");
+        }
+    }
+
+    private static void validateMaximumCleaningAreaForNullPointer(BigDecimal maximumCleaningArea) {
+        if (maximumCleaningArea == null) {
+            throw new NullValueException("The maximum cleaning area cannot be null");
+        }
+    }
+
+    private static void validateMaximumCleaningAreaForNegativeValue(BigDecimal maximumCleaningArea) {
+        if (maximumCleaningArea.compareTo(BigDecimal.ZERO) < 0) {
+            throw new NegativeValueException("The maximum cleaning area cannot be negative");
+        }
+    }
+
+    private void validateBatteryLevelForNullPointer(BigDecimal batteryLevel) {
+        if (batteryLevel == null) {
+            throw new NullValueException("The battery level cannot be null");
+        }
+    }
+
+    private void validateBatteryLevelForNegativeValue(BigDecimal batteryLevel) {
+        if (batteryLevel == null) {
+            throw new NegativeValueException("The battery level cannot be negative");
         }
     }
 }
