@@ -1,9 +1,10 @@
 package com.digital.rewe.academy.shop;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Objects;
 
-public class Cashier {
+public class Cashier implements Serializable {
     private long id;
     private String name;
     private BigDecimal salary;
@@ -54,5 +55,14 @@ public class Cashier {
     @Override
     public int hashCode() {
         return Objects.hash(id, name);
+    }
+
+    @Override
+    public String toString() {
+        return "Cashier{" +
+            "id=" + id +
+            ", name='" + name + '\'' +
+            ", salary=" + salary +
+            '}';
     }
 }
