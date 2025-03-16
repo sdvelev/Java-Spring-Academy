@@ -13,20 +13,25 @@ public class Good {
     private BigDecimal purchasePrice;
     private Optional<LocalDate> expiryDate;
 
-    public Good(long id, String name, GoodCategory goodCategory, GoodUnit goodUnit, BigDecimal purchasePrice) {
+    private BigDecimal deliveryPercentage;
+
+    public Good(long id, String name, GoodCategory goodCategory, GoodUnit goodUnit, BigDecimal purchasePrice,
+                BigDecimal deliveryPercentage) {
         this.id = id;
         this.name = name;
         this.goodCategory = goodCategory;
         this.purchasePrice = purchasePrice;
+        this.deliveryPercentage = deliveryPercentage;
         this.expiryDate = Optional.empty();
     }
 
     public Good(long id, String name, GoodCategory goodCategory, GoodUnit goodUnit, BigDecimal purchasePrice,
-                LocalDate expiryDate) {
+                BigDecimal deliveryPercentage, LocalDate expiryDate) {
         this.id = id;
         this.name = name;
         this.goodCategory = goodCategory;
         this.purchasePrice = purchasePrice;
+        this.deliveryPercentage = deliveryPercentage;
         this.expiryDate = Optional.of(expiryDate);
     }
 
@@ -58,6 +63,10 @@ public class Good {
         return expiryDate.orElse(null);
     }
 
+    public BigDecimal getDeliveryPercentage() {
+        return deliveryPercentage;
+    }
+
     public void setName(String name) {
         this.name = name;
     }
@@ -76,6 +85,10 @@ public class Good {
 
     public void setExpiryDate(LocalDate expiryDate) {
         this.expiryDate = Optional.of(expiryDate);
+    }
+
+    public void setDeliveryPercentage(BigDecimal deliveryPercentage) {
+        this.deliveryPercentage = deliveryPercentage;
     }
 
     @Override
