@@ -6,7 +6,6 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.math.BigDecimal;
@@ -29,7 +28,7 @@ public class ReceiptService {
     private static final String RECEIPT_ATTRIBUTE_GOOD_QUANTITY = "Quantity: ";
     private static final String RECEIPT_ATTRIBUTE_TOTAL_AMOUNT = "Total Amount: ";
 
-    public static void storeInFile(Receipt receiptToStore) {
+    public static void storeInFile(Receipt receiptToStore) throws IOException {
         try (BufferedWriter bufferedWriter = new BufferedWriter(
             new FileWriter(RECEIPT_DIRECTORY + FILE_NAME_PREFIX + receiptToStore.getId() + FILE_NAME_TEXT_SUFFIX))) {
 
@@ -56,7 +55,7 @@ public class ReceiptService {
             bufferedWriter.write(RECEIPT_ATTRIBUTE_TOTAL_AMOUNT + receiptToStore.getTotalPrice() +
                 System.lineSeparator());
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new IOException("There is a problem working with files", e);
         }
     }
 
