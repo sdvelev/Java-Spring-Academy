@@ -6,6 +6,7 @@ import com.digital.rewe.academy.shop.exception.NoSuchCashierException;
 import com.digital.rewe.academy.shop.exception.NoSuchGoodException;
 import com.digital.rewe.academy.shop.exception.NoSuchQuantityException;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDate;
@@ -16,7 +17,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public class Shop {
+public class Shop implements Serializable {
     private static final int ROUNDING_SCALE_FACTOR = 2;
 
     private long id;
@@ -123,11 +124,13 @@ public class Shop {
             throw new NoSuchGoodException("There is not such a good in the shop");
         }
 
-        if (this.availableGoods.get(good) < quantity) {
+        if (this.availableGoods.get(good).compareTo(quantity) < 0) {
             throw new NoSuchQuantityException("There is not enough quantity from the good");
+        } else if (this.availableGoods.get(good).equals(quantity)) {
+            this.availableGoods.remove(good);
+        } else {
+            this.availableGoods.put(good, this.availableGoods.get(good) - quantity);
         }
-
-        this.availableGoods.put(good, this.availableGoods.get(good) - quantity);
     }
 
     public void returnGood(Good good, Double quantity) {
