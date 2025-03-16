@@ -3,8 +3,11 @@ package com.digital.rewe.academy.shop;
 import com.digital.rewe.academy.shop.exception.MarkupPercentagesMissingException;
 import com.digital.rewe.academy.shop.exception.NoSuchCashDeskException;
 import com.digital.rewe.academy.shop.exception.NoSuchCashierException;
+import com.digital.rewe.academy.shop.exception.NoSuchGoodException;
+import com.digital.rewe.academy.shop.exception.NoSuchQuantityException;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.util.EnumMap;
 import java.util.HashMap;
@@ -14,6 +17,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 public class Shop {
+    private static final int ROUNDING_SCALE_FACTOR = 2;
 
     private long id;
     private String name;
@@ -79,21 +83,77 @@ public class Shop {
         return this.markupPercentages.put(goodCategory, percentage);
     }
 
-    public Double loadNewGood(Good good, Double quantity) {
-        if (!markupPercentages.containsKey(good.getGoodCategory())) {
+    public BigDecimal getMarkupPercentage(GoodCategory goodCategory) {
+        if (!this.markupPercentages.containsKey(goodCategory)) {
             throw new MarkupPercentagesMissingException("There is not defined markup percentage for that good category");
         }
 
+        return this.markupPercentages.get(goodCategory);
+    }
+
+    public int getDaysBeforeExpiryDateDiscount() {
+        return daysBeforeExpiryDateDiscount;
+    }
+
+    public BigDecimal getDiscountExpiryDatePercentage() {
+        return discountExpiryDatePercentage;
+    }
+
+    public Double loadNewGood(Good good, Double quantity) {
+
         this.costsPerDayMap.putIfAbsent(LocalDate.now(), BigDecimal.ZERO);
-        this.costsPerDayMap.merge(LocalDate.now(), good.getPurchasePrice().multiply(BigDecimal.valueOf(quantity)),
+        this.costsPerDayMap.merge(LocalDate.now(), good.getPurchasePrice()
+            .multiply(BigDecimal.ONE.add(good.getDeliveryPercentage())).multiply(BigDecimal.valueOf(quantity)),
             BigDecimal::add);
 
         return this.availableGoods.merge(good, quantity, Double::sum);
+    }
+
+    public void addIncome(BigDecimal totalAmount) {
+        this.incomePerDayMap.putIfAbsent(LocalDate.now(), BigDecimal.ZERO);
+        this.incomePerDayMap.merge(LocalDate.now(), totalAmount, BigDecimal::add);
     }
 
     public void loadNewGoods(Map<Good, Double> newGoodsMap) {
         newGoodsMap.forEach(this::loadNewGood);
     }
 
+    public void removeGood(Good good, Double quantity) {
+        if (!this.availableGoods.containsKey(good)) {
+            throw new NoSuchGoodException("There is not such a good in the shop");
+        }
 
+        if (this.availableGoods.get(good) < quantity) {
+            throw new NoSuchQuantityException("There is not enough quantity from the good");
+        }
+
+        this.availableGoods.put(good, this.availableGoods.get(good) - quantity);
+    }
+
+    public void returnGood(Good good, Double quantity) {
+        this.availableGoods.merge(good, quantity, Double::sum);
+    }
+
+    public BigDecimal getCostsForDay(LocalDate targetDate) {
+        return this.costsPerDayMap.getOrDefault(targetDate, BigDecimal.ZERO)
+            .setScale(ROUNDING_SCALE_FACTOR, RoundingMode.HALF_UP);
+    }
+
+    public BigDecimal getIncomePerDay(LocalDate targetDate) {
+        return this.incomePerDayMap.getOrDefault(targetDate, BigDecimal.ZERO)
+            .setScale(ROUNDING_SCALE_FACTOR, RoundingMode.HALF_UP);
+    }
+
+    public BigDecimal getProfitPerDay(LocalDate targetDate) {
+        return this.getIncomePerDay(targetDate).subtract(this.getCostsForDay(targetDate))
+            .setScale(ROUNDING_SCALE_FACTOR, RoundingMode.HALF_UP);
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public long getId() {
+        return id;
+    }
 }
