@@ -3,7 +3,6 @@ package com.digital.rewe.academy.shop;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.net.ProxySelector;
 import java.time.LocalDate;
 import java.util.AbstractMap;
 import java.util.LinkedHashMap;
@@ -15,10 +14,10 @@ public class Receipt implements Serializable {
 
     private final long id;
     private final String shopName;
-    public final int cashDeskNumber;
     private Cashier cashierServing;
+    private final int cashDeskNumber;
     private final LocalDate dateOfPurchase;
-    private Map<String, Map.Entry<BigDecimal, Double>> goodWithQuantityMap;
+    private final Map<String, Map.Entry<BigDecimal, Double>> goodWithQuantityMap;
     private BigDecimal totalPrice;
 
     public Receipt(long id, String shopName, Cashier cashierServing, int cashDeskNumber) {
@@ -95,11 +94,12 @@ public class Receipt implements Serializable {
     public String toString() {
         return "Receipt{" +
             "id=" + id +
-            ", cashDeskNumber=" + cashDeskNumber +
+            ", shopName='" + shopName + '\'' +
             ", cashierServing=" + cashierServing +
+            ", cashDeskNumber=" + cashDeskNumber +
             ", dateOfPurchase=" + dateOfPurchase +
             ", goodWithQuantityMap=" + goodWithQuantityMap +
-            ", totalPrice=" + totalPrice.setScale(ROUNDING_SCALE_FACTOR, RoundingMode.HALF_UP) +
+            ", totalPrice=" + getTotalPrice() +
             '}';
     }
 }
