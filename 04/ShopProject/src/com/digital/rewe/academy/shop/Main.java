@@ -40,7 +40,7 @@ public class Main {
 
         cashDesk.addCustomerWaiting(customer);
         try {
-            System.out.println("Customer Receipt: " + cashDesk.serveNextCustomer());
+            System.out.println("Customer Receipt: " + CashDeskService.serveNextCustomer(cashDesk));
         } catch (IOException e) {
             System.out.println(e.getMessage());
             e.printStackTrace();
