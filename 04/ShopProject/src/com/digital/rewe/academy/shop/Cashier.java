@@ -8,13 +8,11 @@ public class Cashier implements Serializable {
     private long id;
     private String name;
     private BigDecimal salary;
-//    private Shop shop;
 
-    public Cashier(long id, String name, BigDecimal salary/*, Shop shop*/) {
+    public Cashier(long id, String name, BigDecimal salary) {
         this.id = id;
         this.name = name;
         this.salary = salary;
-//        this.shop = shop;
     }
 
     public long getId() {
@@ -29,10 +27,6 @@ public class Cashier implements Serializable {
         return salary;
     }
 
-//    public Shop getShop() {
-//        return shop;
-//    }
-
     public void setName(String name) {
         this.name = name;
     }
@@ -40,10 +34,6 @@ public class Cashier implements Serializable {
     public void setSalary(BigDecimal salary) {
         this.salary = salary;
     }
-
-//    public void setShop(Shop shop) {
-//        this.shop = shop;
-//    }
 
     @Override
     public boolean equals(Object o) {
