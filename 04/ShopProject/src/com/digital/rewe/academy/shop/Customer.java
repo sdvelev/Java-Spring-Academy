@@ -1,15 +1,15 @@
 package com.digital.rewe.academy.shop;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.Set;
+import java.util.Objects;
 
-public class Customer {
+public class Customer implements Serializable {
     private long id;
     private BigDecimal availableMoney;
-    private Map<Good, Double> basket;
+    private final Map<Good, Double> basket;
     private Shop shop;
 
     public Customer(long id, BigDecimal availableMoney, Shop shop) {
@@ -31,14 +31,20 @@ public class Customer {
         return this.basket;
     }
 
+    public Shop getShop() {
+        return shop;
+    }
+
+    public void setShop(Shop shop) {
+        this.shop = shop;
+    }
+
     public void setAvailableMoney(BigDecimal availableMoney) {
         this.availableMoney = availableMoney;
     }
 
     public void addToBasket(Good good, double amount) {
-        //TODO if the shop has enough quantity, then:
-        // remove that quantity from the shop
-        shop.removeGood(good, amount);
+        this.shop.removeGood(good, amount);
         this.basket.merge(good, amount, Double::sum);
     }
 
@@ -55,40 +61,25 @@ public class Customer {
         return false;
     }
 
-//    public boolean buy(Shop shop, Good good, double amount) {
-//        if (shop == null || good == null) {
-//            throw new IllegalArgumentException("Shop and Good cannot be null");
-//        }
-//
-//        // Check if the shop has enough quantity of the good
-//        Double availableQuantity = shop.getAvailableGoods().get(good);
-//        if (availableQuantity == null || availableQuantity < amount) {
-//            return false;
-//        }
-//
-//        // Calculate the total price
-//        BigDecimal totalPrice = good.getSellingPrice().multiply(BigDecimal.valueOf(amount));
-//
-//        // Check if the customer has enough money
-//        if (this.availableMoney.compareTo(totalPrice) < 0) {
-//            return false;
-//        }
-//
-//        // Deduct the money from the customer's available money
-//        this.availableMoney = this.availableMoney.subtract(totalPrice);
-//
-//        // Add the good to the customer's basket
-//        this.basket.merge(good, amount, Double::sum);
-//
-//        // Remove the quantity from the shop
-//        shop.getAvailableGoods().put(good, availableQuantity - amount);
-//
-//        // Add the income to the shop's income map
-//        shop.getIncomePerDayMap().putIfAbsent(LocalDate.now(), BigDecimal.ZERO);
-//        shop.getIncomePerDayMap().merge(LocalDate.now(), totalPrice, BigDecimal::add);
-//
-//        return true;
-//    }
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Customer customer = (Customer) o;
+        return id == customer.id && Objects.equals(shop, customer.shop);
+    }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, shop);
+    }
 
+    @Override
+    public String toString() {
+        return "Customer{" +
+            "id=" + id +
+            ", availableMoney=" + availableMoney +
+            ", basket=" + basket +
+            ", shop=" + shop +
+            '}';
+    }
 }
