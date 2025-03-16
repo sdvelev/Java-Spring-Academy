@@ -1,28 +1,28 @@
 package com.digital.rewe.academy.shop;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Objects;
-import java.util.Optional;
 
-public class Good {
+public class Good implements Serializable {
     private long id;
     private String name;
     private GoodCategory goodCategory;
     private GoodUnit goodUnit;
     private BigDecimal purchasePrice;
-    private Optional<LocalDate> expiryDate;
-
     private BigDecimal deliveryPercentage;
+    private LocalDate expiryDate;
 
     public Good(long id, String name, GoodCategory goodCategory, GoodUnit goodUnit, BigDecimal purchasePrice,
                 BigDecimal deliveryPercentage) {
         this.id = id;
         this.name = name;
         this.goodCategory = goodCategory;
+        this.goodUnit = goodUnit;
         this.purchasePrice = purchasePrice;
         this.deliveryPercentage = deliveryPercentage;
-        this.expiryDate = Optional.empty();
+        this.expiryDate = null;
     }
 
     public Good(long id, String name, GoodCategory goodCategory, GoodUnit goodUnit, BigDecimal purchasePrice,
@@ -30,9 +30,11 @@ public class Good {
         this.id = id;
         this.name = name;
         this.goodCategory = goodCategory;
+        this.goodUnit = goodUnit;
         this.purchasePrice = purchasePrice;
         this.deliveryPercentage = deliveryPercentage;
-        this.expiryDate = Optional.of(expiryDate);
+        this.expiryDate = expiryDate;
+
     }
 
     public long getId() {
@@ -56,11 +58,11 @@ public class Good {
     }
 
     public boolean isExpirableGood() {
-        return expiryDate.isPresent();
+        return expiryDate != null;
     }
 
     public LocalDate getExpiryDate() {
-        return expiryDate.orElse(null);
+        return expiryDate;
     }
 
     public BigDecimal getDeliveryPercentage() {
@@ -84,7 +86,7 @@ public class Good {
     }
 
     public void setExpiryDate(LocalDate expiryDate) {
-        this.expiryDate = Optional.of(expiryDate);
+        this.expiryDate = expiryDate;
     }
 
     public void setDeliveryPercentage(BigDecimal deliveryPercentage) {
@@ -101,5 +103,18 @@ public class Good {
     @Override
     public int hashCode() {
         return Objects.hashCode(id);
+    }
+
+    @Override
+    public String toString() {
+        return "Good{" +
+            "id=" + id +
+            ", name='" + name + '\'' +
+            ", goodCategory=" + goodCategory +
+            ", goodUnit=" + goodUnit +
+            ", purchasePrice=" + purchasePrice +
+            ", deliveryPercentage=" + deliveryPercentage +
+            ", expiryDate=" + expiryDate +
+            '}';
     }
 }
