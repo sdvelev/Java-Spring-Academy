@@ -1,5 +1,14 @@
 package com.digital.rewe.academy.shop;
 
+import com.digital.rewe.academy.shop.enums.GoodCategory;
+import com.digital.rewe.academy.shop.enums.GoodUnit;
+import com.digital.rewe.academy.shop.model.CashDesk;
+import com.digital.rewe.academy.shop.model.Cashier;
+import com.digital.rewe.academy.shop.model.Customer;
+import com.digital.rewe.academy.shop.model.Good;
+import com.digital.rewe.academy.shop.service.CashDeskService;
+import com.digital.rewe.academy.shop.service.ReceiptService;
+
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -12,7 +21,7 @@ public class Main {
         shop.addMarkupPercentage(GoodCategory.FOOD,  BigDecimal.valueOf(0.2));
         shop.addMarkupPercentage(GoodCategory.NON_FOOD, BigDecimal.valueOf(0.3));
 
-        Cashier cashier = new Cashier(1, "Ivan",  BigDecimal.valueOf(2600));
+        Cashier cashier = new Cashier(1, "Ivan", "My shop", BigDecimal.valueOf(2600));
 
         shop.addCashier(cashier);
 
@@ -46,8 +55,8 @@ public class Main {
             e.printStackTrace();
         }
         System.out.println("Shop Costs for Today: " + shop.getCostsForDay(LocalDate.now()));
-        System.out.println("Shop Income for Today: " + shop.getIncomePerDay(LocalDate.now()));
-        System.out.println("Shop Profit for Today: " + shop.getProfitPerDay(LocalDate.now()));
+        System.out.println("Shop Income for Today: " + shop.getIncomeForDay(LocalDate.now()));
+        System.out.println("Shop Profit for Today: " + shop.getProfitForDay(LocalDate.now()));
 
         System.out.println("----------------------");
         try {
