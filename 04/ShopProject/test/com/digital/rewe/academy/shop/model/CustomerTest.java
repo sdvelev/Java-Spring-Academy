@@ -27,7 +27,7 @@ public class CustomerTest {
         customer.setAvailableMoney(newAvailableMoney);
 
         assertEquals(newAvailableMoney, customer.getAvailableMoney(),
-            "The available money of the customer are expected to change but remain the old ones");
+            "The available money of the customer is expected to change but remains the old one");
     }
 
     @Test
@@ -55,7 +55,6 @@ public class CustomerTest {
 
         assertIterableEquals(expectedBasket.entrySet(), customer.getBasket().entrySet(),
             "The expected basket after adding is not the same as the actual");
-
         verify(shopMock).removeGood(water, 3.);
     }
 
@@ -83,11 +82,9 @@ public class CustomerTest {
         Good water = new Good(1, "Water 1L", GoodCategory.FOOD, GoodUnit.LITER, BigDecimal.valueOf(1.6),
             BigDecimal.valueOf(0.1), LocalDate.of(2025, 12, 1));
         customer.addToBasket(water, 6);
-
         verify(shopMock).removeGood(water, 6.);
 
         customer.removeFromBasket(water, 6.);
-
         assertTrue(customer.getBasket().isEmpty(),
             "The basket of the customer is expected to be empty but it is not");
 
@@ -100,11 +97,9 @@ public class CustomerTest {
         Good water = new Good(1, "Water 1L", GoodCategory.FOOD, GoodUnit.LITER, BigDecimal.valueOf(1.6),
             BigDecimal.valueOf(0.1), LocalDate.of(2025, 12, 1));
         customer.addToBasket(water, 6);
-
         verify(shopMock).removeGood(water, 6.);
 
         customer.removeFromBasket(water, 4.);
-
         assertEquals(2, customer.getBasket().get(water),
             "Two elements are expected to be in the basket of the customer but they are not");
 

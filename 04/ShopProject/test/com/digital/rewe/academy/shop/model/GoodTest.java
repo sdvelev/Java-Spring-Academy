@@ -167,7 +167,7 @@ public class GoodTest {
         Good book = new Good(1, "And Then There Were None | Agatha Christie", GoodCategory.NON_FOOD,
             GoodUnit.PIECE, BigDecimal.valueOf(19.9), BigDecimal.valueOf(0.1));
 
-        assertFalse(book.isExpirableGood(), "The good object is a book and is expected to be non-expirable good");
+        assertFalse(book.isExpirableGood(), "The good argument is a book and is expected to be non-expirable good");
     }
 
     @Test

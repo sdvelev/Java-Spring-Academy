@@ -10,7 +10,6 @@ import org.mockito.Mockito;
 import java.math.BigDecimal;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
 
 public class CashDeskTest {
 
@@ -91,7 +90,4 @@ public class CashDeskTest {
         assertThrows(CashDeskClosedException.class, () -> cashDesk.addCustomerWaiting(customer),
             "Customers cannot be added when the cash desk is closed");
     }
-
-
-
 }

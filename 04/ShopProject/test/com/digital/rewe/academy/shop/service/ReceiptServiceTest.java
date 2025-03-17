@@ -97,7 +97,7 @@ public class ReceiptServiceTest {
 
         ReceiptService.storeInFile(myReceipt);
 
-        List<String> receiptTextList = new ArrayList<>();
+        List<String> receiptTextList;
         try (BufferedReader bufferedReader = new BufferedReader(new FileReader(RECEIPT_DIRECTORY +
             FILE_NAME_PREFIX + myReceipt.getId() + FILE_NAME_TEXT_SUFFIX))) {
             receiptTextList = bufferedReader.lines().toList();

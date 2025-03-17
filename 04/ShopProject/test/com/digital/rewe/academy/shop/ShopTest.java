@@ -262,10 +262,11 @@ public class ShopTest {
         if (isEndOfTheMonth(LocalDate.now())) {
             assertEquals(totalSalariesAmount.add(BigDecimal.valueOf(10.56).setScale(ROUNDING_SCALE_FACTOR,
                     RoundingMode.HALF_UP)), shop.getCostsForDay(LocalDate.now()),
-                "The actual costs at the end of the month are not the same as expected");
+                "The actual costs (at the end of the month) are not the same as expected");
         } else {
             assertEquals(BigDecimal.valueOf(10.56).setScale(ROUNDING_SCALE_FACTOR, RoundingMode.HALF_UP),
-                shop.getCostsForDay(LocalDate.now()), "The actual costs not at the end of the month are not the same as expected");
+                shop.getCostsForDay(LocalDate.now()), "The actual costs (not at the end of the month) " +
+                    "are not the same as expected");
         }
     }
 

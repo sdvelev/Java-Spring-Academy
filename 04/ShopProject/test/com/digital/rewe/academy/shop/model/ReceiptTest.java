@@ -16,7 +16,6 @@ import static org.junit.jupiter.api.Assertions.*;
 public class ReceiptTest {
     private static final int ROUNDING_SCALE_FACTOR = 2;
 
-
     private Cashier cashierMock = Mockito.mock(Cashier.class);
 
     @Test
@@ -57,12 +56,6 @@ public class ReceiptTest {
     void testAddGoodsPositiveCase() {
         Receipt myReceipt = new Receipt(1, "My shop", cashierMock, 6);
 
-//        Good water = new Good(1, "Water 1L", GoodCategory.FOOD, GoodUnit.LITER, BigDecimal.valueOf(1.6),
-//            BigDecimal.valueOf(0.1), LocalDate.of(2025, 12, 1));
-//
-//        Good orange = new Good(3, "Orange 1KG", GoodCategory.FOOD, GoodUnit.KILOGRAM, BigDecimal.valueOf(2.2),
-//            BigDecimal.valueOf(0.1), LocalDate.of(2025, 3, 26));
-
         Map<String, Map.Entry<BigDecimal, Double>> expectedGoodsMap = new LinkedHashMap<>();
         expectedGoodsMap.put("Water 1L", new AbstractMap.SimpleEntry<>(BigDecimal.valueOf(1.6)
             .setScale(ROUNDING_SCALE_FACTOR, RoundingMode.HALF_UP), 3.));
@@ -79,18 +72,11 @@ public class ReceiptTest {
     void testRemoveGoodPositiveCase() {
         Receipt myReceipt = new Receipt(1, "My shop", cashierMock, 6);
 
-//        Good water = new Good(1, "Water 1L", GoodCategory.FOOD, GoodUnit.LITER, BigDecimal.valueOf(1.6),
-//            BigDecimal.valueOf(0.1), LocalDate.of(2025, 12, 1));
-//
-//        Good orange = new Good(3, "Orange 1KG", GoodCategory.FOOD, GoodUnit.KILOGRAM, BigDecimal.valueOf(2.2),
-//            BigDecimal.valueOf(0.1), LocalDate.of(2025, 3, 26));
-
         Map<String, Map.Entry<BigDecimal, Double>> expectedGoodsMap = new LinkedHashMap<>();
         expectedGoodsMap.put("Water 1L", new AbstractMap.SimpleEntry<>(BigDecimal.valueOf(1.6), 3.));
         expectedGoodsMap.put("Orange 1KG", new AbstractMap.SimpleEntry<>(BigDecimal.valueOf(2.2), 3.6));
 
         myReceipt.addGoods(expectedGoodsMap);
-
         myReceipt.removeGood("Water 1L");
 
         assertEquals(1, myReceipt.getGoodWithQuantityMap().size(),
