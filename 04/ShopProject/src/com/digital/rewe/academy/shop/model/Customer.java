@@ -6,11 +6,14 @@ import com.digital.rewe.academy.shop.exception.NullValueException;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Objects;
 
 public class Customer implements Serializable {
+    private static final int ROUNDING_SCALE_FACTOR = 2;
+
     private long id;
     private BigDecimal availableMoney;
     private Shop shop;
@@ -28,7 +31,7 @@ public class Customer implements Serializable {
     }
 
     public BigDecimal getAvailableMoney() {
-        return availableMoney;
+        return availableMoney.setScale(ROUNDING_SCALE_FACTOR, RoundingMode.HALF_UP);
     }
 
     public Shop getShop() {
@@ -88,7 +91,7 @@ public class Customer implements Serializable {
     public String toString() {
         return "Customer{" +
             "id=" + id +
-            ", availableMoney=" + availableMoney +
+            ", availableMoney=" + availableMoney.setScale(ROUNDING_SCALE_FACTOR, RoundingMode.HALF_UP) +
             ", basket=" + basket +
             ", shopName=" + shop.getName() +
             '}';
