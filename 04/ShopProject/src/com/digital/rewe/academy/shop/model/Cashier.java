@@ -1,4 +1,8 @@
-package com.digital.rewe.academy.shop;
+package com.digital.rewe.academy.shop.model;
+
+import com.digital.rewe.academy.shop.exception.EmptyValueException;
+import com.digital.rewe.academy.shop.exception.NegativeValueException;
+import com.digital.rewe.academy.shop.exception.NullValueException;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -11,8 +15,8 @@ public class Cashier implements Serializable {
 
     public Cashier(long id, String name, BigDecimal salary) {
         this.id = id;
-        this.name = name;
-        this.salary = salary;
+        this.setName(name);
+        this.setSalary(salary);
     }
 
     public long getId() {
@@ -28,10 +32,12 @@ public class Cashier implements Serializable {
     }
 
     public void setName(String name) {
+        validateName(name);
         this.name = name;
     }
 
     public void setSalary(BigDecimal salary) {
+        validateSalary(salary);
         this.salary = salary;
     }
 
@@ -54,5 +60,25 @@ public class Cashier implements Serializable {
             ", name='" + name + '\'' +
             ", salary=" + salary +
             '}';
+    }
+
+    private void validateName(String name) {
+        if (name == null) {
+            throw new NullValueException("The name of the cashier cannot be null");
+        }
+
+        if (name.isBlank()) {
+            throw new EmptyValueException("The name of the cashier cannot be empty or blank");
+        }
+    }
+
+    private void validateSalary(BigDecimal salary) {
+        if (salary == null) {
+            throw new NullValueException("The salary of the cashier cannot be null");
+        }
+
+        if (salary.compareTo(BigDecimal.ZERO) < 0) {
+            throw new NegativeValueException("The salary of the cashier cannot be negative");
+        }
     }
 }
