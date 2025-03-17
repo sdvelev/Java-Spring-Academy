@@ -72,6 +72,7 @@ public class CashDeskService {
         currentCustomer.getBasket().entrySet().stream()
             .filter(entry -> !(entry.getKey().isExpirableGood() && entry.getKey().getExpiryDate().isBefore(LocalDate.now())))
             .forEach(entry -> shop.returnGood(entry.getKey(), entry.getValue()));
+        currentCustomer.getBasket().clear();
     }
 
     private static Receipt generateReceipt(CashDesk cashDesk, Map<String, Map.Entry<BigDecimal, Double>> receiptGoodsMap,
