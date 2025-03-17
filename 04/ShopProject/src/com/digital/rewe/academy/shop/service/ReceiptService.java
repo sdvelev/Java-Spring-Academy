@@ -1,4 +1,8 @@
-package com.digital.rewe.academy.shop;
+package com.digital.rewe.academy.shop.service;
+
+import com.digital.rewe.academy.shop.exception.EmptyValueException;
+import com.digital.rewe.academy.shop.exception.NullValueException;
+import com.digital.rewe.academy.shop.model.Receipt;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -29,6 +33,7 @@ public class ReceiptService {
     private static final String RECEIPT_ATTRIBUTE_TOTAL_AMOUNT = "Total Amount: ";
 
     public static void storeInFile(Receipt receiptToStore) throws IOException {
+        validateReceipt(receiptToStore);
         try (BufferedWriter bufferedWriter = new BufferedWriter(
             new FileWriter(RECEIPT_DIRECTORY + FILE_NAME_PREFIX + receiptToStore.getId() + FILE_NAME_TEXT_SUFFIX))) {
 
@@ -55,24 +60,44 @@ public class ReceiptService {
             bufferedWriter.write(RECEIPT_ATTRIBUTE_TOTAL_AMOUNT + receiptToStore.getTotalPrice() +
                 System.lineSeparator());
         } catch (IOException e) {
-            throw new IOException("There is a problem working with files", e);
+            throw new IOException("There is a problem storing receipt in txt file", e);
         }
     }
 
     public static void serializeReceipt(Receipt receiptToSerialize) throws IOException {
+        validateReceipt(receiptToSerialize);
         try (ObjectOutputStream objectOutputStream = new ObjectOutputStream(new
             FileOutputStream(RECEIPT_DIRECTORY + FILE_NAME_PREFIX + receiptToSerialize.getId() +
             FILE_NAME_SERIALIZATION_SUFFIX))) {
 
             objectOutputStream.writeObject(receiptToSerialize);
         } catch (IOException e) {
-            throw new IOException("There is a problem working with files", e);
+            throw new IOException("There is a problem serializing receipt in ser file", e);
         }
     }
 
     public static Receipt deserializeReceipt(String fileName) throws IOException, ClassNotFoundException {
+        validateFileName(fileName);
         try (ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream(fileName))) {
             return (Receipt) objectInputStream.readObject();
+        } catch (IOException e) {
+            throw new IOException("There is a problem deserializing receipt from ser file", e);
+        }
+    }
+
+    private static void validateReceipt(Receipt receipt) {
+        if (receipt == null) {
+            throw new NullValueException("The provided receipt cannot be null");
+        }
+    }
+
+    private static void validateFileName(String fileName) {
+        if (fileName == null) {
+            throw new NullValueException("The provided file name cannot be null");
+        }
+
+        if (fileName.isBlank()) {
+            throw new EmptyValueException("The provided file name cannot be empty or blank");
         }
     }
 }

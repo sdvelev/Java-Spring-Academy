@@ -1,8 +1,14 @@
-package com.digital.rewe.academy.shop;
+package com.digital.rewe.academy.shop.service;
 
+import com.digital.rewe.academy.shop.Shop;
 import com.digital.rewe.academy.shop.exception.CashDeskClosedException;
 import com.digital.rewe.academy.shop.exception.NoCustomerWaitingException;
 import com.digital.rewe.academy.shop.exception.NotEnoughMoneyException;
+import com.digital.rewe.academy.shop.exception.NullValueException;
+import com.digital.rewe.academy.shop.model.CashDesk;
+import com.digital.rewe.academy.shop.model.Customer;
+import com.digital.rewe.academy.shop.model.Good;
+import com.digital.rewe.academy.shop.model.Receipt;
 
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -16,6 +22,7 @@ public class CashDeskService {
     private static long receiptId = 1;
 
     public static Receipt serveNextCustomer(CashDesk cashDesk) throws IOException {
+        validateCashDesk(cashDesk);
         validateCashDescOpen(cashDesk);
         validateCustomersWaiting(cashDesk);
 
@@ -34,8 +41,10 @@ public class CashDeskService {
                 if (expiryDate.isBefore(LocalDate.now())) {
                     continue;
                 }
-                if (ChronoUnit.DAYS.between(LocalDate.now(), expiryDate) <= cashDesk.getShop().getDaysBeforeExpiryDateDiscount()) {
-                    sellingPrice = sellingPrice.multiply(BigDecimal.ONE.subtract(cashDesk.getShop().getDiscountExpiryDatePercentage()));
+                if (ChronoUnit.DAYS.between(LocalDate.now(), expiryDate) <= cashDesk.getShop()
+                    .getDaysBeforeExpiryDateDiscount()) {
+                    sellingPrice = sellingPrice.multiply(BigDecimal.ONE.subtract(cashDesk.getShop()
+                        .getDiscountExpiryDatePercentage()));
                 }
             }
 
@@ -45,23 +54,11 @@ public class CashDeskService {
 
         if (totalAmount.compareTo(nextCustomer.getAvailableMoney()) > 0) {
             returnBasket(nextCustomer, nextCustomer.getShop());
-            throw new NotEnoughMoneyException("The client does not have enough money");
+            throw new NotEnoughMoneyException("The customer does not have enough money");
         } else {
             nextCustomer.setAvailableMoney(nextCustomer.getAvailableMoney().subtract(totalAmount));
             nextCustomer.getShop().addIncome(totalAmount);
             return generateReceipt(cashDesk, receiptGoodsMap, totalAmount);
-        }
-    }
-
-    private static void validateCashDescOpen(CashDesk cashDesk) {
-        if (!cashDesk.isOpen()) {
-            throw new CashDeskClosedException("The current cash desk is closed");
-        }
-    }
-
-    private static void validateCustomersWaiting(CashDesk cashDesk) {
-        if (cashDesk.getWaitingCustomers().isEmpty()) {
-            throw new NoCustomerWaitingException("There is not a customer waiting to be served");
         }
     }
 
@@ -86,5 +83,23 @@ public class CashDeskService {
         ReceiptService.storeInFile(receiptToHand);
         ReceiptService.serializeReceipt(receiptToHand);
         return receiptToHand;
+    }
+
+    private static void validateCashDesk(CashDesk cashDesk) {
+        if (cashDesk == null) {
+            throw new NullValueException("The provided cash desk cannot be null");
+        }
+    }
+
+    private static void validateCashDescOpen(CashDesk cashDesk) {
+        if (!cashDesk.isOpen()) {
+            throw new CashDeskClosedException("The current cash desk is closed");
+        }
+    }
+
+    private static void validateCustomersWaiting(CashDesk cashDesk) {
+        if (cashDesk.getWaitingCustomers().isEmpty()) {
+            throw new NoCustomerWaitingException("There is not a customer waiting to be served");
+        }
     }
 }
