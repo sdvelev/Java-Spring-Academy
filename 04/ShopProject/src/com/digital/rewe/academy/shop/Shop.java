@@ -79,14 +79,18 @@ public class Shop implements FinancialOperationsAPI, Serializable {
         return this.markupPercentages.get(goodCategory);
     }
 
+    public Set<CashDesk> getCashDesks() {
+        return this.cashDesksSet;
+    }
+
     public Set<CashDesk> getWorkingCashDesks() {
         return this.cashDesksSet.stream()
             .filter(CashDesk::isOpen)
             .collect(Collectors.toSet());
     }
 
-    public Set<CashDesk> getCashiers() {
-        return this.cashDesksSet;
+    public Set<Cashier> getCashiers() {
+        return this.cashiersSet;
     }
 
     public Map<Good, Double> getAvailableGoods() {
@@ -260,6 +264,7 @@ public class Shop implements FinancialOperationsAPI, Serializable {
     }
 
     private boolean shouldAddSalary(LocalDate date) {
+        // Check if given date is end of month
         return date.equals(date.withDayOfMonth(date.lengthOfMonth()));
     }
 
@@ -308,11 +313,11 @@ public class Shop implements FinancialOperationsAPI, Serializable {
     }
 
     private void validateMarkupPercentage(BigDecimal markupPercentage) {
-        if (discountExpiryDatePercentage == null) {
+        if (markupPercentage == null) {
             throw new NullValueException("The provided markup percentage cannot be null");
         }
 
-        if (discountExpiryDatePercentage.compareTo(BigDecimal.ZERO) < 0) {
+        if (markupPercentage.compareTo(BigDecimal.ZERO) < 0) {
             throw new NegativeValueException("The provided markup percentage cannot be negative");
         }
     }
