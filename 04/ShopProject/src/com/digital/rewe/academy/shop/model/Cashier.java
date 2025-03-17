@@ -11,11 +11,13 @@ import java.util.Objects;
 public class Cashier implements Serializable {
     private long id;
     private String name;
+    private String shopName;
     private BigDecimal salary;
 
-    public Cashier(long id, String name, BigDecimal salary) {
+    public Cashier(long id, String name, String shopName, BigDecimal salary) {
         this.id = id;
         this.setName(name);
+        this.setShopName(shopName);
         this.setSalary(salary);
     }
 
@@ -27,6 +29,10 @@ public class Cashier implements Serializable {
         return name;
     }
 
+    public String getShopName() {
+        return shopName;
+    }
+
     public BigDecimal getSalary() {
         return salary;
     }
@@ -34,6 +40,11 @@ public class Cashier implements Serializable {
     public void setName(String name) {
         validateName(name);
         this.name = name;
+    }
+
+    public void setShopName(String shopName) {
+        validateName(shopName);
+        this.shopName = shopName;
     }
 
     public void setSalary(BigDecimal salary) {
@@ -58,6 +69,7 @@ public class Cashier implements Serializable {
         return "Cashier{" +
             "id=" + id +
             ", name='" + name + '\'' +
+            ", shopName='" + shopName + '\'' +
             ", salary=" + salary +
             '}';
     }
@@ -69,6 +81,16 @@ public class Cashier implements Serializable {
 
         if (name.isBlank()) {
             throw new EmptyValueException("The name of the cashier cannot be empty or blank");
+        }
+    }
+
+    private void validateShopName(String name) {
+        if (name == null) {
+            throw new NullValueException("The name of the shop cannot be null");
+        }
+
+        if (name.isBlank()) {
+            throw new EmptyValueException("The name of the shop cannot be empty or blank");
         }
     }
 
