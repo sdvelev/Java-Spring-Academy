@@ -21,7 +21,7 @@ public class Main {
         shop.addMarkupPercentage(GoodCategory.FOOD,  BigDecimal.valueOf(0.2));
         shop.addMarkupPercentage(GoodCategory.NON_FOOD, BigDecimal.valueOf(0.3));
 
-        Cashier cashier = new Cashier(1, "Ivan", "My shop", BigDecimal.valueOf(2600));
+        Cashier cashier = new Cashier(1, "Stefan", "My shop", BigDecimal.valueOf(2600));
 
         shop.addCashier(cashier);
 
@@ -60,7 +60,7 @@ public class Main {
 
         System.out.println("----------------------");
         try {
-            System.out.println(ReceiptService.deserializeReceipt("./receipts/RECEIPT_1.ser"));
+            System.out.println(ReceiptService.deserializeReceipt("RECEIPT_1.ser"));
         } catch (IOException e) {
             System.out.println(e.getMessage());
             e.printStackTrace();
