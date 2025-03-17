@@ -8,10 +8,13 @@ import com.digital.rewe.academy.shop.exception.NullValueException;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.util.Objects;
 
 public class Good implements Serializable {
+    private static final int ROUNDING_SCALE_FACTOR = 2;
+
     private long id;
     private String name;
     private GoodCategory goodCategory;
@@ -59,7 +62,7 @@ public class Good implements Serializable {
     }
 
     public BigDecimal getPurchasePrice() {
-        return purchasePrice;
+        return purchasePrice.setScale(ROUNDING_SCALE_FACTOR,  RoundingMode.HALF_UP);
     }
 
     public boolean isExpirableGood() {
@@ -123,7 +126,7 @@ public class Good implements Serializable {
             ", name='" + name + '\'' +
             ", goodCategory=" + goodCategory +
             ", goodUnit=" + goodUnit +
-            ", purchasePrice=" + purchasePrice +
+            ", purchasePrice=" + purchasePrice.setScale(ROUNDING_SCALE_FACTOR, RoundingMode.HALF_UP) +
             ", deliveryPercentage=" + deliveryPercentage +
             ", expiryDate=" + expiryDate +
             '}';
