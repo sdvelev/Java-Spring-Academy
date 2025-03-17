@@ -78,7 +78,7 @@ public class ReceiptService {
 
     public static Receipt deserializeReceipt(String fileName) throws IOException, ClassNotFoundException {
         validateFileName(fileName);
-        try (ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream(fileName))) {
+        try (ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream(RECEIPT_DIRECTORY + fileName))) {
             return (Receipt) objectInputStream.readObject();
         } catch (IOException e) {
             throw new IOException("There is a problem deserializing receipt from ser file", e);
