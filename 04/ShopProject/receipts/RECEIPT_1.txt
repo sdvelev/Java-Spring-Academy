@@ -1,0 +1,15 @@
+Receipt ID: 1
+Shop Name: My shop
+Cash Desk Number: 5
+Cashier ID: 10
+Cashier Name: Mark
+Date of Purchase: 2025-03-17
+
+1. Water 1L
+Unit Price: 1.41
+Quantity: 6.0
+2. And Then There Were None | Agatha Christie
+Unit Price: 23.88
+Quantity: 1.0
+
+Total Amount: 32.33
