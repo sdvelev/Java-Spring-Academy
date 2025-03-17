@@ -1,4 +1,8 @@
-package com.digital.rewe.academy.shop;
+package com.digital.rewe.academy.shop.model;
+
+import com.digital.rewe.academy.shop.Shop;
+import com.digital.rewe.academy.shop.exception.NegativeValueException;
+import com.digital.rewe.academy.shop.exception.NullValueException;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -9,13 +13,13 @@ import java.util.Objects;
 public class Customer implements Serializable {
     private long id;
     private BigDecimal availableMoney;
-    private final Map<Good, Double> basket;
     private Shop shop;
+    private final Map<Good, Double> basket;
 
     public Customer(long id, BigDecimal availableMoney, Shop shop) {
         this.id = id;
-        this.availableMoney = availableMoney;
-        this.shop = shop;
+        this.setAvailableMoney(availableMoney);
+        this.setShop(shop);
         this.basket = new LinkedHashMap<>();
     }
 
@@ -27,28 +31,35 @@ public class Customer implements Serializable {
         return availableMoney;
     }
 
-    public Map<Good, Double> getBasket() {
-        return this.basket;
-    }
-
     public Shop getShop() {
         return shop;
     }
 
-    public void setShop(Shop shop) {
-        this.shop = shop;
+    public Map<Good, Double> getBasket() {
+        return this.basket;
     }
 
     public void setAvailableMoney(BigDecimal availableMoney) {
+        validateAvailableMoney(availableMoney);
         this.availableMoney = availableMoney;
     }
 
+    public void setShop(Shop shop) {
+        validateShop(shop);
+        this.shop = shop;
+    }
+
     public void addToBasket(Good good, double amount) {
+        validateGood(good);
+        validateAmount(amount);
         this.shop.removeGood(good, amount);
+        this.basket.putIfAbsent(good, 0.);
         this.basket.merge(good, amount, Double::sum);
     }
 
     public boolean removeFromBasket(Good good, double amount) {
+        validateGood(good);
+        validateAmount(amount);
         if (this.basket.containsKey(good) && this.basket.get(good) > amount) {
             this.basket.put(good, this.basket.get(good) - amount);
             this.shop.returnGood(good, amount);
@@ -79,7 +90,35 @@ public class Customer implements Serializable {
             "id=" + id +
             ", availableMoney=" + availableMoney +
             ", basket=" + basket +
-            ", shop=" + shop +
+            ", shopName=" + shop.getName() +
             '}';
+    }
+
+    private void validateAvailableMoney(BigDecimal availableMoney) {
+        if (availableMoney == null) {
+            throw new NullValueException("The available money of the customer cannot be null");
+        }
+
+        if (availableMoney.compareTo(BigDecimal.ZERO) < 0) {
+            throw new NegativeValueException("The available money of the customer cannot be negative");
+        }
+    }
+
+    private void validateShop(Shop shop) {
+        if (shop == null) {
+            throw new NullValueException("The shop argument of the customer cannot be null");
+        }
+    }
+
+    private void validateGood(Good good) {
+        if (good == null) {
+            throw new NullValueException("The provided good cannot be null");
+        }
+    }
+
+    private void validateAmount(double amount) {
+        if (amount < 0) {
+            throw new NegativeValueException("The amount of the good in basket cannot be negative");
+        }
     }
 }
