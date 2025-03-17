@@ -1,6 +1,8 @@
-package com.digital.rewe.academy.shop;
+package com.digital.rewe.academy.shop.model;
 
+import com.digital.rewe.academy.shop.Shop;
 import com.digital.rewe.academy.shop.exception.CashDeskClosedException;
+import com.digital.rewe.academy.shop.exception.NegativeValueException;
 import com.digital.rewe.academy.shop.exception.NullValueException;
 
 
@@ -18,8 +20,8 @@ public class CashDesk implements Serializable {
 
     public CashDesk(long id, int cashDeskNumber, Shop shop) {
         this.id = id;
-        this.cashDeskNumber = cashDeskNumber;
-        this.shop = shop;
+        this.setCashDeskNumber(cashDeskNumber);
+        this.setShop(shop);
         this.workingCashier = null;
         this.waitingCustomers = new LinkedHashSet<>();
     }
@@ -44,12 +46,22 @@ public class CashDesk implements Serializable {
         return shop;
     }
 
+    public boolean isOpen() {
+        return this.workingCashier != null;
+    }
+
     public void setCashDeskNumber(int cashDeskNumber) {
+        validateCashDeskNumber(cashDeskNumber);
         this.cashDeskNumber = cashDeskNumber;
     }
 
+    public void setShop(Shop shop) {
+        validateShop(shop);
+        this.shop = shop;
+    }
+
     public void openCashDesk(Cashier workingCashier) {
-        validateCashierIsNull(workingCashier);
+        validateCashier(workingCashier);
         this.workingCashier = workingCashier;
     }
 
@@ -57,28 +69,12 @@ public class CashDesk implements Serializable {
         this.workingCashier = null;
     }
 
-    public boolean isOpen() {
-        return this.workingCashier != null;
-    }
-
     public void addCustomerWaiting(Customer customerToAdd) {
+        validateCustomer(customerToAdd);
         if (isOpen()) {
-            validateCustomerIsNull(customerToAdd);
             this.waitingCustomers.add(customerToAdd);
         } else {
             throw new CashDeskClosedException("The current cash desk is closed");
-        }
-    }
-
-    private void validateCashierIsNull(Cashier cashier) {
-        if (cashier == null) {
-            throw new NullValueException("The cashier argument cannot be null");
-        }
-    }
-
-    private void validateCustomerIsNull(Customer customer) {
-        if (customer == null) {
-            throw new NullValueException("The customer argument cannot be null");
         }
     }
 
@@ -99,7 +95,33 @@ public class CashDesk implements Serializable {
         return "CashDesk{" +
             "id=" + id +
             ", cashDeskNumber=" + cashDeskNumber +
+            ", shop=" + shop +
             ", workingCashier=" + workingCashier +
+            ", waitingCustomers=" + waitingCustomers +
             '}';
+    }
+
+    private void validateCashDeskNumber(int cashDeskNumber) {
+        if (cashDeskNumber < 0) {
+            throw new NegativeValueException("The number of the cash desk cannot be negative");
+        }
+    }
+
+    private void validateShop(Shop shop) {
+        if (shop == null) {
+            throw new NullValueException("The shop field cannot be null");
+        }
+    }
+
+    private void validateCashier(Cashier cashier) {
+        if (cashier == null) {
+            throw new NullValueException("The cashier of the cash desk cannot be null");
+        }
+    }
+
+    private void validateCustomer(Customer customer) {
+        if (customer == null) {
+            throw new NullValueException("The customer argument cannot be null");
+        }
     }
 }
