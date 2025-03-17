@@ -6,9 +6,12 @@ import com.digital.rewe.academy.shop.exception.NullValueException;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Objects;
 
 public class Cashier implements Serializable {
+    private static final int ROUNDING_SCALE_FACTOR = 2;
+
     private long id;
     private String name;
     private String shopName;
@@ -34,7 +37,7 @@ public class Cashier implements Serializable {
     }
 
     public BigDecimal getSalary() {
-        return salary;
+        return salary.setScale(ROUNDING_SCALE_FACTOR, RoundingMode.HALF_UP);
     }
 
     public void setName(String name) {
@@ -43,7 +46,7 @@ public class Cashier implements Serializable {
     }
 
     public void setShopName(String shopName) {
-        validateName(shopName);
+        validateShopName(shopName);
         this.shopName = shopName;
     }
 
@@ -70,7 +73,7 @@ public class Cashier implements Serializable {
             "id=" + id +
             ", name='" + name + '\'' +
             ", shopName='" + shopName + '\'' +
-            ", salary=" + salary +
+            ", salary=" + salary.setScale(ROUNDING_SCALE_FACTOR, RoundingMode.HALF_UP) +
             '}';
     }
 
