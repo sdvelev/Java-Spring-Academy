@@ -1,4 +1,8 @@
-package com.digital.rewe.academy.shop;
+package com.digital.rewe.academy.shop.model;
+
+import com.digital.rewe.academy.shop.exception.EmptyValueException;
+import com.digital.rewe.academy.shop.exception.NegativeValueException;
+import com.digital.rewe.academy.shop.exception.NullValueException;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -21,9 +25,11 @@ public class Receipt implements Serializable {
     private BigDecimal totalPrice;
 
     public Receipt(long id, String shopName, Cashier cashierServing, int cashDeskNumber) {
+        validateShopName(shopName);
+        validateCashDeskNumber(cashDeskNumber);
         this.id = id;
         this.shopName = shopName;
-        this.cashierServing = cashierServing;
+        this.setCashierServing(cashierServing);
         this.cashDeskNumber = cashDeskNumber;
         this.dateOfPurchase = LocalDate.now();
         this.goodWithQuantityMap = new LinkedHashMap<>();
@@ -59,23 +65,30 @@ public class Receipt implements Serializable {
     }
 
     public void setCashierServing(Cashier cashierServing) {
+        validateCashierServing(cashierServing);
         this.cashierServing = cashierServing;
     }
 
     public void setTotalPrice(BigDecimal totalPrice) {
+        validateTotalPrice(totalPrice);
         this.totalPrice = totalPrice;
     }
 
     public void addGood(String goodName, BigDecimal finalPrice, double quantity) {
+        validateGoodName(goodName);
+        validateTotalPrice(finalPrice);
+        validateQuantity(quantity);
         this.goodWithQuantityMap.put(goodName, new AbstractMap.SimpleEntry<>(finalPrice, quantity));
     }
 
-    public void removeGood(String goodName) {
-        this.goodWithQuantityMap.remove(goodName);
+    public void addGoods(Map<String, Map.Entry<BigDecimal, Double>> goodWithQuantityMap) {
+        goodWithQuantityMap.forEach((key, value) -> addGood(key, value.getKey(), value.getValue()));
+//        this.goodWithQuantityMap.putAll(goodWithQuantityMap);
     }
 
-    public void addGoods(Map<String, Map.Entry<BigDecimal, Double>> goodWithQuantityMap) {
-        this.goodWithQuantityMap.putAll(goodWithQuantityMap);
+    public void removeGood(String goodName) {
+        validateGoodName(goodName);
+        this.goodWithQuantityMap.remove(goodName);
     }
 
     @Override
@@ -101,5 +114,53 @@ public class Receipt implements Serializable {
             ", goodWithQuantityMap=" + goodWithQuantityMap +
             ", totalPrice=" + getTotalPrice() +
             '}';
+    }
+
+    private void validateShopName(String shopName) {
+        if (shopName == null) {
+            throw new NullValueException("The provided name of the shop cannot be null");
+        }
+
+        if (shopName.isBlank()) {
+            throw new EmptyValueException("The provided name of the shop cannot be empty or blank");
+        }
+    }
+
+    private void validateCashierServing(Cashier cashierServing) {
+        if (cashierServing == null) {
+            throw new NullValueException("The cashier cannot be null");
+        }
+    }
+
+    private void validateCashDeskNumber(int cashDeskNumber) {
+        if (cashDeskNumber < 0) {
+            throw new NegativeValueException("The cash desk number cannot be negative");
+        }
+    }
+
+    private void validateGoodName(String goodName) {
+        if (goodName == null) {
+            throw new NullValueException("The provided name of the good cannot be null");
+        }
+
+        if (goodName.isBlank()) {
+            throw new EmptyValueException("The provided name of the good cannot be empty or blank");
+        }
+    }
+
+    private void validateTotalPrice(BigDecimal totalPrice) {
+        if (totalPrice == null) {
+            throw new NullValueException("The price argument cannot be null");
+        }
+
+        if (totalPrice.compareTo(BigDecimal.ZERO) < 0) {
+            throw new NegativeValueException("The price cannot be negative");
+        }
+    }
+
+    private void validateQuantity(double quantity) {
+        if (quantity < 0) {
+            throw new NegativeValueException("The quantity of the provided good cannot be negative");
+        }
     }
 }
