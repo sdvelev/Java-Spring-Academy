@@ -82,8 +82,11 @@ public class Receipt implements Serializable {
     }
 
     public void addGoods(Map<String, Map.Entry<BigDecimal, Double>> goodWithQuantityMap) {
-        goodWithQuantityMap.forEach((key, value) -> addGood(key, value.getKey(), value.getValue()));
-//        this.goodWithQuantityMap.putAll(goodWithQuantityMap);
+        if (goodWithQuantityMap == null) {
+            throw new NullValueException("The provided map cannot be null");
+        }
+        goodWithQuantityMap.forEach((key, value) -> addGood(key,
+            value.getKey().setScale(ROUNDING_SCALE_FACTOR, RoundingMode.HALF_UP), value.getValue()));
     }
 
     public void removeGood(String goodName) {
