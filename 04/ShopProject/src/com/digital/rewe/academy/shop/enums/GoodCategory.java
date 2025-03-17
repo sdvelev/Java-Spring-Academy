@@ -1,4 +1,4 @@
-package com.digital.rewe.academy.shop;
+package com.digital.rewe.academy.shop.enums;
 
 public enum GoodCategory {
     FOOD,
