@@ -158,6 +158,10 @@ public class Good implements Serializable {
         if (purchasePrice == null) {
             throw new NullValueException("The purchase price of the good cannot be null");
         }
+
+        if (purchasePrice.compareTo(BigDecimal.ZERO) < 0) {
+            throw new NegativeValueException("The purchase price of the good cannot be negative");
+        }
     }
 
     private void validateDeliveryPercentage(BigDecimal deliveryPercentage) {
