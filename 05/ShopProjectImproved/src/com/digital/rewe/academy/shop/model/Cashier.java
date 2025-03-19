@@ -10,7 +10,7 @@ import java.util.Objects;
 public class Cashier implements Serializable {
     private static final int ROUNDING_SCALE_FACTOR = 2;
 
-    private CashierValidator cashierValidator;
+    private transient CashierValidator cashierValidator;
 
     private long id;
     private String name;
