@@ -1,6 +1,10 @@
 package com.digital.rewe.academy.shop.service;
 
 import com.digital.rewe.academy.shop.api.PurchaseServiceAPI;
+import com.digital.rewe.academy.shop.api.ReceiptGoodsServiceAPI;
+import com.digital.rewe.academy.shop.api.ReceiptSerializeDeserializeServiceAPI;
+import com.digital.rewe.academy.shop.api.ReceiptStoreInFileServiceAPI;
+import com.digital.rewe.academy.shop.api.ShopOperationsServiceAPI;
 import com.digital.rewe.academy.shop.exception.NotEnoughMoneyException;
 import com.digital.rewe.academy.shop.model.CashDesk;
 import com.digital.rewe.academy.shop.model.Customer;
@@ -22,10 +26,10 @@ import java.util.Map;
 public class PurchaseService implements PurchaseServiceAPI {
     private static long receiptId = 1;
 
-    private ShopOperationsService shopService;
-    private ReceiptGoodsService receiptGoodsService;
-    private ReceiptStoreInFileService receiptStoreInFileService;
-    private ReceiptSerializeDeserializeService receiptSerializeDeserializeService;
+    private ShopOperationsServiceAPI shopService;
+    private ReceiptGoodsServiceAPI receiptGoodsService;
+    private ReceiptStoreInFileServiceAPI receiptStoreInFileService;
+    private ReceiptSerializeDeserializeServiceAPI receiptSerializeDeserializeService;
 
     private CashDeskValidator cashDeskValidator;
     private ReceiptValidator receiptValidator;
@@ -89,7 +93,7 @@ public class PurchaseService implements PurchaseServiceAPI {
             cashDesk.getWaitingCustomers().remove(nextCustomer);
             return nextCustomer;
         }
-       return null;
+        return null;
     }
 
     @Override
@@ -105,7 +109,7 @@ public class PurchaseService implements PurchaseServiceAPI {
 
     @Override
     public Receipt generateReceipt(CashDesk cashDesk, Map<String, Map.Entry<BigDecimal, Double>> receiptGoodsMap,
-                                    BigDecimal totalAmount, Shop shop) throws IOException {
+                                   BigDecimal totalAmount, Shop shop) throws IOException {
         Receipt receiptToHand = new Receipt(receiptId++, shop.getName(), cashDesk.getWorkingCashier(),
             cashDesk.getCashDeskNumber(), new ReceiptValidator());
 

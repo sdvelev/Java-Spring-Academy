@@ -1,5 +1,6 @@
 package com.digital.rewe.academy.shop.service;
 
+import com.digital.rewe.academy.shop.api.ShopOperationsServiceAPI;
 import com.digital.rewe.academy.shop.exception.NegativeValueException;
 import com.digital.rewe.academy.shop.model.Customer;
 import com.digital.rewe.academy.shop.model.Good;
@@ -27,7 +28,7 @@ public class CustomerServiceUnitTest {
     private CustomerValidator customerValidatorMock = Mockito.mock(CustomerValidator.class);
 
     @Mock
-    private ShopOperationsService shopOperationsServiceMock = Mockito.mock(ShopOperationsService.class);
+    private ShopOperationsServiceAPI shopOperationsServiceMock = Mockito.mock(ShopOperationsService.class);
 
     @Mock
     private Shop shopMock;

@@ -1,5 +1,6 @@
 package com.digital.rewe.academy.shop.service;
 
+import com.digital.rewe.academy.shop.api.ShopOperationsServiceAPI;
 import com.digital.rewe.academy.shop.enums.GoodCategory;
 import com.digital.rewe.academy.shop.exception.MarkupPercentagesMissingException;
 import com.digital.rewe.academy.shop.exception.NegativeValueException;
@@ -37,7 +38,7 @@ public class ShopOperationsServiceUnitTest {
     @Mock
     private ShopValidator shopValidatorMock;
 
-    private ShopOperationsService shopOperationsService;
+    private ShopOperationsServiceAPI shopOperationsService;
 
     @BeforeEach
     void setUp() {

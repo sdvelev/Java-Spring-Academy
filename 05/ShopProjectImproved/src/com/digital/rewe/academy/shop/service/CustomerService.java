@@ -1,6 +1,7 @@
 package com.digital.rewe.academy.shop.service;
 
 import com.digital.rewe.academy.shop.api.CustomerServiceAPI;
+import com.digital.rewe.academy.shop.api.ShopOperationsServiceAPI;
 import com.digital.rewe.academy.shop.model.Customer;
 import com.digital.rewe.academy.shop.model.Good;
 import com.digital.rewe.academy.shop.model.Shop;
@@ -9,9 +10,9 @@ import com.digital.rewe.academy.shop.validation.CustomerValidator;
 public class CustomerService implements CustomerServiceAPI {
 
     private CustomerValidator customerValidator;
-    private ShopOperationsService shopOperationsService;
+    private ShopOperationsServiceAPI shopOperationsService;
 
-    public CustomerService(CustomerValidator customerValidator, ShopOperationsService shopOperationsService) {
+    public CustomerService(CustomerValidator customerValidator, ShopOperationsServiceAPI shopOperationsService) {
         this.customerValidator = customerValidator;
         this.shopOperationsService = shopOperationsService;
     }

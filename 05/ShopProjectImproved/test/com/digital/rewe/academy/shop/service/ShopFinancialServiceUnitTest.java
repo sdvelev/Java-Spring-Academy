@@ -1,5 +1,7 @@
 package com.digital.rewe.academy.shop.service;
 
+import com.digital.rewe.academy.shop.api.ShopFinancialServiceAPI;
+import com.digital.rewe.academy.shop.api.ShopOperationsServiceAPI;
 import com.digital.rewe.academy.shop.exception.EndDateBeforeStartDateException;
 import com.digital.rewe.academy.shop.model.Cashier;
 import com.digital.rewe.academy.shop.model.Shop;
@@ -33,20 +35,12 @@ public class ShopFinancialServiceUnitTest {
     private Shop shopMock;
     @Mock
     private ShopValidator shopValidatorMock;
-    private CashierValidator cashierValidator;
-    private CashDeskValidator cashDeskValidator;
-    private GoodValidator goodValidator;
 
-    private ShopOperationsService shopOperationsService;
-    private ShopFinancialService shopFinancialService;
+    private ShopFinancialServiceAPI shopFinancialService;
 
     @BeforeEach
     void setUp() {
         shopValidatorMock = Mockito.mock(ShopValidator.class);
-        cashierValidator = new CashierValidator();
-        cashDeskValidator = new CashDeskValidator();
-        goodValidator = new GoodValidator();
-        shopOperationsService = new ShopOperationsService(shopValidatorMock);
         shopFinancialService = new ShopFinancialService(shopValidatorMock);
         shopMock = Mockito.mock(Shop.class);
     }

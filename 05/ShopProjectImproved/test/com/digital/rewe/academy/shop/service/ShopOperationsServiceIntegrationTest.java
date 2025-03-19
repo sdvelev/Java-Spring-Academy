@@ -1,5 +1,7 @@
 package com.digital.rewe.academy.shop.service;
 
+import com.digital.rewe.academy.shop.api.ShopFinancialServiceAPI;
+import com.digital.rewe.academy.shop.api.ShopOperationsServiceAPI;
 import com.digital.rewe.academy.shop.enums.GoodCategory;
 import com.digital.rewe.academy.shop.enums.GoodUnit;
 import com.digital.rewe.academy.shop.exception.NegativeValueException;
@@ -39,8 +41,8 @@ public class ShopOperationsServiceIntegrationTest {
     private CashDeskValidator cashDeskValidator;
     private GoodValidator goodValidator;
 
-    private ShopOperationsService shopOperationsService;
-    private ShopFinancialService shopFinancialService;
+    private ShopOperationsServiceAPI shopOperationsService;
+    private ShopFinancialServiceAPI shopFinancialService;
 
     @BeforeEach
     void setUp() {

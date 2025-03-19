@@ -1,5 +1,6 @@
 package com.digital.rewe.academy.shop.service;
 
+import com.digital.rewe.academy.shop.api.ReceiptGoodsServiceAPI;
 import com.digital.rewe.academy.shop.exception.NullValueException;
 import com.digital.rewe.academy.shop.model.Cashier;
 import com.digital.rewe.academy.shop.model.Receipt;
@@ -26,7 +27,7 @@ public class ReceiptGoodsServiceIntegrationTest {
     private Cashier cashierMock = Mockito.mock(Cashier.class);
 
     private ReceiptValidator receiptValidator;
-    private ReceiptGoodsService receiptGoodsService;
+    private ReceiptGoodsServiceAPI receiptGoodsService;
 
     private Receipt myReceipt;
 

@@ -1,5 +1,6 @@
 package com.digital.rewe.academy.shop.service;
 
+import com.digital.rewe.academy.shop.api.ReceiptGoodsServiceAPI;
 import com.digital.rewe.academy.shop.exception.EmptyValueException;
 import com.digital.rewe.academy.shop.exception.NegativeValueException;
 import com.digital.rewe.academy.shop.exception.NullValueException;
@@ -26,7 +27,7 @@ public class ReceiptGoodsServiceUnitTest {
     @Mock
     private Receipt receiptMock;
 
-    private ReceiptGoodsService receiptGoodsService;
+    private ReceiptGoodsServiceAPI receiptGoodsService;
 
     @BeforeEach
     void setUp() {

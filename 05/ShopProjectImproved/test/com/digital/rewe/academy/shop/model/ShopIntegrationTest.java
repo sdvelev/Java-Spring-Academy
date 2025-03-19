@@ -12,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class ShopIntegrationTest {
-    
+
     @Test
     void testSetNamePositiveCase() {
         Shop shop = new Shop(1, "My shop", 7, BigDecimal.valueOf(0.1),

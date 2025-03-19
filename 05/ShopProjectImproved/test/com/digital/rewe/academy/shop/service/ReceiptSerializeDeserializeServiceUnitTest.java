@@ -1,5 +1,6 @@
 package com.digital.rewe.academy.shop.service;
 
+import com.digital.rewe.academy.shop.api.ReceiptSerializeDeserializeServiceAPI;
 import com.digital.rewe.academy.shop.model.Cashier;
 import com.digital.rewe.academy.shop.model.Receipt;
 import com.digital.rewe.academy.shop.validation.ReceiptValidator;
@@ -28,7 +29,7 @@ public class ReceiptSerializeDeserializeServiceUnitTest {
     private Cashier cashierMock;
     @Mock
     private Receipt myReceiptMock;
-    private ReceiptSerializeDeserializeService receiptSerializeDeserializeService;
+    private ReceiptSerializeDeserializeServiceAPI receiptSerializeDeserializeService;
 
     @BeforeEach
     void setUp() {

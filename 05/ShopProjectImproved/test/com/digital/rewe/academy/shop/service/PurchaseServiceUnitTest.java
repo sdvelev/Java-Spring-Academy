@@ -1,5 +1,7 @@
 package com.digital.rewe.academy.shop.service;
 
+import com.digital.rewe.academy.shop.api.PurchaseServiceAPI;
+import com.digital.rewe.academy.shop.api.ShopOperationsServiceAPI;
 import com.digital.rewe.academy.shop.enums.GoodCategory;
 import com.digital.rewe.academy.shop.enums.GoodUnit;
 import com.digital.rewe.academy.shop.exception.NotEnoughMoneyException;
@@ -49,25 +51,20 @@ public class PurchaseServiceUnitTest {
     private Customer customerMock = Mockito.mock(Customer.class);
 
     @Mock
-    private GoodValidator goodValidatorMock;
-    @Mock
     private CashDeskValidator cashDeskValidatorMock;
     @Mock
     private ReceiptValidator receiptValidatorMock;
     @Mock
     private ShopValidator shopValidatorMock;
 
-    private PurchaseService purchaseService;
-    private ShopOperationsService shopOperationsService;
+    private PurchaseServiceAPI purchaseService;
 
     @BeforeEach
     void setUp() throws IOException, NotEnoughMoneyException {
-        goodValidatorMock = Mockito.mock(GoodValidator.class);
         cashDeskValidatorMock = Mockito.mock(CashDeskValidator.class);
         receiptValidatorMock = Mockito.mock(ReceiptValidator.class);
         shopValidatorMock = Mockito.mock(ShopValidator.class);
         purchaseService = new PurchaseService(cashDeskValidatorMock, receiptValidatorMock, shopValidatorMock);
-        shopOperationsService = new ShopOperationsService(shopValidatorMock);
     }
 
     @Test

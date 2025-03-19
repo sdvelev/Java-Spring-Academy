@@ -1,5 +1,6 @@
 package com.digital.rewe.academy.shop.service;
 
+import com.digital.rewe.academy.shop.api.CashDeskServiceAPI;
 import com.digital.rewe.academy.shop.exception.CashDeskClosedException;
 import com.digital.rewe.academy.shop.exception.NullValueException;
 import com.digital.rewe.academy.shop.model.CashDesk;
@@ -25,7 +26,7 @@ public class CashDeskServiceUnitTest {
     @Mock
     private Customer customerMock;
 
-    private CashDeskService cashDeskService;
+    private CashDeskServiceAPI cashDeskService;
 
     @BeforeEach
     void setUp() {

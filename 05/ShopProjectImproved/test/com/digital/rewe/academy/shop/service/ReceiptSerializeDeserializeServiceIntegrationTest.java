@@ -1,5 +1,7 @@
 package com.digital.rewe.academy.shop.service;
 
+import com.digital.rewe.academy.shop.api.ReceiptGoodsServiceAPI;
+import com.digital.rewe.academy.shop.api.ReceiptSerializeDeserializeServiceAPI;
 import com.digital.rewe.academy.shop.model.Cashier;
 import com.digital.rewe.academy.shop.model.Receipt;
 import com.digital.rewe.academy.shop.validation.CashierValidator;
@@ -20,8 +22,8 @@ import static org.junit.jupiter.api.Assertions.assertIterableEquals;
 public class ReceiptSerializeDeserializeServiceIntegrationTest {
     private ReceiptValidator receiptValidator;
     private CashierValidator cashierValidator;
-    private ReceiptSerializeDeserializeService receiptSerializeDeserializeService;
-    private ReceiptGoodsService receiptGoodsService;
+    private ReceiptSerializeDeserializeServiceAPI receiptSerializeDeserializeService;
+    private ReceiptGoodsServiceAPI receiptGoodsService;
 
     @BeforeEach
     void setUp() {

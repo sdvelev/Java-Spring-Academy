@@ -1,5 +1,9 @@
 package com.digital.rewe.academy.shop.service;
 
+import com.digital.rewe.academy.shop.api.CashDeskServiceAPI;
+import com.digital.rewe.academy.shop.api.CustomerServiceAPI;
+import com.digital.rewe.academy.shop.api.PurchaseServiceAPI;
+import com.digital.rewe.academy.shop.api.ShopOperationsServiceAPI;
 import com.digital.rewe.academy.shop.enums.GoodCategory;
 import com.digital.rewe.academy.shop.enums.GoodUnit;
 import com.digital.rewe.academy.shop.exception.NotEnoughMoneyException;
@@ -18,7 +22,6 @@ import com.digital.rewe.academy.shop.validation.ReceiptValidator;
 import com.digital.rewe.academy.shop.validation.ShopValidator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -43,10 +46,10 @@ public class PurchaseServiceIntegrationTest {
     private ReceiptValidator receiptValidator;
     private CashierValidator cashierValidator;
 
-    private CustomerService customerService;
-    private ShopOperationsService shopOperationsService;
-    private CashDeskService cashDeskService;
-    private PurchaseService purchaseService;
+    private CustomerServiceAPI customerService;
+    private ShopOperationsServiceAPI shopOperationsService;
+    private CashDeskServiceAPI cashDeskService;
+    private PurchaseServiceAPI purchaseService;
 
     @BeforeEach
     void setUp() throws IOException, NotEnoughMoneyException {

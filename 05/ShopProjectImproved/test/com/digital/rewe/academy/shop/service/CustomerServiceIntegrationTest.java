@@ -1,5 +1,7 @@
 package com.digital.rewe.academy.shop.service;
 
+import com.digital.rewe.academy.shop.api.CustomerServiceAPI;
+import com.digital.rewe.academy.shop.api.ShopOperationsServiceAPI;
 import com.digital.rewe.academy.shop.enums.GoodCategory;
 import com.digital.rewe.academy.shop.enums.GoodUnit;
 import com.digital.rewe.academy.shop.exception.NegativeValueException;
@@ -12,7 +14,6 @@ import com.digital.rewe.academy.shop.validation.GoodValidator;
 import com.digital.rewe.academy.shop.validation.ShopValidator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -27,8 +28,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class CustomerServiceIntegrationTest {
 
     private ShopValidator shopValidator;
-    private ShopOperationsService shopOperationsService;
-    private CustomerService customerService;
+    private ShopOperationsServiceAPI shopOperationsService;
+    private CustomerServiceAPI customerService;
     private Shop shop;
 
     @BeforeEach
