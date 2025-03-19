@@ -12,6 +12,7 @@ import com.digital.rewe.academy.shop.validation.GoodValidator;
 import com.digital.rewe.academy.shop.validation.ShopValidator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -25,13 +26,15 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class CustomerServiceIntegrationTest {
 
+    private ShopValidator shopValidator;
     private ShopOperationsService shopOperationsService;
     private CustomerService customerService;
     private Shop shop;
 
     @BeforeEach
     void setUp() {
-        shopOperationsService = new ShopOperationsService();
+        shopValidator = new ShopValidator();
+        shopOperationsService = new ShopOperationsService(shopValidator);
         customerService = new CustomerService(new CustomerValidator(), shopOperationsService);
         shop = new Shop(1, "My shop", 7, BigDecimal.valueOf(0.1), new ShopValidator());
     }
