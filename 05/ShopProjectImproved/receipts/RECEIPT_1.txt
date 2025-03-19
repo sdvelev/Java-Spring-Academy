@@ -1,0 +1,15 @@
+Receipt ID: 1
+Shop Name: My shop
+Cash Desk Number: 6
+Cashier ID: 12
+Cashier Name: Mark
+Date of Purchase: 2025-03-19
+
+1. Water 1L
+Unit Price: 1.60
+Quantity: 3.0
+2. Oranges 1KG
+Unit Price: 2.20
+Quantity: 3.6
+
+Total Amount: 12.72
