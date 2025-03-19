@@ -1,11 +1,12 @@
 package com.digital.rewe.academy.shop.service;
 
+import com.digital.rewe.academy.shop.api.CustomerServiceAPI;
 import com.digital.rewe.academy.shop.model.Customer;
 import com.digital.rewe.academy.shop.model.Good;
 import com.digital.rewe.academy.shop.model.Shop;
 import com.digital.rewe.academy.shop.validation.CustomerValidator;
 
-public class CustomerService {
+public class CustomerService implements CustomerServiceAPI {
 
     private CustomerValidator customerValidator;
     private ShopOperationsService shopOperationsService;
@@ -15,6 +16,7 @@ public class CustomerService {
         this.shopOperationsService = shopOperationsService;
     }
 
+    @Override
     public void addToBasket(Customer customer, Shop shop, Good good, double amount) {
         customerValidator.validateGood(good);
         customerValidator.validateAmount(amount);
@@ -23,6 +25,7 @@ public class CustomerService {
         customer.getBasket().merge(good, amount, Double::sum);
     }
 
+    @Override
     public boolean removeFromBasket(Customer customer, Shop shop, Good good, double amount) {
         customerValidator.validateGood(good);
         customerValidator.validateAmount(amount);
