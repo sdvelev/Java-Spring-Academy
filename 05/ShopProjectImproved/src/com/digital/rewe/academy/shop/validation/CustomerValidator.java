@@ -2,7 +2,9 @@ package com.digital.rewe.academy.shop.validation;
 
 import com.digital.rewe.academy.shop.exception.NegativeValueException;
 import com.digital.rewe.academy.shop.exception.NullValueException;
+import com.digital.rewe.academy.shop.model.Customer;
 import com.digital.rewe.academy.shop.model.Good;
+import com.digital.rewe.academy.shop.model.Shop;
 
 import java.math.BigDecimal;
 
@@ -26,6 +28,18 @@ public class CustomerValidator {
     public void validateAmount(double amount) {
         if (amount < 0) {
             throw new NegativeValueException("The amount of the good in basket cannot be negative");
+        }
+    }
+
+    public void validateCustomer(Customer customer) {
+        if (customer == null) {
+            throw new NullValueException("The customer argument cannot be null");
+        }
+    }
+
+    public void validateShop(Shop shop) {
+        if (shop == null) {
+            throw new NullValueException("The shop argument cannot be null");
         }
     }
 }

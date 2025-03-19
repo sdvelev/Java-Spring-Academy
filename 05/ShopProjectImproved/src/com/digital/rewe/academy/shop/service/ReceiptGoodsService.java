@@ -21,6 +21,7 @@ public class ReceiptGoodsService implements ReceiptGoodsServiceAPI {
 
     @Override
     public void addGood(Receipt receipt, String goodName, BigDecimal finalPrice, double quantity) {
+        receiptValidator.validateReceipt(receipt);
         receiptValidator.validateGoodName(goodName);
         receiptValidator.validateTotalPrice(finalPrice);
         receiptValidator.validateQuantity(quantity);
@@ -29,6 +30,7 @@ public class ReceiptGoodsService implements ReceiptGoodsServiceAPI {
 
     @Override
     public void addGoods(Receipt receipt, Map<String, Map.Entry<BigDecimal, Double>> goodWithQuantityMap) {
+        receiptValidator.validateReceipt(receipt);
         if (goodWithQuantityMap == null) {
             throw new NullValueException("The provided map cannot be null");
         }
@@ -38,6 +40,7 @@ public class ReceiptGoodsService implements ReceiptGoodsServiceAPI {
 
     @Override
     public void removeGood(Receipt receipt, String goodName) {
+        receiptValidator.validateReceipt(receipt);
         receiptValidator.validateGoodName(goodName);
         receipt.getGoodWithQuantityMap().remove(goodName);
     }

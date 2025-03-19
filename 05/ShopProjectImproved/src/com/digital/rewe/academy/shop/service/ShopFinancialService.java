@@ -20,6 +20,7 @@ public class ShopFinancialService implements ShopFinancialServiceAPI {
 
     @Override
     public BigDecimal getCostsForDay(Shop shop, LocalDate targetDate) {
+        shopValidator.validateShop(shop);
         shopValidator.validateDate(targetDate);
         return shop.getCostsPerDayMap().getOrDefault(targetDate, BigDecimal.ZERO)
             .add(shouldAddSalary(targetDate) ? getTotalSalaries(shop) : BigDecimal.ZERO)
@@ -28,6 +29,7 @@ public class ShopFinancialService implements ShopFinancialServiceAPI {
 
     @Override
     public BigDecimal getCostsForPeriod(Shop shop, LocalDate startDate, LocalDate endDate) {
+        shopValidator.validateShop(shop);
         shopValidator.validateDate(startDate);
         shopValidator.validateDate(endDate);
         shopValidator.validateStartDateBeforeEndDate(startDate, endDate);
@@ -40,6 +42,7 @@ public class ShopFinancialService implements ShopFinancialServiceAPI {
 
     @Override
     public BigDecimal getIncomeForDay(Shop shop, LocalDate targetDate) {
+        shopValidator.validateShop(shop);
         shopValidator.validateDate(targetDate);
         return shop.getIncomePerDayMap().getOrDefault(targetDate, BigDecimal.ZERO)
             .setScale(ROUNDING_SCALE_FACTOR, RoundingMode.HALF_UP);
@@ -47,6 +50,7 @@ public class ShopFinancialService implements ShopFinancialServiceAPI {
 
     @Override
     public BigDecimal getIncomeForPeriod(Shop shop, LocalDate startDate, LocalDate endDate) {
+        shopValidator.validateShop(shop);
         shopValidator.validateDate(startDate);
         shopValidator.validateDate(endDate);
         shopValidator.validateStartDateBeforeEndDate(startDate, endDate);
@@ -58,6 +62,7 @@ public class ShopFinancialService implements ShopFinancialServiceAPI {
 
     @Override
     public BigDecimal getProfitForDay(Shop shop, LocalDate targetDate) {
+        shopValidator.validateShop(shop);
         shopValidator.validateDate(targetDate);
         return this.getIncomeForDay(shop, targetDate).subtract(this.getCostsForDay(shop, targetDate))
             .setScale(ROUNDING_SCALE_FACTOR, RoundingMode.HALF_UP);
@@ -65,6 +70,7 @@ public class ShopFinancialService implements ShopFinancialServiceAPI {
 
     @Override
     public BigDecimal getProfitForPeriod(Shop shop, LocalDate startDate, LocalDate endDate) {
+        shopValidator.validateShop(shop);
         shopValidator.validateDate(startDate);
         shopValidator.validateDate(endDate);
         shopValidator.validateStartDateBeforeEndDate(startDate, endDate);
@@ -83,6 +89,7 @@ public class ShopFinancialService implements ShopFinancialServiceAPI {
 
     @Override
     public BigDecimal getTotalSalaries(Shop shop) {
+        shopValidator.validateShop(shop);
         return shop.getCashiers().stream()
             .map(Cashier::getSalary)
             .reduce(BigDecimal.ZERO, BigDecimal::add);

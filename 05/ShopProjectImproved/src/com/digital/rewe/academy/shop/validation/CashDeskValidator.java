@@ -7,6 +7,7 @@ import com.digital.rewe.academy.shop.exception.NullValueException;
 import com.digital.rewe.academy.shop.model.CashDesk;
 import com.digital.rewe.academy.shop.model.Cashier;
 import com.digital.rewe.academy.shop.model.Customer;
+import com.digital.rewe.academy.shop.model.Shop;
 
 public class CashDeskValidator {
     public void validateCashDeskNumber(int cashDeskNumber) {
@@ -42,6 +43,12 @@ public class CashDeskValidator {
     public void validateCustomersWaiting(CashDesk cashDesk) {
         if (cashDesk.getWaitingCustomers().isEmpty()) {
             throw new NoCustomerWaitingException("There is not a customer waiting to be served");
+        }
+    }
+
+    public void validateShop(Shop shop) {
+        if (shop == null) {
+            throw new NullValueException("The shop argument cannot be null");
         }
     }
 }

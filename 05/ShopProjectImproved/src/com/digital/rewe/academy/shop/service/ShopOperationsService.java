@@ -28,6 +28,7 @@ public class ShopOperationsService implements ShopOperationsServiceAPI {
 
     @Override
     public BigDecimal getMarkupPercentage(Shop shop, GoodCategory goodCategory) {
+        shopValidator.validateShop(shop);
         shopValidator.validateGoodCategory(goodCategory);
         if (!shop.getMarkupPercentages().containsKey(goodCategory)) {
             throw new MarkupPercentagesMissingException("There is not a defined markup percentage for the provided good category");
@@ -38,6 +39,7 @@ public class ShopOperationsService implements ShopOperationsServiceAPI {
 
     @Override
     public void addMarkupPercentage(Shop shop, GoodCategory goodCategory, BigDecimal percentage) {
+        shopValidator.validateShop(shop);
         shopValidator.validateGoodCategory(goodCategory);
         shopValidator.validateMarkupPercentage(percentage);
         shop.getMarkupPercentages().put(goodCategory, percentage);
@@ -45,12 +47,14 @@ public class ShopOperationsService implements ShopOperationsServiceAPI {
 
     @Override
     public void addCashier(Shop shop, Cashier cashierToAdd) {
+        shopValidator.validateShop(shop);
         shopValidator.validateCashier(cashierToAdd);
         shop.getCashiers().add(cashierToAdd);
     }
 
     @Override
     public void removeCashier(Shop shop, Cashier cashierToRemove) {
+        shopValidator.validateShop(shop);
         shopValidator.validateCashier(cashierToRemove);
         if (!shop.getCashiers().contains(cashierToRemove)) {
             throw new NoSuchCashierException("There is not such a cashier in the shop");
@@ -61,12 +65,14 @@ public class ShopOperationsService implements ShopOperationsServiceAPI {
 
     @Override
     public void addCashDesk(Shop shop, CashDesk cashDeskToAdd) {
+        shopValidator.validateShop(shop);
         shopValidator.validateCashDesk(cashDeskToAdd);
         shop.getCashDesks().add(cashDeskToAdd);
     }
 
     @Override
     public void removeCashDesk(Shop shop, CashDesk cashDeskToRemove) {
+        shopValidator.validateShop(shop);
         shopValidator.validateCashDesk(cashDeskToRemove);
         if (!shop.getCashDesks().contains(cashDeskToRemove)) {
             throw new NoSuchCashDeskException("There is not such a cash desk in the shop");
@@ -77,6 +83,7 @@ public class ShopOperationsService implements ShopOperationsServiceAPI {
 
     @Override
     public void removeGood(Shop shop, Good good, double quantity) {
+        shopValidator.validateShop(shop);
         shopValidator.validateGood(good);
         shopValidator.validateQuantity(quantity);
 
@@ -95,6 +102,7 @@ public class ShopOperationsService implements ShopOperationsServiceAPI {
 
     @Override
     public void returnGood(Shop shop, Good good, Double quantity) {
+        shopValidator.validateShop(shop);
         shopValidator.validateGood(good);
         shopValidator.validateQuantity(quantity);
         shop.getAvailableGoods().putIfAbsent(good, 0.);
@@ -103,6 +111,7 @@ public class ShopOperationsService implements ShopOperationsServiceAPI {
 
     @Override
     public void loadNewGood(Shop shop, Good good, double quantity) {
+        shopValidator.validateShop(shop);
         shopValidator.validateGood(good);
         shopValidator.validateQuantity(quantity);
         shop.getCostsPerDayMap().putIfAbsent(LocalDate.now(), BigDecimal.ZERO);
@@ -115,6 +124,7 @@ public class ShopOperationsService implements ShopOperationsServiceAPI {
 
     @Override
     public void loadNewGoods(Shop shop, Map<Good, Double> newGoodsMap) {
+        shopValidator.validateShop(shop);
         if (newGoodsMap == null) {
             throw new NullValueException("The provided map with new goods cannot be null");
         }
@@ -126,6 +136,7 @@ public class ShopOperationsService implements ShopOperationsServiceAPI {
 
     @Override
     public void addIncome(Shop shop, BigDecimal totalAmount) {
+        shopValidator.validateShop(shop);
         shopValidator.validateAmount(totalAmount);
         shop.getIncomePerDayMap().putIfAbsent(LocalDate.now(), BigDecimal.ZERO);
         shop.getIncomePerDayMap().merge(LocalDate.now(), totalAmount, BigDecimal::add);

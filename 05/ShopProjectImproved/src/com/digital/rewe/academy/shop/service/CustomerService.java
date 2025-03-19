@@ -19,6 +19,8 @@ public class CustomerService implements CustomerServiceAPI {
 
     @Override
     public void addToBasket(Customer customer, Shop shop, Good good, double amount) {
+        customerValidator.validateCustomer(customer);
+        customerValidator.validateShop(shop);
         customerValidator.validateGood(good);
         customerValidator.validateAmount(amount);
         shopOperationsService.removeGood(shop, good, amount);
@@ -28,6 +30,8 @@ public class CustomerService implements CustomerServiceAPI {
 
     @Override
     public boolean removeFromBasket(Customer customer, Shop shop, Good good, double amount) {
+        customerValidator.validateCustomer(customer);
+        customerValidator.validateShop(shop);
         customerValidator.validateGood(good);
         customerValidator.validateAmount(amount);
         if (customer.getBasket().containsKey(good) && customer.getBasket().get(good) > amount) {

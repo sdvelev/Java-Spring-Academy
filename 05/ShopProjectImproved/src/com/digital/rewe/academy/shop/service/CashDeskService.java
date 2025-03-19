@@ -17,6 +17,7 @@ public class CashDeskService implements CashDeskServiceAPI {
 
     @Override
     public void addCustomerWaiting(CashDesk cashDesk, Customer customerToAdd) {
+        cashDeskValidator.validateCashDesk(cashDesk);
         cashDeskValidator.validateCustomer(customerToAdd);
         if (cashDesk.isOpen()) {
             cashDesk.getWaitingCustomers().add(customerToAdd);

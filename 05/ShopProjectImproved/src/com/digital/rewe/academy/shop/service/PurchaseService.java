@@ -47,6 +47,7 @@ public class PurchaseService implements PurchaseServiceAPI {
 
     @Override
     public Receipt serveNextCustomer(Shop shop, CashDesk cashDesk) throws IOException {
+        shopValidator.validateShop(shop);
         cashDeskValidator.validateCashDesk(cashDesk);
         cashDeskValidator.validateCashDescOpen(cashDesk);
         cashDeskValidator.validateCustomersWaiting(cashDesk);
@@ -110,6 +111,9 @@ public class PurchaseService implements PurchaseServiceAPI {
     @Override
     public Receipt generateReceipt(CashDesk cashDesk, Map<String, Map.Entry<BigDecimal, Double>> receiptGoodsMap,
                                    BigDecimal totalAmount, Shop shop) throws IOException {
+        cashDeskValidator.validateCashDesk(cashDesk);
+        shopValidator.validateAmount(totalAmount);
+        shopValidator.validateShop(shop);
         Receipt receiptToHand = new Receipt(receiptId++, shop.getName(), cashDesk.getWorkingCashier(),
             cashDesk.getCashDeskNumber(), new ReceiptValidator());
 
