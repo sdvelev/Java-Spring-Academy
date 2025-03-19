@@ -13,7 +13,7 @@ import java.util.Objects;
 public class Good implements Serializable {
     private static final int ROUNDING_SCALE_FACTOR = 2;
 
-    private GoodValidator goodValidator;
+    private transient GoodValidator goodValidator;
 
     private long id;
     private String name;

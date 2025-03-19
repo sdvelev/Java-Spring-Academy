@@ -12,7 +12,7 @@ import java.util.Objects;
 public class Customer implements Serializable {
     private static final int ROUNDING_SCALE_FACTOR = 2;
 
-    private CustomerValidator customerValidator;
+    private transient CustomerValidator customerValidator;
 
     private long id;
     private BigDecimal availableMoney;
