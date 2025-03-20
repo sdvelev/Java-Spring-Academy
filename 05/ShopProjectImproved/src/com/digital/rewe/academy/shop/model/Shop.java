@@ -14,7 +14,6 @@ import java.util.Objects;
 import java.util.Set;
 
 public class Shop implements Serializable {
-    private static final int ROUNDING_SCALE_FACTOR = 2;
 
     private transient ShopValidator shopValidator;
 
