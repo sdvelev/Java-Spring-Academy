@@ -23,7 +23,7 @@ public class PublicationUnitTest {
     @Mock
     private PrintingHouseValidator printingHouseValidatorMock = Mockito.mock(PrintingHouseValidator.class);
 
-    private Publication publication;
+    private PublicationAPI publication;
 
     @BeforeEach
     void setUp() {

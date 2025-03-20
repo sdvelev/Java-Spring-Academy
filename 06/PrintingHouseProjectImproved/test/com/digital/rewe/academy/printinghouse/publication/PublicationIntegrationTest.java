@@ -16,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public class PublicationIntegrationTest {
 
     private PrintingHouseValidator printingHouseValidator;
-    private Publication publication;
+    private PublicationAPI publication;
 
     @BeforeEach
     void setUp() {
