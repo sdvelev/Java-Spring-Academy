@@ -3,7 +3,7 @@ Shop Name: My shop
 Cash Desk Number: 5
 Cashier ID: 10
 Cashier Name: Mark
-Date of Purchase: 2025-03-17
+Date of Purchase: 2025-03-19
 
 1. Water 1L
 Unit Price: 1.76
