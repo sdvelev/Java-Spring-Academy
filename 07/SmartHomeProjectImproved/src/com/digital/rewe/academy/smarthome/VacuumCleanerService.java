@@ -49,8 +49,8 @@ public class VacuumCleanerService implements VacuumCleanerServiceAPI {
     public BigDecimal calculateBatteryConsumptionRate(VacuumCleaner vacuumCleaner) {
         smartHomeValidator.validateVacuumCleaner(vacuumCleaner);
         return vacuumCleaner.isMop()
-            ? vacuumCleaner.getBatteryLevel().multiply(VacuumCleaner.getBatteryConsumptionPercentageWithoutMop()).multiply(BigDecimal.TWO)
-            : vacuumCleaner.getBatteryLevel().multiply(VacuumCleaner.getBatteryConsumptionPercentageWithoutMop());
+            ? vacuumCleaner.getPreciseBatteryLevel().multiply(VacuumCleaner.getBatteryConsumptionPercentageWithoutMop()).multiply(BigDecimal.TWO)
+            : vacuumCleaner.getPreciseBatteryLevel().multiply(VacuumCleaner.getBatteryConsumptionPercentageWithoutMop());
     }
 
     private boolean compareBatteryConsumptionWithTotalBattery(VacuumCleaner vacuumCleaner, BigDecimal batteryConsumptionRate) {
@@ -59,6 +59,6 @@ public class VacuumCleanerService implements VacuumCleanerServiceAPI {
     }
 
     private void decreaseBatteryLevel(VacuumCleaner vacuumCleaner, BigDecimal batteryConsumptionRate) {
-        vacuumCleaner.setBatteryLevel(vacuumCleaner.getBatteryLevel().subtract(batteryConsumptionRate));
+        vacuumCleaner.setBatteryLevel(vacuumCleaner.getPreciseBatteryLevel().subtract(batteryConsumptionRate));
     }
 }

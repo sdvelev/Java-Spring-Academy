@@ -6,6 +6,7 @@ import com.digital.rewe.academy.smarthome.validator.SmartHomeValidator;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDate;
+import java.util.Objects;
 
 public class VacuumCleaner extends Device {
     private static final String IDENTIFIER = "VACUUMCLEANER-";
@@ -39,6 +40,10 @@ public class VacuumCleaner extends Device {
         return batteryLevel.setScale(ROUNDING_SCALE_FACTOR, RoundingMode.HALF_UP);
     }
 
+    public BigDecimal getPreciseBatteryLevel() {
+        return batteryLevel;
+    }
+
     public void setBatteryLevel(BigDecimal batteryLevel) {
         super.getSmartHomeValidator().validateBatteryLevel(batteryLevel);
         this.batteryLevel = batteryLevel;
@@ -55,5 +60,18 @@ public class VacuumCleaner extends Device {
     public static void setMaximumCleaningArea(BigDecimal maximumCleaningArea) {
         SmartHomeValidator.validateMaximumCleaningArea(maximumCleaningArea);
         VacuumCleaner.maximumCleaningArea = maximumCleaningArea;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        VacuumCleaner that = (VacuumCleaner) o;
+        return isMop == that.isMop && Objects.equals(batteryLevel, that.batteryLevel);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), isMop, batteryLevel);
     }
 }

@@ -148,7 +148,7 @@ public class SmartHomeValidator {
 
     public void validateOwnerName(String ownerName) {
         if (ownerName == null) {
-            throw new NullPointerException("The name of the owner cannot be null");
+            throw new NullValueException("The name of the owner cannot be null");
         }
 
         if (ownerName.isBlank()) {

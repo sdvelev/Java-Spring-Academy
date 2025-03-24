@@ -8,6 +8,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.EnumMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class SmartLight extends Device {
     private static final String IDENTIFIER = "SMARTLIGHT-";
@@ -47,5 +48,19 @@ public class SmartLight extends Device {
     public void setMaximumLumen(BigDecimal maximumLumen) {
         super.getSmartHomeValidator().validateMaximumLumen(maximumLumen);
         this.maximumLumen = maximumLumen;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        SmartLight that = (SmartLight) o;
+        return lightingMode == that.lightingMode && Objects.equals(maximumLumen, that.maximumLumen) &&
+            Objects.equals(brightnessReductionPercentageMap, that.brightnessReductionPercentageMap);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), lightingMode, maximumLumen, brightnessReductionPercentageMap);
     }
 }

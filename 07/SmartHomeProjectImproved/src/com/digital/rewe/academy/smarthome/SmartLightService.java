@@ -6,8 +6,10 @@ import com.digital.rewe.academy.smarthome.model.SmartLight;
 import com.digital.rewe.academy.smarthome.validator.SmartHomeValidator;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 public class SmartLightService implements SmartLightServiceAPI {
+    private static final int ROUNDING_SCALE_FACTOR = 2;
 
     private SmartHomeValidator smartHomeValidator;
 
@@ -30,6 +32,7 @@ public class SmartLightService implements SmartLightServiceAPI {
 
         return lightingMode.equals(LightingMode.OFF) ? BigDecimal.ZERO
             : smartLight.getMaximumLumen().multiply(BigDecimal.ONE.subtract(smartLight
-            .getBrightnessReductionPercentageMap().get(lightingMode)));
+            .getBrightnessReductionPercentageMap().get(lightingMode)))
+            .setScale(ROUNDING_SCALE_FACTOR, RoundingMode.HALF_UP);
     }
 }
