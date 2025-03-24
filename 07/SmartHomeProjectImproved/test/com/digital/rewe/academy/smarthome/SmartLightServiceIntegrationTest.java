@@ -1,5 +1,6 @@
 package com.digital.rewe.academy.smarthome;
 
+import com.digital.rewe.academy.smarthome.api.SmartLightServiceAPI;
 import com.digital.rewe.academy.smarthome.enums.LightingMode;
 import com.digital.rewe.academy.smarthome.enums.Placement;
 import com.digital.rewe.academy.smarthome.exception.NegativeValueException;
@@ -23,7 +24,7 @@ public class SmartLightServiceIntegrationTest {
 
     private SmartHomeValidator smartHomeValidator;
 
-    private SmartLightService smartLightService;
+    private SmartLightServiceAPI smartLightService;
     private SmartLight smartLight;
 
     @BeforeEach

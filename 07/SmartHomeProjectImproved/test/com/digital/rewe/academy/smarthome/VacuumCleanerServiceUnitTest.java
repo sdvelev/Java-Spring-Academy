@@ -1,5 +1,6 @@
 package com.digital.rewe.academy.smarthome;
 
+import com.digital.rewe.academy.smarthome.api.VacuumCleanerServiceAPI;
 import com.digital.rewe.academy.smarthome.exception.MaximumCleaningAreaExceededException;
 import com.digital.rewe.academy.smarthome.exception.NullValueException;
 import com.digital.rewe.academy.smarthome.model.VacuumCleaner;
@@ -16,13 +17,11 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class VacuumCleanerServiceUnitTest {
-
-
     private static final int ROUNDING_SCALE_FACTOR = 2;
 
     @Mock
     private SmartHomeValidator smartHomeValidatorMock;
-    private VacuumCleanerService vacuumCleanerService;
+    private VacuumCleanerServiceAPI vacuumCleanerService;
     @Mock
     private VacuumCleaner vacuumCleanerMock;
 
@@ -32,7 +31,6 @@ public class VacuumCleanerServiceUnitTest {
         vacuumCleanerService = new VacuumCleanerService(smartHomeValidatorMock);
         vacuumCleanerMock = Mockito.mock(VacuumCleaner.class);
     }
-
 
     @Test
     void testCleanTargetAreaMaximumCleaningAreaExceeded() {

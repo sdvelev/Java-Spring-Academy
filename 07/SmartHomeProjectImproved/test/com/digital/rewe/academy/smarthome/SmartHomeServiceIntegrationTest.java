@@ -1,5 +1,6 @@
 package com.digital.rewe.academy.smarthome;
 
+import com.digital.rewe.academy.smarthome.api.SmartHomeServiceAPI;
 import com.digital.rewe.academy.smarthome.enums.Placement;
 import com.digital.rewe.academy.smarthome.exception.NullValueException;
 import com.digital.rewe.academy.smarthome.model.SmartHome;
@@ -18,7 +19,7 @@ public class SmartHomeServiceIntegrationTest {
 
     private SmartHomeValidator smartHomeValidator;
 
-    private SmartHomeService smartHomeService;
+    private SmartHomeServiceAPI smartHomeService;
     private SmartHome smartHome;
 
     @BeforeEach

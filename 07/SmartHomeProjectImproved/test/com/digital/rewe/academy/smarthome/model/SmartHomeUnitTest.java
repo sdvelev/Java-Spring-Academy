@@ -16,8 +16,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class SmartHomeUnitTest {
 
-    private static final int ROUNDING_SCALE_FACTOR = 2;
-
     private SmartHomeValidator smartHomeValidatorMock;
     private SmartHome smartHome;
 

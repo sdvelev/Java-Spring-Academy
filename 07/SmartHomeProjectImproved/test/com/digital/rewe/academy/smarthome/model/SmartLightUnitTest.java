@@ -19,7 +19,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class SmartLightUnitTest {
-
     private static final int ROUNDING_SCALE_FACTOR = 2;
 
     private SmartHomeValidator smartHomeValidatorMock;

@@ -1,6 +1,5 @@
 package com.digital.rewe.academy.smarthome.model;
 
-import com.digital.rewe.academy.smarthome.exception.EmptyValueException;
 import com.digital.rewe.academy.smarthome.validator.SmartHomeValidator;
 
 import java.util.HashSet;

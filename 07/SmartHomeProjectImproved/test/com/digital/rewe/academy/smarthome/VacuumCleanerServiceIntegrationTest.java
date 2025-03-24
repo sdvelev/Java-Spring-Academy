@@ -1,5 +1,6 @@
 package com.digital.rewe.academy.smarthome;
 
+import com.digital.rewe.academy.smarthome.api.VacuumCleanerServiceAPI;
 import com.digital.rewe.academy.smarthome.enums.Placement;
 import com.digital.rewe.academy.smarthome.exception.MaximumCleaningAreaExceededException;
 import com.digital.rewe.academy.smarthome.exception.NullValueException;
@@ -20,7 +21,7 @@ public class VacuumCleanerServiceIntegrationTest {
 
     private SmartHomeValidator smartHomeValidator;
 
-    private VacuumCleanerService vacuumCleanerService;
+    private VacuumCleanerServiceAPI vacuumCleanerService;
     private VacuumCleaner vacuumCleaner;
 
     @BeforeEach

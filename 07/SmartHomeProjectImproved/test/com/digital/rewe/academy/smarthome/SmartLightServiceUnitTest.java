@@ -1,5 +1,6 @@
 package com.digital.rewe.academy.smarthome;
 
+import com.digital.rewe.academy.smarthome.api.SmartLightServiceAPI;
 import com.digital.rewe.academy.smarthome.enums.LightingMode;
 import com.digital.rewe.academy.smarthome.exception.NegativeValueException;
 import com.digital.rewe.academy.smarthome.exception.NullValueException;
@@ -25,7 +26,7 @@ public class SmartLightServiceUnitTest {
 
     @Mock
     private SmartHomeValidator smartHomeValidatorMock;
-    private SmartLightService smartLightService;
+    private SmartLightServiceAPI smartLightService;
     @Mock
     private SmartLight smartLightMock;
 
@@ -38,7 +39,6 @@ public class SmartLightServiceUnitTest {
 
     @Test
     void testAddBrightnessReductionPercentagePositiveCase() {
-
         Mockito.doNothing().when(smartHomeValidatorMock).validateSmartLight(Mockito.any());
         Mockito.doNothing().when(smartHomeValidatorMock).validateLightingMode(Mockito.any());
         Mockito.doNothing().when(smartHomeValidatorMock).validatePercentage(Mockito.any());

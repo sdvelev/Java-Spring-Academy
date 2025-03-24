@@ -1,5 +1,6 @@
 package com.digital.rewe.academy.smarthome;
 
+import com.digital.rewe.academy.smarthome.api.SmartHomeServiceAPI;
 import com.digital.rewe.academy.smarthome.exception.NullValueException;
 import com.digital.rewe.academy.smarthome.model.Device;
 import com.digital.rewe.academy.smarthome.model.SmartHome;
@@ -21,7 +22,7 @@ public class SmartHomeServiceUnitTest {
 
     @Mock
     private SmartHomeValidator smartHomeValidatorMock;
-    private SmartHomeService smartHomeService;
+    private SmartHomeServiceAPI smartHomeService;
     @Mock
     private SmartHome smartHomeMock;
 
