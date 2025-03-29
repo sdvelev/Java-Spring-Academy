@@ -3,10 +3,8 @@ package com.digital.rewe.academy.medicalrecord.dto;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.experimental.SuperBuilder;
 
 import java.util.Set;
 
@@ -20,5 +18,5 @@ public class DoctorDTO extends PersonDTO {
     private String uniqueIdNumber;
 
     @JsonProperty("specialtySet")
-    private Set<SpecialtyDTO> specialtySet;
+    private Set<SpecialtyDTO> specialtyDTOSet;
 }

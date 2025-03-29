@@ -35,6 +35,12 @@ public class PersonServiceImpl implements PersonService {
     }
 
     @Override
+    public Person getPersonEntity(Long id) {
+        return personRepository.findById(id)
+            .orElseThrow(() -> new EntityNotFoundException("Person with id " + id + " not found"));
+    }
+
+    @Override
     public PersonDTO createPerson(PersonCreateDTO personCreateDTO) {
         PersonDTO personDTOToSave = personMapper.toPersonDTO(personCreateDTO);
         personDTOToSave.setPermanentAddressDTO(addressService.getAddress(personCreateDTO.getPermanentAddressId()));
