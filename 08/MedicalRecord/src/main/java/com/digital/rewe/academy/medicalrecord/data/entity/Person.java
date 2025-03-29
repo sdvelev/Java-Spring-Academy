@@ -1,5 +1,6 @@
 package com.digital.rewe.academy.medicalrecord.data.entity;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;

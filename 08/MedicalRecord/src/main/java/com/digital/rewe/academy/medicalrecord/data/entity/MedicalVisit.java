@@ -49,5 +49,5 @@ public class MedicalVisit extends BaseEntity{
     private Set<Treatment> treatmentSet;
 
     @OneToOne(mappedBy = "medicalVisit")
-    private SickLeave sickleave;
+    private SickLeave sickLeave;
 }
