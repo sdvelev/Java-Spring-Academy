@@ -6,12 +6,15 @@ import com.digital.rewe.academy.medicalrecord.data.repo.DoctorRepository;
 import com.digital.rewe.academy.medicalrecord.data.service.AddressService;
 import com.digital.rewe.academy.medicalrecord.data.service.DoctorService;
 import com.digital.rewe.academy.medicalrecord.data.service.PersonService;
+import com.digital.rewe.academy.medicalrecord.data.service.SpecialtyService;
 import com.digital.rewe.academy.medicalrecord.dto.AddressDTO;
 import com.digital.rewe.academy.medicalrecord.dto.DoctorCreateDTO;
 import com.digital.rewe.academy.medicalrecord.dto.DoctorDTO;
 import com.digital.rewe.academy.medicalrecord.dto.PersonDTO;
+import com.digital.rewe.academy.medicalrecord.dto.SpecialtyDTO;
 import com.digital.rewe.academy.medicalrecord.mapper.AddressMapper;
 import com.digital.rewe.academy.medicalrecord.mapper.DoctorMapper;
+import com.digital.rewe.academy.medicalrecord.mapper.SpecialtyMapper;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -31,6 +34,9 @@ public class DoctorServiceImpl implements DoctorService {
     private final PersonService personService;
     private final AddressService addressService;
     private final AddressMapper addressMapper;
+
+    private final SpecialtyService specialtyService;
+    private final SpecialtyMapper specialtyMapper;
 
 
     @Override
@@ -161,5 +167,31 @@ public class DoctorServiceImpl implements DoctorService {
         }
 
         return doctorToUpdate;
+    }
+
+    @Override
+    public DoctorDTO addSpecialty(Long doctorId, Long specialtyId) {
+        Optional<Doctor> optionalDoctorToAddSpecialty = doctorRepository.findById(doctorId);
+        if (optionalDoctorToAddSpecialty.isPresent()) {
+            Doctor doctorToSave = optionalDoctorToAddSpecialty.get();
+            SpecialtyDTO specialtyDTO = specialtyService.getSpecialty(specialtyId);
+            doctorToSave.getSpecialtySet().add(specialtyMapper.toSpecialty(specialtyDTO));
+            return doctorMapper.toDoctorDTO(doctorRepository.save(doctorToSave));
+        }
+
+        throw new RuntimeException("Doctor with id: " + doctorId + " not found");
+    }
+
+    @Override
+    public DoctorDTO removeSpecialty(Long doctorId, Long specialtyId) {
+        Optional<Doctor> optionalDoctorToRemoveSpecialty = doctorRepository.findById(doctorId);
+        if (optionalDoctorToRemoveSpecialty.isPresent()) {
+            Doctor doctorToSave = optionalDoctorToRemoveSpecialty.get();
+            SpecialtyDTO specialtyDTO = specialtyService.getSpecialty(specialtyId);
+            doctorToSave.getSpecialtySet().remove(specialtyMapper.toSpecialty(specialtyDTO));
+            return doctorMapper.toDoctorDTO(doctorRepository.save(doctorToSave));
+        }
+
+        throw new RuntimeException("Doctor with id: " + doctorId + " not found");
     }
 }

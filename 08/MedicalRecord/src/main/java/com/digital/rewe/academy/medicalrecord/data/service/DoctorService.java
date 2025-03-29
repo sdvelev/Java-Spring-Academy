@@ -16,6 +16,8 @@ public interface DoctorService {
     void deleteDoctor(Long id);
     Doctor setDoctorNonNullFields(DoctorDTO doctorDTO, Doctor doctorToUpdate);
 
+    DoctorDTO addSpecialty(Long  doctorId, Long specialtyId);
+    DoctorDTO removeSpecialty(Long  doctorId, Long specialtyId);
 
 
 }

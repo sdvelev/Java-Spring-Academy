@@ -7,6 +7,7 @@ import jakarta.websocket.server.PathParam;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -47,6 +48,16 @@ public class DoctorController {
     @PutMapping("/{id}")
     public DoctorDTO updateDoctor(@RequestBody DoctorDTO doctorDTO, @PathVariable Long id) {
         return this.doctorService.updateDoctor(doctorDTO, id);
+    }
+
+    @PatchMapping(params = {"add-specialty"}, path="/{doctorId}")
+    public DoctorDTO addSpecialty(@PathVariable Long doctorId, @RequestParam("add-specialty") Long specialtyId) {
+        return this.doctorService.addSpecialty(doctorId, specialtyId);
+    }
+
+    @PatchMapping(params = {"remove-specialty"}, path="/{doctorId}")
+    public DoctorDTO removeSpecialty(@PathVariable Long doctorId, @RequestParam("remove-specialty") Long specialtyId) {
+        return this.doctorService.removeSpecialty(doctorId, specialtyId);
     }
 
     @DeleteMapping("/{id}")
