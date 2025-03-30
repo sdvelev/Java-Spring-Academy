@@ -1,0 +1,35 @@
+package com.digital.rewe.academy.medicalrecord.mapper;
+
+import com.digital.rewe.academy.medicalrecord.data.entity.Doctor;
+import com.digital.rewe.academy.medicalrecord.data.entity.Patient;
+import com.digital.rewe.academy.medicalrecord.dto.DoctorCreateDTO;
+import com.digital.rewe.academy.medicalrecord.dto.DoctorDTO;
+import com.digital.rewe.academy.medicalrecord.dto.PatientDTO;
+import com.digital.rewe.academy.medicalrecord.dto.PersonDTO;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.factory.Mappers;
+
+import java.util.Collection;
+import java.util.List;
+
+@Mapper(componentModel = "spring", uses = {GeneralPractitionerMapper.class, DoctorMapper.class, SpecialtyMapper.class, PersonMapper.class, AddressMapper.class})
+public interface PatientMapper {
+    PatientMapper INSTANCE = Mappers.getMapper(PatientMapper.class);
+
+    @Mapping(source = "generalPractitioner", target = "generalPractitionerDTO")
+    @Mapping(source = "permanentAddress", target = "permanentAddressDTO")
+    PatientDTO toPatientDTO(Patient patient);
+
+    @Mapping(source = "generalPractitionerDTO", target = "generalPractitioner")
+    @Mapping(source = "permanentAddressDTO", target = "permanentAddress")
+    Patient toPatient(PatientDTO patientDTO);
+
+//    PatientDTO toPatientDTO(PatientCreateDTO personCreateDTO);
+
+//    DoctorDTO toDoctorDTO(PersonDTO personDTO);
+
+    List<PatientDTO> toPatientDTOCollection(Collection<Patient> patientCollection);
+
+    List<Patient> toPatientCollection(Collection<PatientDTO> patientDTOCollection);
+}

@@ -16,6 +16,6 @@ public class PatientDTO extends PersonDTO {
     @JsonProperty("lastPaidHealthInsurance")
     private LocalDate lastPaidHealthInsurance;
 
-    @JsonProperty("generalPractitioner")
-    private GeneralPractitionerDTO generalPractitioner;
+    @JsonProperty("generalPractitionerDTO")
+    private GeneralPractitionerDTO generalPractitionerDTO;
 }
