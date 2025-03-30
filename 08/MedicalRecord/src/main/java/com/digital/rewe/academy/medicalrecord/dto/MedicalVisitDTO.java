@@ -35,18 +35,18 @@ public class MedicalVisitDTO extends BaseEntity {
     @PastOrPresent(message = "The date of a medical visit cannot be in the future")
     private LocalDate dateOfVisit;
 
-    @JsonProperty("doctorId")
-    private Long doctorId;
+    @JsonProperty("doctorDTO")
+    private DoctorDTO doctorDTO;
 
-    @JsonProperty("patientId")
-    private Long patientId;
+    @JsonProperty("patientDTO")
+    private PatientDTO patientDTO;
 
     @JsonProperty("diagnoseDTOSet")
     private Set<DiagnoseDTO> diagnoseDTOSet;
 
     @JsonProperty("treatmentDTOSet")
-    private Set<Treatment> treatmentSet;
+    private Set<TreatmentDTO> treatmentDTOSet;
 
-    @JsonProperty("sickLeave")
+    @JsonProperty("sickLeaveDTO")
     private SickLeaveDTO sickLeaveDTO;
 }
