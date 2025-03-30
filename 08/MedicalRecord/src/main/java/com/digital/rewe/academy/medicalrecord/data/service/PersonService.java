@@ -10,7 +10,6 @@ import java.util.List;
 public interface PersonService {
     List<PersonDTO> getPersons();
     PersonDTO getPerson(Long id);
-    Person getPersonEntity(Long id);
     PersonDTO createPerson(PersonCreateDTO personCreateDTO);
     PersonDTO updatePerson(PersonDTO personDTO, Long id);
     void deletePerson(Long id);

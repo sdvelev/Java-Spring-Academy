@@ -18,6 +18,4 @@ public interface DoctorService {
 
     DoctorDTO addSpecialty(Long  doctorId, Long specialtyId);
     DoctorDTO removeSpecialty(Long  doctorId, Long specialtyId);
-
-
 }
