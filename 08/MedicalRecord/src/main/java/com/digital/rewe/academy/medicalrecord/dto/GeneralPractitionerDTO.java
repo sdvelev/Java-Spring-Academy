@@ -13,10 +13,10 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 public class GeneralPractitionerDTO extends DoctorDTO {
 
-    @JsonProperty("practice_number")
+    @JsonProperty("practiceNumber")
     @NotBlank(message = "The practice number of a general practitioner cannot be null, empty or blank")
     private String practiceNumber;
 
-    @JsonProperty("practiceAddress")
-    private AddressDTO practiceAddress;
+    @JsonProperty("practiceAddressDTO")
+    private AddressDTO practiceAddressDTO;
 }

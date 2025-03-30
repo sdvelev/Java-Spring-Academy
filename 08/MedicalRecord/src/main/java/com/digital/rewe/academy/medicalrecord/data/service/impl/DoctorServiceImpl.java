@@ -17,6 +17,7 @@ import com.digital.rewe.academy.medicalrecord.mapper.DoctorMapper;
 import com.digital.rewe.academy.medicalrecord.mapper.SpecialtyMapper;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -95,22 +96,22 @@ public class DoctorServiceImpl implements DoctorService {
 //    }
 
     @Override
+    @Transactional
     public DoctorDTO createDoctor(DoctorDTO doctorDTO) {
 
-       // AddressDTO addressDTO = addressService.getAddress(addressId);
 
-        // Retrieve the existing Person from the PersonService
         Doctor doctorToSave = new Doctor();
-//        doctorToSave.setId(doctorDTO.getId());  // Set the same ID as the existing Person
-        doctorToSave.setUniqueIdNumber(doctorDTO.getUniqueIdNumber());
-        doctorToSave.setFirstName(doctorDTO.getFirstName());
-        doctorToSave.setMiddleName(doctorDTO.getMiddleName());
-        doctorToSave.setLastName(doctorDTO.getLastName());
-        doctorToSave.setUsername(doctorDTO.getUsername());
-        doctorToSave.setPersonalIdNumber(doctorDTO.getPersonalIdNumber());
-        doctorToSave.setBirthDate(doctorDTO.getBirthDate());
-        doctorToSave.setPhoneNumber(doctorDTO.getPhoneNumber());
-        doctorToSave.setEmail(doctorDTO.getEmail());
+//        doctorToSave.setUniqueIdNumber(doctorDTO.getUniqueIdNumber());
+//        doctorToSave.setFirstName(doctorDTO.getFirstName());
+//        doctorToSave.setMiddleName(doctorDTO.getMiddleName());
+//        doctorToSave.setLastName(doctorDTO.getLastName());
+//        doctorToSave.setUsername(doctorDTO.getUsername());
+//        doctorToSave.setPersonalIdNumber(doctorDTO.getPersonalIdNumber());
+//        doctorToSave.setBirthDate(doctorDTO.getBirthDate());
+//        doctorToSave.setPhoneNumber(doctorDTO.getPhoneNumber());
+//        doctorToSave.setEmail(doctorDTO.getEmail());
+
+        doctorToSave = setDoctorNonNullFields(doctorDTO, doctorToSave);
 
         AddressDTO addressToSave = addressService.createAddress(doctorDTO.getPermanentAddressDTO());
 
@@ -122,21 +123,19 @@ public class DoctorServiceImpl implements DoctorService {
     @Override
     public DoctorDTO createDoctorWithExistingAddress(DoctorDTO doctorDTO, Long addressId) {
 
-        AddressDTO addressDTO = addressService.getAddress(addressId);
-
         // Retrieve the existing Person from the PersonService
         Doctor doctorToSave = new Doctor();
-//        doctorToSave.setId(doctorDTO.getId());  // Set the same ID as the existing Person
-        doctorToSave.setUniqueIdNumber(doctorDTO.getUniqueIdNumber());
-        doctorToSave.setFirstName(doctorDTO.getFirstName());
-        doctorToSave.setMiddleName(doctorDTO.getMiddleName());
-        doctorToSave.setLastName(doctorDTO.getLastName());
-        doctorToSave.setUsername(doctorDTO.getUsername());
-        doctorToSave.setPersonalIdNumber(doctorDTO.getPersonalIdNumber());
-        doctorToSave.setBirthDate(doctorDTO.getBirthDate());
-        doctorToSave.setPhoneNumber(doctorDTO.getPhoneNumber());
-        doctorToSave.setEmail(doctorDTO.getEmail());
+//        doctorToSave.setUniqueIdNumber(doctorDTO.getUniqueIdNumber());
+//        doctorToSave.setFirstName(doctorDTO.getFirstName());
+//        doctorToSave.setMiddleName(doctorDTO.getMiddleName());
+//        doctorToSave.setLastName(doctorDTO.getLastName());
+//        doctorToSave.setUsername(doctorDTO.getUsername());
+//        doctorToSave.setPersonalIdNumber(doctorDTO.getPersonalIdNumber());
+//        doctorToSave.setBirthDate(doctorDTO.getBirthDate());
+//        doctorToSave.setPhoneNumber(doctorDTO.getPhoneNumber());
+//        doctorToSave.setEmail(doctorDTO.getEmail());
 
+        doctorToSave = setDoctorNonNullFields(doctorDTO, doctorToSave);
 
         doctorToSave.setPermanentAddress(addressMapper.toAddress(addressService.getAddress(addressId)));
 
@@ -163,8 +162,41 @@ public class DoctorServiceImpl implements DoctorService {
     @Override
     public Doctor setDoctorNonNullFields(DoctorDTO doctorDTO, Doctor doctorToUpdate) {
         if (doctorDTO.getUniqueIdNumber() != null) {
-            doctorToUpdate.setUniqueIdNumber(doctorToUpdate.getFirstName());
+            doctorToUpdate.setUniqueIdNumber(doctorDTO.getUniqueIdNumber());
         }
+
+        personService.setPersonNonNullFields(doctorDTO, doctorToUpdate);
+//        if (doctorDTO.getFirstName() != null) {
+//            doctorToUpdate.setFirstName(doctorDTO.getFirstName());
+//        }
+//
+//        if (doctorDTO.getMiddleName() != null) {
+//            doctorToUpdate.setMiddleName(doctorDTO.getMiddleName());
+//        }
+//
+//        if (doctorDTO.getLastName() != null) {
+//            doctorToUpdate.setLastName(doctorDTO.getLastName());
+//        }
+//
+//        if (doctorDTO.getUsername() != null) {
+//            doctorToUpdate.setUsername(doctorDTO.getUsername());
+//        }
+//
+//        if (doctorDTO.getPersonalIdNumber() != null) {
+//            doctorToUpdate.setPersonalIdNumber(doctorDTO.getPersonalIdNumber());
+//        }
+//
+//        if (doctorDTO.getBirthDate() != null) {
+//            doctorToUpdate.setBirthDate(doctorDTO.getBirthDate());
+//        }
+//
+//        if (doctorDTO.getPhoneNumber() != null) {
+//            doctorToUpdate.setPhoneNumber(doctorDTO.getPhoneNumber());
+//        }
+//
+//        if (doctorDTO.getEmail() != null) {
+//            doctorToUpdate.setEmail(doctorDTO.getEmail());
+//        }
 
         return doctorToUpdate;
     }

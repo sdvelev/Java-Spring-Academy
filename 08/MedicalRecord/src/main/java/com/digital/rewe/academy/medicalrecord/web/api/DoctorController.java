@@ -40,8 +40,8 @@ public class DoctorController {
         return doctorService.createDoctor(doctorDTO);
     }
 
-    @PostMapping(params = {"address_id"})
-    public DoctorDTO createDoctorWithExistingAddress(@RequestBody DoctorDTO doctorDTO, @RequestParam("address_id") Long addressId) {
+    @PostMapping(params = {"address-id"})
+    public DoctorDTO createDoctorWithExistingAddress(@RequestBody DoctorDTO doctorDTO, @RequestParam("address-id") Long addressId) {
         return doctorService.createDoctorWithExistingAddress(doctorDTO, addressId);
     }
 
