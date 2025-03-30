@@ -1,25 +1,20 @@
 package com.digital.rewe.academy.medicalrecord.data.service.impl;
 
 import com.digital.rewe.academy.medicalrecord.data.entity.Doctor;
-import com.digital.rewe.academy.medicalrecord.data.entity.Person;
 import com.digital.rewe.academy.medicalrecord.data.repo.DoctorRepository;
 import com.digital.rewe.academy.medicalrecord.data.service.AddressService;
 import com.digital.rewe.academy.medicalrecord.data.service.DoctorService;
 import com.digital.rewe.academy.medicalrecord.data.service.PersonService;
 import com.digital.rewe.academy.medicalrecord.data.service.SpecialtyService;
 import com.digital.rewe.academy.medicalrecord.dto.AddressDTO;
-import com.digital.rewe.academy.medicalrecord.dto.DoctorCreateDTO;
 import com.digital.rewe.academy.medicalrecord.dto.DoctorDTO;
-import com.digital.rewe.academy.medicalrecord.dto.PersonDTO;
 import com.digital.rewe.academy.medicalrecord.dto.SpecialtyDTO;
 import com.digital.rewe.academy.medicalrecord.mapper.AddressMapper;
 import com.digital.rewe.academy.medicalrecord.mapper.DoctorMapper;
 import com.digital.rewe.academy.medicalrecord.mapper.SpecialtyMapper;
-import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

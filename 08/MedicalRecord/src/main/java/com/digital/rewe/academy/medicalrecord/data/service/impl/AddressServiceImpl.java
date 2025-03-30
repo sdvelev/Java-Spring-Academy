@@ -1,11 +1,9 @@
 package com.digital.rewe.academy.medicalrecord.data.service.impl;
 
 import com.digital.rewe.academy.medicalrecord.data.entity.Address;
-import com.digital.rewe.academy.medicalrecord.data.entity.Person;
 import com.digital.rewe.academy.medicalrecord.data.repo.AddressRepository;
 import com.digital.rewe.academy.medicalrecord.data.service.AddressService;
 import com.digital.rewe.academy.medicalrecord.dto.AddressDTO;
-import com.digital.rewe.academy.medicalrecord.dto.PersonDTO;
 import com.digital.rewe.academy.medicalrecord.mapper.AddressMapper;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -20,7 +18,6 @@ public class AddressServiceImpl implements AddressService {
 
     private final AddressRepository addressRepository;
     private final AddressMapper addressMapper;
-
 
     @Override
     public List<AddressDTO> getAddresses() {

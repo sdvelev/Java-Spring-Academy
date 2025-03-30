@@ -30,5 +30,4 @@ public class SickLeave extends BaseEntity {
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "medical_visit_id", nullable = false)
     private MedicalVisit medicalVisit;
-
 }
