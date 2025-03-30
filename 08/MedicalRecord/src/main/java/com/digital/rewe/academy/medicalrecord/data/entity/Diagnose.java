@@ -7,6 +7,7 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.Objects;
 import java.util.Set;
 
 @Entity(name = "diagnose")
@@ -24,4 +25,16 @@ public class Diagnose extends BaseEntity {
 
     @ManyToMany(mappedBy = "diagnoseSet")
     private Set<MedicalVisit> medicalVisitSet;
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Diagnose diagnose = (Diagnose) o;
+        return Objects.equals(icdCode, diagnose.icdCode);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(icdCode);
+    }
 }
