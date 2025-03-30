@@ -28,6 +28,21 @@ public class PatientController {
         return patientService.getPatients();
     }
 
+    @GetMapping("/diagnose/{diagnoseId}")
+    public List<PatientDTO> getPatientsWithSpecificDiagnose(@PathVariable Long diagnoseId) {
+        return patientService.getPatientsWithSpecificDiagnose(diagnoseId);
+    }
+
+    @GetMapping("/general-practitioner/{generalPractitionerId}")
+    public List<PatientDTO> getPatientsWithGeneralPractitioner(@PathVariable Long generalPractitionerId) {
+        return patientService.getPatientsWithGeneralPractitioner(generalPractitionerId);
+    }
+
+    @GetMapping("/count/general-practitioner/{generalPractitionerId}")
+    public Long getCountByGeneralPractitionerId(@PathVariable Long generalPractitionerId) {
+        return patientService.getCountByGeneralPractitionerId(generalPractitionerId);
+    }
+
     @GetMapping("/{id}")
     public PatientDTO getPatient(@PathVariable Long id) {
         return patientService.getPatient(id);

@@ -42,6 +42,21 @@ public class PatientServiceImpl implements PatientService {
     }
 
     @Override
+    public List<PatientDTO> getPatientsWithSpecificDiagnose(Long diagnoseId) {
+        return patientMapper.toPatientDTOCollection(patientRepository.findDistinctByMedicalvisitSet_DiagnoseSet_Id(diagnoseId));
+    }
+
+    @Override
+    public List<PatientDTO> getPatientsWithGeneralPractitioner(Long generalPractitionerId) {
+        return patientMapper.toPatientDTOCollection(patientRepository.findByGeneralPractitionerId(generalPractitionerId));
+    }
+
+    @Override
+    public Long getCountByGeneralPractitionerId(Long generalPractitionerId) {
+        return patientRepository.countByGeneralPractitionerId(generalPractitionerId);
+    }
+
+    @Override
     public PatientDTO getPatient(Long id) {
         return patientMapper.toPatientDTO(patientRepository.findById(id)
             .orElseThrow(() -> new EntityNotFoundException("Patient with id: " + id + " not found")));

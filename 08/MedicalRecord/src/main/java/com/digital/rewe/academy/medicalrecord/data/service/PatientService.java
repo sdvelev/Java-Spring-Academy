@@ -7,6 +7,9 @@ import java.util.List;
 
 public interface PatientService {
     List<PatientDTO> getPatients();
+    List<PatientDTO> getPatientsWithSpecificDiagnose(Long diagnoseId);
+    List<PatientDTO> getPatientsWithGeneralPractitioner(Long generalPractitionerId);
+    Long getCountByGeneralPractitionerId(Long generalPractitionerId);
     PatientDTO getPatient(Long id);
     //    DoctorDTO createDoctor(DoctorCreateDTO doctorCreateDTO);
     PatientDTO createPatient(PatientDTO patientDTO);

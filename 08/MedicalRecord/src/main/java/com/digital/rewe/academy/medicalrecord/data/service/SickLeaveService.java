@@ -4,6 +4,7 @@ import com.digital.rewe.academy.medicalrecord.data.entity.Diagnose;
 import com.digital.rewe.academy.medicalrecord.data.entity.SickLeave;
 import com.digital.rewe.academy.medicalrecord.dto.DiagnoseDTO;
 import com.digital.rewe.academy.medicalrecord.dto.SickLeaveDTO;
+import com.digital.rewe.academy.medicalrecord.util.MonthCountProjection;
 
 import java.util.List;
 
@@ -14,5 +15,6 @@ public interface SickLeaveService {
     SickLeaveDTO updateSickLeave(SickLeaveDTO sickLeaveDTO, Long id);
     void deleteSickLeave(Long id);
     SickLeave setSickLeaveNonNullFields(SickLeaveDTO sickLeaveDTO, SickLeave sickLeaveToUpdate);
+    List<MonthCountProjection> getMonthWithHighestNumberOfSickLeaves();
 }
 

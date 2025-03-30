@@ -9,6 +9,7 @@ import java.util.List;
 public interface DoctorService {
     List<DoctorDTO> getDoctors();
     DoctorDTO getDoctor(Long id);
+    List<DoctorDTO> getDoctorWithMostSickLeaves();
 //    DoctorDTO createDoctor(DoctorCreateDTO doctorCreateDTO);
     DoctorDTO createDoctor(DoctorDTO doctorDTO);
     DoctorDTO createDoctorWithExistingAddress(DoctorDTO doctorDTO, Long addressId);

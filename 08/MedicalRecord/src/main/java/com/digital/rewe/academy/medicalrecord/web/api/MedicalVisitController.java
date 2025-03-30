@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -32,6 +33,29 @@ public class MedicalVisitController {
     @GetMapping("/{id}")
     public MedicalVisitDTO getMedicalVisit(@PathVariable Long id) {
         return medicalVisitService.getMedicalVisit(id);
+    }
+
+    @GetMapping("/count/doctor/{doctorId}")
+    public Long getMedicalVisitsCountByDoctorId(@PathVariable Long doctorId) {
+        return medicalVisitService.getMedicalVisitsCountByDoctorId(doctorId);
+    }
+
+    @GetMapping("/patient/{patientId}")
+    public List<MedicalVisitDTO> getMedicalVisitsByPatientId(@PathVariable Long patientId) {
+        return medicalVisitService.getMedicalVisitsByPatientId(patientId);
+    }
+
+    @GetMapping(path = "/period", params = {"start-date", "end-date"})
+    public List<MedicalVisitDTO> getMedicalVisitsByPeriod(@RequestParam("start-date") LocalDate startDate,
+                                                          @RequestParam("end-date") LocalDate endDate) {
+        return medicalVisitService.getMedicalVisitsByPeriod(startDate, endDate);
+    }
+
+    @GetMapping(path = "/doctor/{doctorId}/period", params = {"start-date", "end-date"})
+    public List<MedicalVisitDTO> getMedicalVisitsByPeriodAndDoctorId(@PathVariable Long doctorId,
+                                                                     @RequestParam("start-date") LocalDate startDate,
+                                                                     @RequestParam("end-date") LocalDate endDate) {
+        return medicalVisitService.getMedicalVisitsByPeriodAndDoctorId(doctorId, startDate, endDate);
     }
 
     @PostMapping()

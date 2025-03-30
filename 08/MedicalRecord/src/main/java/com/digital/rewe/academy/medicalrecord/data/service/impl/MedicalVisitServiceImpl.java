@@ -22,6 +22,7 @@ import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -53,6 +54,27 @@ public class MedicalVisitServiceImpl implements MedicalVisitService {
     public MedicalVisitDTO getMedicalVisit(Long id) {
         return medicalVisitMapper.toMedicalVisitDTO(medicalVisitRepository.findById(id)
             .orElseThrow(() -> new EntityNotFoundException("Medical visit with id: " + id + " not found")));
+    }
+
+    @Override
+    public Long getMedicalVisitsCountByDoctorId(Long doctorId) {
+        return medicalVisitRepository.countByDoctorId(doctorId);
+    }
+
+    @Override
+    public List<MedicalVisitDTO> getMedicalVisitsByPatientId(Long patientId) {
+        return medicalVisitMapper.toMedicalVisitDTOCollection(medicalVisitRepository.findByPatientId(patientId));
+    }
+
+    @Override
+    public List<MedicalVisitDTO> getMedicalVisitsByPeriod(LocalDate startDate, LocalDate endDate) {
+        return medicalVisitMapper.toMedicalVisitDTOCollection(medicalVisitRepository.findByDateOfVisitBetween(startDate, endDate));
+    }
+
+    @Override
+    public List<MedicalVisitDTO> getMedicalVisitsByPeriodAndDoctorId(Long doctorId, LocalDate startDate,
+                                                                     LocalDate endDate) {
+        return medicalVisitMapper.toMedicalVisitDTOCollection(medicalVisitRepository.findByDoctorIdAndDateOfVisitBetween(doctorId, startDate, endDate));
     }
 
     @Override

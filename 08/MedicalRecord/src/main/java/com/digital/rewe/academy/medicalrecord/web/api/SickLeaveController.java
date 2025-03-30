@@ -2,6 +2,7 @@ package com.digital.rewe.academy.medicalrecord.web.api;
 
 import com.digital.rewe.academy.medicalrecord.data.service.SickLeaveService;
 import com.digital.rewe.academy.medicalrecord.dto.SickLeaveDTO;
+import com.digital.rewe.academy.medicalrecord.util.MonthCountProjection;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,6 +30,11 @@ public class SickLeaveController {
     @GetMapping("/{id}")
     public SickLeaveDTO getSickLeave(@PathVariable Long id) {
         return sickLeaveService.getSickLeave(id);
+    }
+
+    @GetMapping("/months-count-history-statistic")
+    public List<MonthCountProjection> getMonthWithHighestNumberOfSickLeaves() {
+        return sickLeaveService.getMonthWithHighestNumberOfSickLeaves();
     }
 
     @PostMapping

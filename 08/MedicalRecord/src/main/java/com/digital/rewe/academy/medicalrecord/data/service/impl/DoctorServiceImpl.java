@@ -51,6 +51,11 @@ public class DoctorServiceImpl implements DoctorService {
             .orElseThrow(() -> new EntityNotFoundException("Doctor with id: " + id + " not found")));
     }
 
+    @Override
+    public List<DoctorDTO> getDoctorWithMostSickLeaves() {
+        return doctorMapper.toDoctorDTOCollection(doctorRepository.findDoctorWithMostSickLeaves());
+    }
+
    /* @Override
     public DoctorDTO createDoctor(DoctorCreateDTO doctorCreateDTO) {
         PersonDTO relevantPersonDTO = personService.getPerson(doctorCreateDTO.getPersonId());

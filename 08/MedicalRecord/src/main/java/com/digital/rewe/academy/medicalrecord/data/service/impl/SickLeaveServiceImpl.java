@@ -8,6 +8,7 @@ import com.digital.rewe.academy.medicalrecord.data.service.SickLeaveService;
 import com.digital.rewe.academy.medicalrecord.dto.SickLeaveDTO;
 import com.digital.rewe.academy.medicalrecord.mapper.MedicalVisitMapper;
 import com.digital.rewe.academy.medicalrecord.mapper.SickLeaveMapper;
+import com.digital.rewe.academy.medicalrecord.util.MonthCountProjection;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -81,5 +82,10 @@ public class SickLeaveServiceImpl implements SickLeaveService {
         }
 
         return sickLeaveToUpdate;
+    }
+
+    @Override
+    public List<MonthCountProjection> getMonthWithHighestNumberOfSickLeaves() {
+        return sickLeaveRepository.findMonthWithHighestNumberOfSickLeaves();
     }
 }

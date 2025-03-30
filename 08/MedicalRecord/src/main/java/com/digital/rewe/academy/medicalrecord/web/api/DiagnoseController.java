@@ -28,6 +28,11 @@ public class DiagnoseController {
         return diagnoseService.getDiagnoses();
     }
 
+    @GetMapping("/rank")
+    public List<DiagnoseDTO> getDiagnosesByRank() {
+        return diagnoseService.getDiagnosesByRank();
+    }
+
     @GetMapping("/{id}")
     public DiagnoseDTO getDiagnose(@PathVariable Long id) {
         return diagnoseService.getDiagnose(id);

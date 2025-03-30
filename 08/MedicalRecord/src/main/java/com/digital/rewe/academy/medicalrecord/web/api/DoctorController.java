@@ -35,6 +35,11 @@ public class DoctorController {
         return doctorService.getDoctor(id);
     }
 
+    @GetMapping("/most-sick-leaves")
+    public List<DoctorDTO> getDoctorWithMostSickLeaves() {
+        return doctorService.getDoctorWithMostSickLeaves();
+    }
+
     @PostMapping()
     public DoctorDTO createDoctor(@RequestBody DoctorDTO doctorDTO) {
         return doctorService.createDoctor(doctorDTO);
