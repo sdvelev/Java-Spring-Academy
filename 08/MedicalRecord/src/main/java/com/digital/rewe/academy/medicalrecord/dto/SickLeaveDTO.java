@@ -20,11 +20,11 @@ import java.time.LocalDate;
 @NoArgsConstructor
 public class SickLeaveDTO extends BaseEntityDTO {
 
-    @JsonProperty("start_date")
+    @JsonProperty("startDate")
     @NotNull(message = "The start date of a sick leave cannot be null")
     private LocalDate startDate;
 
-    @JsonProperty("end_date")
+    @JsonProperty("endDate")
     @NotNull(message = "The end date of a sick leave cannot be null")
     private LocalDate endDate;
 
