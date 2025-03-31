@@ -1,6 +1,5 @@
 package com.digital.rewe.academy.medicalrecord.data.service.impl;
 
-import com.digital.rewe.academy.medicalrecord.data.entity.Diagnose;
 import com.digital.rewe.academy.medicalrecord.data.entity.Treatment;
 import com.digital.rewe.academy.medicalrecord.data.repo.TreatmentRepository;
 import com.digital.rewe.academy.medicalrecord.data.service.TreatmentService;
@@ -28,7 +27,7 @@ public class TreatmentServiceImpl implements TreatmentService {
     @Override
     public TreatmentDTO getTreatment(Long id) {
         return treatmentMapper.toTreatmentDTO(treatmentRepository.findById(id)
-            .orElseThrow(() -> new EntityNotFoundException("Treatment with id: " + id + " not found")));
+            .orElseThrow(() -> new EntityNotFoundException("Treatment with id " + id + " not found")));
     }
 
     @Override

@@ -42,10 +42,12 @@ public class SickLeaveServiceImpl implements SickLeaveService {
     @Override
     public SickLeaveDTO createSickLeave(SickLeaveDTO sickLeaveDTO) {
         SickLeave sickLeaveToAdd = sickLeaveMapper.toSickLeave(sickLeaveDTO);
-        MedicalVisit relevantMedicalVisit = medicalVisitMapper.toMedicalVisit(medicalVisitService.getMedicalVisit(sickLeaveDTO.getMedicalVisitId()));
+        MedicalVisit relevantMedicalVisit = medicalVisitMapper.toMedicalVisit(medicalVisitService
+            .getMedicalVisit(sickLeaveDTO.getMedicalVisitId()));
         if (relevantMedicalVisit != null && relevantMedicalVisit.getPatient().getLastPaidHealthInsurance().isBefore(
             LocalDate.now().minusMonths(BOUNDARY_MONTH_PERIOD_HEALTH_INSURANCE_PAYMENTS))) {
-            throw new RuntimeException("Sick leave of person with id " + relevantMedicalVisit.getPatient().getId() + " cannot be issued");
+            throw new RuntimeException("Sick leave of person with id " +
+                relevantMedicalVisit.getPatient().getId() + " cannot be issued");
         }
         sickLeaveToAdd.setMedicalVisit(relevantMedicalVisit);
         return sickLeaveMapper.toSickLeaveDTO(sickLeaveRepository.save(sickLeaveToAdd));

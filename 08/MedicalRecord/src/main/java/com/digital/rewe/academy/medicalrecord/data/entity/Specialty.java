@@ -29,11 +29,12 @@ public class Specialty extends BaseEntity {
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         Specialty specialty = (Specialty) o;
-        return Objects.equals(specialtyName, specialty.specialtyName);
+        return Objects.equals(specialtyName, specialty.specialtyName) &&
+            Objects.equals(description, specialty.description);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(specialtyName);
+        return Objects.hash(specialtyName, description);
     }
 }

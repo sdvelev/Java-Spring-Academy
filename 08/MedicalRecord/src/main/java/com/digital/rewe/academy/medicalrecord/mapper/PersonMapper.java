@@ -1,8 +1,6 @@
 package com.digital.rewe.academy.medicalrecord.mapper;
 
-import com.digital.rewe.academy.medicalrecord.data.entity.Address;
 import com.digital.rewe.academy.medicalrecord.data.entity.Person;
-import com.digital.rewe.academy.medicalrecord.dto.AddressDTO;
 import com.digital.rewe.academy.medicalrecord.dto.PersonCreateDTO;
 import com.digital.rewe.academy.medicalrecord.dto.PersonDTO;
 import org.mapstruct.Mapper;

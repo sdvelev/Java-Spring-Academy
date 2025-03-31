@@ -9,17 +9,30 @@ import java.util.List;
 
 public interface MedicalVisitService {
     List<MedicalVisitDTO> getMedicalVisits();
+
     MedicalVisitDTO getMedicalVisit(Long id);
+
     Long getMedicalVisitsCountByDoctorId(Long doctorId);
+
     List<MedicalVisitDTO> getMedicalVisitsByPatientId(Long patientId);
+
     List<MedicalVisitDTO> getMedicalVisitsByPeriod(LocalDate startDate, LocalDate endDate);
+
     List<MedicalVisitDTO> getMedicalVisitsByPeriodAndDoctorId(Long doctorId, LocalDate startDate, LocalDate endDate);
+
     MedicalVisitDTO createMedicalVisit(MedicalVisitCreateDTO medicalVisitCreateDTO);
+
     MedicalVisitDTO updateMedicalVisit(MedicalVisitDTO medicalVisitDTO, Long id);
-    void deleteMedicalVisit(Long id);
+
     MedicalVisit setMedicalVisitNonNullFields(MedicalVisitDTO medicalVisitDTO, MedicalVisit medicalVisitToUpdate);
+
+    void deleteMedicalVisit(Long id);
+
     MedicalVisitDTO addDiagnose(Long medicalVisitId, Long diagnoseId);
+
     MedicalVisitDTO removeDiagnose(Long medicalVisitId, Long diagnoseId);
+
     MedicalVisitDTO addTreatment(Long medicalVisitId, Long treatmentId);
+
     MedicalVisitDTO removeTreatment(Long medicalVisitId, Long treatmentId);
 }

@@ -2,6 +2,7 @@ package com.digital.rewe.academy.medicalrecord.web.api;
 
 import com.digital.rewe.academy.medicalrecord.data.service.PatientService;
 import com.digital.rewe.academy.medicalrecord.dto.PatientDTO;
+import jakarta.validation.constraints.Positive;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,22 +30,22 @@ public class PatientController {
     }
 
     @GetMapping("/diagnose/{diagnoseId}")
-    public List<PatientDTO> getPatientsWithSpecificDiagnose(@PathVariable Long diagnoseId) {
+    public List<PatientDTO> getPatientsWithSpecificDiagnose(@PathVariable @Positive Long diagnoseId) {
         return patientService.getPatientsWithSpecificDiagnose(diagnoseId);
     }
 
     @GetMapping("/general-practitioner/{generalPractitionerId}")
-    public List<PatientDTO> getPatientsWithGeneralPractitioner(@PathVariable Long generalPractitionerId) {
+    public List<PatientDTO> getPatientsWithGeneralPractitioner(@PathVariable @Positive Long generalPractitionerId) {
         return patientService.getPatientsWithGeneralPractitioner(generalPractitionerId);
     }
 
     @GetMapping("/count/general-practitioner/{generalPractitionerId}")
-    public Long getCountByGeneralPractitionerId(@PathVariable Long generalPractitionerId) {
+    public Long getCountByGeneralPractitionerId(@PathVariable @Positive Long generalPractitionerId) {
         return patientService.getCountByGeneralPractitionerId(generalPractitionerId);
     }
 
     @GetMapping("/{id}")
-    public PatientDTO getPatient(@PathVariable Long id) {
+    public PatientDTO getPatient(@PathVariable @Positive Long id) {
         return patientService.getPatient(id);
     }
 
@@ -54,27 +55,28 @@ public class PatientController {
     }
 
     @PostMapping(params = {"address-id"})
-    public PatientDTO createPatientWithExistingAddress(@RequestBody PatientDTO patientDTO, @RequestParam("address-id") Long addressId) {
+    public PatientDTO createPatientWithExistingAddress(@RequestBody PatientDTO patientDTO, @RequestParam("address-id") @Positive Long addressId) {
         return patientService.createPatientWithExistingAddress(patientDTO, addressId);
     }
 
     @PutMapping("/{id}")
-    public PatientDTO updatePatient(@RequestBody PatientDTO patientDTO, @PathVariable Long id) {
+    public PatientDTO updatePatient(@RequestBody PatientDTO patientDTO, @PathVariable @Positive Long id) {
         return this.patientService.updatePatient(patientDTO, id);
     }
 
     @PatchMapping(params = {"add-general-practitioner"}, path="/{patientId}")
-    public PatientDTO addGeneralPractitioner(@PathVariable Long patientId, @RequestParam("add-general-practitioner") Long generalPractitionerId) {
+    public PatientDTO addGeneralPractitioner(@PathVariable @Positive Long patientId, @RequestParam("add-general-practitioner") @Positive Long generalPractitionerId) {
         return this.patientService.addGeneralPractitioner(patientId, generalPractitionerId);
     }
 
     @PatchMapping(params = {"remove-general-practitioner"}, path="/{patientId}")
-    public PatientDTO removeGeneralPractitioner(@PathVariable Long patientId, @RequestParam(value = "remove-specialty", required = false) Long generalPractitionerId) {
+    public PatientDTO removeGeneralPractitioner(@PathVariable @Positive Long patientId,
+                                                @RequestParam(value = "remove-specialty", required = false) Long generalPractitionerId) {
         return this.patientService.removeGeneralPractitioner(patientId);
     }
 
     @DeleteMapping("/{id}")
-    public void deletePatient(@PathVariable Long id) {
+    public void deletePatient(@PathVariable @Positive Long id) {
         this.patientService.deletePatient(id);
     }
 }

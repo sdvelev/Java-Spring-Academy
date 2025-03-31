@@ -1,6 +1,5 @@
 package com.digital.rewe.academy.medicalrecord.data.service.impl;
 
-import com.digital.rewe.academy.medicalrecord.data.entity.Address;
 import com.digital.rewe.academy.medicalrecord.data.entity.Specialty;
 import com.digital.rewe.academy.medicalrecord.data.repo.SpecialtyRepository;
 import com.digital.rewe.academy.medicalrecord.data.service.SpecialtyService;
@@ -28,7 +27,7 @@ public class SpecialtyServiceImpl implements SpecialtyService {
     @Override
     public SpecialtyDTO getSpecialty(Long id) {
         return specialtyMapper.toSpecialtyDTO(specialtyRepository.findById(id)
-            .orElseThrow(() -> new EntityNotFoundException("Specialty with id: " + id + " not found")));
+            .orElseThrow(() -> new EntityNotFoundException("Specialty with id " + id + " not found")));
     }
 
     @Override

@@ -7,9 +7,14 @@ import java.util.List;
 
 public interface SpecialtyService {
     List<SpecialtyDTO> getSpecialties();
+
     SpecialtyDTO getSpecialty(Long id);
+
     SpecialtyDTO createSpecialty(SpecialtyDTO specialtyDTO);
+
     SpecialtyDTO updateSpecialty(SpecialtyDTO specialtyDTO, Long id);
-    void deleteSpecialty(Long id);
+
     Specialty setSpecialtyNonNullFields(SpecialtyDTO specialtyDTO, Specialty specialtyToUpdate);
+
+    void deleteSpecialty(Long id);
 }

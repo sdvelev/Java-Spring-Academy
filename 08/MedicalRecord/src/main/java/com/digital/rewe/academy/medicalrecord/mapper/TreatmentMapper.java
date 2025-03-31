@@ -1,8 +1,6 @@
 package com.digital.rewe.academy.medicalrecord.mapper;
 
-import com.digital.rewe.academy.medicalrecord.data.entity.Diagnose;
 import com.digital.rewe.academy.medicalrecord.data.entity.Treatment;
-import com.digital.rewe.academy.medicalrecord.dto.DiagnoseDTO;
 import com.digital.rewe.academy.medicalrecord.dto.TreatmentDTO;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;

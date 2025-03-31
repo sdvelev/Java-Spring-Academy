@@ -3,6 +3,7 @@ package com.digital.rewe.academy.medicalrecord.web.api;
 import com.digital.rewe.academy.medicalrecord.data.service.SickLeaveService;
 import com.digital.rewe.academy.medicalrecord.dto.SickLeaveDTO;
 import com.digital.rewe.academy.medicalrecord.util.MonthCountProjection;
+import jakarta.validation.constraints.Positive;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,7 +29,7 @@ public class SickLeaveController {
     }
 
     @GetMapping("/{id}")
-    public SickLeaveDTO getSickLeave(@PathVariable Long id) {
+    public SickLeaveDTO getSickLeave(@PathVariable @Positive Long id) {
         return sickLeaveService.getSickLeave(id);
     }
 
@@ -43,12 +44,12 @@ public class SickLeaveController {
     }
 
     @PutMapping("/{id}")
-    public SickLeaveDTO updateSickLeave(@RequestBody SickLeaveDTO sickLeaveDTO, @PathVariable Long id) {
+    public SickLeaveDTO updateSickLeave(@RequestBody SickLeaveDTO sickLeaveDTO, @PathVariable @Positive Long id) {
         return this.sickLeaveService.updateSickLeave(sickLeaveDTO, id);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteSickLeave(@PathVariable Long id) {
+    public void deleteSickLeave(@PathVariable @Positive Long id) {
         this.sickLeaveService.deleteSickLeave(id);
     }
 }

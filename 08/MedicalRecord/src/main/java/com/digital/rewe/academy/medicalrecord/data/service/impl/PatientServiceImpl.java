@@ -1,6 +1,5 @@
 package com.digital.rewe.academy.medicalrecord.data.service.impl;
 
-import com.digital.rewe.academy.medicalrecord.data.entity.Doctor;
 import com.digital.rewe.academy.medicalrecord.data.entity.Patient;
 import com.digital.rewe.academy.medicalrecord.data.repo.PatientRepository;
 import com.digital.rewe.academy.medicalrecord.data.service.AddressService;
@@ -10,7 +9,6 @@ import com.digital.rewe.academy.medicalrecord.data.service.PersonService;
 import com.digital.rewe.academy.medicalrecord.dto.AddressDTO;
 import com.digital.rewe.academy.medicalrecord.dto.GeneralPractitionerDTO;
 import com.digital.rewe.academy.medicalrecord.dto.PatientDTO;
-import com.digital.rewe.academy.medicalrecord.dto.SpecialtyDTO;
 import com.digital.rewe.academy.medicalrecord.mapper.AddressMapper;
 import com.digital.rewe.academy.medicalrecord.mapper.GeneralPractitionerMapper;
 import com.digital.rewe.academy.medicalrecord.mapper.PatientMapper;
@@ -59,26 +57,15 @@ public class PatientServiceImpl implements PatientService {
     @Override
     public PatientDTO getPatient(Long id) {
         return patientMapper.toPatientDTO(patientRepository.findById(id)
-            .orElseThrow(() -> new EntityNotFoundException("Patient with id: " + id + " not found")));
+            .orElseThrow(() -> new EntityNotFoundException("Patient with id " + id + " not found")));
     }
 
     @Override
     public PatientDTO createPatient(PatientDTO patientDTO) {
         Patient patientToSave = new Patient();
-//        doctorToSave.setUniqueIdNumber(doctorDTO.getUniqueIdNumber());
-//        doctorToSave.setFirstName(doctorDTO.getFirstName());
-//        doctorToSave.setMiddleName(doctorDTO.getMiddleName());
-//        doctorToSave.setLastName(doctorDTO.getLastName());
-//        doctorToSave.setUsername(doctorDTO.getUsername());
-//        doctorToSave.setPersonalIdNumber(doctorDTO.getPersonalIdNumber());
-//        doctorToSave.setBirthDate(doctorDTO.getBirthDate());
-//        doctorToSave.setPhoneNumber(doctorDTO.getPhoneNumber());
-//        doctorToSave.setEmail(doctorDTO.getEmail());
-
         patientToSave = setPatientNonNullFields(patientDTO, patientToSave);
 
         AddressDTO addressToSave = addressService.createAddress(patientDTO.getPermanentAddressDTO());
-
         patientToSave.setPermanentAddress(addressMapper.toAddress(addressToSave));
 
         return patientMapper.toPatientDTO(patientRepository.save(patientToSave));
@@ -86,18 +73,7 @@ public class PatientServiceImpl implements PatientService {
 
     @Override
     public PatientDTO createPatientWithExistingAddress(PatientDTO patientDTO, Long addressId) {
-        // Retrieve the existing Person from the PersonService
         Patient patientToSave = new Patient();
-//        doctorToSave.setUniqueIdNumber(doctorDTO.getUniqueIdNumber());
-//        doctorToSave.setFirstName(doctorDTO.getFirstName());
-//        doctorToSave.setMiddleName(doctorDTO.getMiddleName());
-//        doctorToSave.setLastName(doctorDTO.getLastName());
-//        doctorToSave.setUsername(doctorDTO.getUsername());
-//        doctorToSave.setPersonalIdNumber(doctorDTO.getPersonalIdNumber());
-//        doctorToSave.setBirthDate(doctorDTO.getBirthDate());
-//        doctorToSave.setPhoneNumber(doctorDTO.getPhoneNumber());
-//        doctorToSave.setEmail(doctorDTO.getEmail());
-
         patientToSave = setPatientNonNullFields(patientDTO, patientToSave);
 
         patientToSave.setPermanentAddress(addressMapper.toAddress(addressService.getAddress(addressId)));
@@ -141,7 +117,7 @@ public class PatientServiceImpl implements PatientService {
             return patientMapper.toPatientDTO(patientRepository.save(patientToSave));
         }
 
-        throw new RuntimeException("Patient with id: " + patientId + " not found");
+        throw new EntityNotFoundException("Patient with id " + patientId + " not found");
     }
 
     @Override
@@ -153,6 +129,6 @@ public class PatientServiceImpl implements PatientService {
             return patientMapper.toPatientDTO(patientRepository.save(patientToSave));
         }
 
-        throw new RuntimeException("Patient with id: " + patientId + " not found");
+        throw new EntityNotFoundException("Patient with id " + patientId + " not found");
     }
 }

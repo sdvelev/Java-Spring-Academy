@@ -3,6 +3,7 @@ package com.digital.rewe.academy.medicalrecord.web.api;
 import com.digital.rewe.academy.medicalrecord.data.service.PersonService;
 import com.digital.rewe.academy.medicalrecord.dto.PersonCreateDTO;
 import com.digital.rewe.academy.medicalrecord.dto.PersonDTO;
+import jakarta.validation.constraints.Positive;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,7 +29,7 @@ public class PersonController {
     }
 
     @GetMapping("/{id}")
-    public PersonDTO getPerson(@PathVariable Long id) {
+    public PersonDTO getPerson(@PathVariable @Positive Long id) {
         return personService.getPerson(id);
     }
 
@@ -38,12 +39,12 @@ public class PersonController {
     }
 
     @PutMapping("/{id}")
-    public PersonDTO updatePerson(@RequestBody PersonDTO person, @PathVariable Long id) {
+    public PersonDTO updatePerson(@RequestBody PersonDTO person, @PathVariable @Positive Long id) {
         return this.personService.updatePerson(person, id);
     }
 
     @DeleteMapping("/{id}")
-    public void deletePerson(@PathVariable Long id) {
+    public void deletePerson(@PathVariable @Positive Long id) {
         this.personService.deletePerson(id);
     }
 }

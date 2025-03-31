@@ -2,6 +2,7 @@ package com.digital.rewe.academy.medicalrecord.web.api;
 
 import com.digital.rewe.academy.medicalrecord.data.service.SpecialtyService;
 import com.digital.rewe.academy.medicalrecord.dto.SpecialtyDTO;
+import jakarta.validation.constraints.Positive;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,7 +28,7 @@ public class SpecialtyController {
     }
 
     @GetMapping("/{id}")
-    public SpecialtyDTO getSpecialty(@PathVariable Long id) {
+    public SpecialtyDTO getSpecialty(@PathVariable @Positive Long id) {
         return specialtyService.getSpecialty(id);
     }
 
@@ -37,12 +38,12 @@ public class SpecialtyController {
     }
 
     @PutMapping("/{id}")
-    public SpecialtyDTO updateSpecialty(@RequestBody SpecialtyDTO specialtyDTO, @PathVariable Long id) {
+    public SpecialtyDTO updateSpecialty(@RequestBody SpecialtyDTO specialtyDTO, @PathVariable @Positive Long id) {
         return this.specialtyService.updateSpecialty(specialtyDTO, id);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteSpecialty(@PathVariable Long id) {
+    public void deleteSpecialty(@PathVariable @Positive Long id) {
         this.specialtyService.deleteSpecialty(id);
     }
 }

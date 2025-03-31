@@ -6,7 +6,6 @@ import com.digital.rewe.academy.medicalrecord.data.service.AddressService;
 import com.digital.rewe.academy.medicalrecord.data.service.PersonService;
 import com.digital.rewe.academy.medicalrecord.dto.PersonCreateDTO;
 import com.digital.rewe.academy.medicalrecord.dto.PersonDTO;
-import com.digital.rewe.academy.medicalrecord.mapper.AddressMapper;
 import com.digital.rewe.academy.medicalrecord.mapper.PersonMapper;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -18,10 +17,11 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class PersonServiceImpl implements PersonService {
+
     private final PersonRepository personRepository;
     private final PersonMapper personMapper;
+
     private final AddressService addressService;
-    private final AddressMapper addressMapper;
 
     @Override
     public List<PersonDTO> getPersons() {

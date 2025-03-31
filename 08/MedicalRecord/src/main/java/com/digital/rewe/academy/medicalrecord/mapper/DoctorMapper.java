@@ -1,13 +1,7 @@
 package com.digital.rewe.academy.medicalrecord.mapper;
 
-import com.digital.rewe.academy.medicalrecord.data.entity.Address;
 import com.digital.rewe.academy.medicalrecord.data.entity.Doctor;
-import com.digital.rewe.academy.medicalrecord.data.entity.Person;
-import com.digital.rewe.academy.medicalrecord.dto.AddressDTO;
-import com.digital.rewe.academy.medicalrecord.dto.DoctorCreateDTO;
 import com.digital.rewe.academy.medicalrecord.dto.DoctorDTO;
-import com.digital.rewe.academy.medicalrecord.dto.PersonCreateDTO;
-import com.digital.rewe.academy.medicalrecord.dto.PersonDTO;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
@@ -27,12 +21,7 @@ public interface DoctorMapper {
     @Mapping(source = "permanentAddressDTO", target = "permanentAddress")
     Doctor toDoctor(DoctorDTO doctorDTO);
 
-    DoctorDTO toDoctorDTO(DoctorCreateDTO personCreateDTO);
-
-    DoctorDTO toDoctorDTO(PersonDTO personDTO);
-
     List<DoctorDTO> toDoctorDTOCollection(Collection<Doctor> doctorCollection);
 
     List<Doctor> toDoctorCollection(Collection<DoctorDTO> doctorDTOCollection);
-
 }

@@ -3,6 +3,7 @@ package com.digital.rewe.academy.medicalrecord.web.api;
 import com.digital.rewe.academy.medicalrecord.data.service.GeneralPractitionerService;
 import com.digital.rewe.academy.medicalrecord.dto.DoctorDTO;
 import com.digital.rewe.academy.medicalrecord.dto.GeneralPractitionerDTO;
+import jakarta.validation.constraints.Positive;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -40,18 +41,18 @@ public class GeneralPractitionerController {
 
     @PostMapping(params = {"permanent-address-id", "practice-address-id"})
     public GeneralPractitionerDTO createGeneralPractitionerWithExistingAddress(@RequestBody GeneralPractitionerDTO generalPractitionerDTO,
-                                                                               @RequestParam("permanent-address-id") Long permanentAddressId,
-                                                                               @RequestParam("practice-address-id") Long practiceAddressId) {
+                                                                               @RequestParam("permanent-address-id") @Positive Long permanentAddressId,
+                                                                               @RequestParam("practice-address-id") @Positive Long practiceAddressId) {
         return generalPractitionerService.createGeneralPractitionerWithExistingAddresses(generalPractitionerDTO, permanentAddressId, practiceAddressId);
     }
 
     @PutMapping("/{id}")
-    public DoctorDTO updateGeneralPractitioner(@RequestBody GeneralPractitionerDTO generalPractitionerDTO, @PathVariable Long id) {
+    public DoctorDTO updateGeneralPractitioner(@RequestBody GeneralPractitionerDTO generalPractitionerDTO, @PathVariable @Positive Long id) {
         return this.generalPractitionerService.updateGeneralPractitioner(generalPractitionerDTO, id);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteGeneralPractitioner(@PathVariable Long id) {
+    public void deleteGeneralPractitioner(@PathVariable @Positive Long id) {
         this.generalPractitionerService.deleteGeneralPractitioner(id);
     }
 }

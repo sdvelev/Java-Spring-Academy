@@ -1,6 +1,5 @@
 package com.digital.rewe.academy.medicalrecord.data.service.impl;
 
-import com.digital.rewe.academy.medicalrecord.data.entity.Doctor;
 import com.digital.rewe.academy.medicalrecord.data.entity.GeneralPractitioner;
 import com.digital.rewe.academy.medicalrecord.data.repo.GeneralPractitionerRepository;
 import com.digital.rewe.academy.medicalrecord.data.service.AddressService;
@@ -38,29 +37,14 @@ public class GeneralPractitionerImpl implements GeneralPractitionerService {
     @Override
     public GeneralPractitionerDTO getGeneralPractitioner(Long id) {
         return generalPractitionerMapper.toGeneralPractitionerDTO(generalPractitionerRepository.findById(id)
-            .orElseThrow(() -> new EntityNotFoundException("General practitioner with id: " + id + " not found")));
+            .orElseThrow(() -> new EntityNotFoundException("General practitioner with id " + id + " not found")));
     }
 
     @Override
     @Transactional
     public GeneralPractitionerDTO createGeneralPractitioner(GeneralPractitionerDTO generalPractitionerDTO) {
-        // AddressDTO addressDTO = addressService.getAddress(addressId);
-
-        // Retrieve the existing Person from the PersonService
         GeneralPractitioner generalPractitionerToSave = new GeneralPractitioner();
-//        doctorToSave.setId(doctorDTO.getId());  // Set the same ID as the existing Person
-//        generalPractitionerToSave.setPracticeNumber(generalPractitionerDTO.getPracticeNumber());
-//        generalPractitionerToSave.setUniqueIdNumber(generalPractitionerDTO.getUniqueIdNumber());
-//        generalPractitionerToSave.setFirstName(generalPractitionerDTO.getFirstName());
-//        generalPractitionerToSave.setMiddleName(generalPractitionerDTO.getMiddleName());
-//        generalPractitionerToSave.setLastName(generalPractitionerDTO.getLastName());
-//        generalPractitionerToSave.setUsername(generalPractitionerDTO.getUsername());
-//        generalPractitionerToSave.setPersonalIdNumber(generalPractitionerDTO.getPersonalIdNumber());
-//        generalPractitionerToSave.setBirthDate(generalPractitionerDTO.getBirthDate());
-//        generalPractitionerToSave.setPhoneNumber(generalPractitionerDTO.getPhoneNumber());
-//        generalPractitionerToSave.setEmail(generalPractitionerDTO.getEmail());
-
-        generalPractitionerToSave = this.setGeneralPractitionerNonNullFields(generalPractitionerDTO, generalPractitionerToSave);
+        generalPractitionerToSave = setGeneralPractitionerNonNullFields(generalPractitionerDTO, generalPractitionerToSave);
 
         AddressDTO permanentAddressToSave = addressService.createAddress(generalPractitionerDTO.getPermanentAddressDTO());
         generalPractitionerToSave.setPermanentAddress(addressMapper.toAddress(permanentAddressToSave));
@@ -75,19 +59,8 @@ public class GeneralPractitionerImpl implements GeneralPractitionerService {
     public GeneralPractitionerDTO createGeneralPractitionerWithExistingAddresses(
         GeneralPractitionerDTO generalPractitionerDTO, Long permanentAddressId, Long practiceAddressId) {
         GeneralPractitioner generalPractitionerToSave = new GeneralPractitioner();
-//        doctorToSave.setId(doctorDTO.getId());  // Set the same ID as the existing Person
-//        generalPractitionerToSave.setPracticeNumber(generalPractitionerDTO.getPracticeNumber());
-//        generalPractitionerToSave.setUniqueIdNumber(generalPractitionerDTO.getUniqueIdNumber());
-//        generalPractitionerToSave.setFirstName(generalPractitionerDTO.getFirstName());
-//        generalPractitionerToSave.setMiddleName(generalPractitionerDTO.getMiddleName());
-//        generalPractitionerToSave.setLastName(generalPractitionerDTO.getLastName());
-//        generalPractitionerToSave.setUsername(generalPractitionerDTO.getUsername());
-//        generalPractitionerToSave.setPersonalIdNumber(generalPractitionerDTO.getPersonalIdNumber());
-//        generalPractitionerToSave.setBirthDate(generalPractitionerDTO.getBirthDate());
-//        generalPractitionerToSave.setPhoneNumber(generalPractitionerDTO.getPhoneNumber());
-//        generalPractitionerToSave.setEmail(generalPractitionerDTO.getEmail());
 
-        generalPractitionerToSave = this.setGeneralPractitionerNonNullFields(generalPractitionerDTO, generalPractitionerToSave);
+        generalPractitionerToSave = setGeneralPractitionerNonNullFields(generalPractitionerDTO, generalPractitionerToSave);
 
         generalPractitionerToSave.setPermanentAddress(addressMapper.toAddress(addressService.getAddress(permanentAddressId)));
         generalPractitionerToSave.setPracticeAddress(addressMapper.toAddress(addressService.getAddress(practiceAddressId)));
@@ -99,7 +72,8 @@ public class GeneralPractitionerImpl implements GeneralPractitionerService {
     public GeneralPractitionerDTO updateGeneralPractitioner(GeneralPractitionerDTO generalPractitionerDTO, Long id) {
         Optional<GeneralPractitioner> optionalGeneralPractitioner = generalPractitionerRepository.findById(id);
         if (optionalGeneralPractitioner.isPresent()) {
-            GeneralPractitioner generalPractitionerToUpdate = setGeneralPractitionerNonNullFields(generalPractitionerDTO, optionalGeneralPractitioner.get());
+            GeneralPractitioner generalPractitionerToUpdate = setGeneralPractitionerNonNullFields(generalPractitionerDTO,
+                optionalGeneralPractitioner.get());
             return generalPractitionerMapper.toGeneralPractitionerDTO(generalPractitionerRepository.save(generalPractitionerToUpdate));
         }
 
@@ -119,42 +93,6 @@ public class GeneralPractitionerImpl implements GeneralPractitionerService {
         if (generalPractitionerDTO.getPracticeNumber() != null) {
             generalPractitionerToUpdate.setPracticeNumber(generalPractitionerDTO.getPracticeNumber());
         }
-
-//        if (generalPractitionerDTO.getUniqueIdNumber() != null) {
-//            generalPractitionerToUpdate.setUniqueIdNumber(generalPractitionerDTO.getFirstName());
-//        }
-//
-//        if (generalPractitionerDTO.getFirstName() != null) {
-//            generalPractitionerToUpdate.setFirstName(generalPractitionerDTO.getFirstName());
-//        }
-//
-//        if (generalPractitionerDTO.getMiddleName() != null) {
-//            generalPractitionerToUpdate.setMiddleName(generalPractitionerDTO.getMiddleName());
-//        }
-//
-//        if (generalPractitionerDTO.getLastName() != null) {
-//            generalPractitionerToUpdate.setLastName(generalPractitionerDTO.getLastName());
-//        }
-//
-//        if (generalPractitionerDTO.getUsername() != null) {
-//            generalPractitionerToUpdate.setUsername(generalPractitionerDTO.getUsername());
-//        }
-//
-//        if (generalPractitionerDTO.getPersonalIdNumber() != null) {
-//            generalPractitionerToUpdate.setPersonalIdNumber(generalPractitionerDTO.getPersonalIdNumber());
-//        }
-//
-//        if (generalPractitionerDTO.getBirthDate() != null) {
-//            generalPractitionerToUpdate.setBirthDate(generalPractitionerDTO.getBirthDate());
-//        }
-//
-//        if (generalPractitionerDTO.getPhoneNumber() != null) {
-//            generalPractitionerToUpdate.setPhoneNumber(generalPractitionerDTO.getPhoneNumber());
-//        }
-//
-//        if (generalPractitionerDTO.getEmail() != null) {
-//            generalPractitionerToUpdate.setEmail(generalPractitionerDTO.getEmail());
-//        }
 
         return generalPractitionerToUpdate;
     }

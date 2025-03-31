@@ -27,7 +27,7 @@ public class AddressServiceImpl implements AddressService {
     @Override
     public AddressDTO getAddress(Long id) {
         return addressMapper.toAddressDTO(addressRepository.findById(id)
-            .orElseThrow(() -> new EntityNotFoundException("Address with id: " + id + " not found")));
+            .orElseThrow(() -> new EntityNotFoundException("Address with id " + id + " not found")));
     }
 
     @Override

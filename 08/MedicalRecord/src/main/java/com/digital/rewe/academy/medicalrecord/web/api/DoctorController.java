@@ -1,9 +1,8 @@
 package com.digital.rewe.academy.medicalrecord.web.api;
 
 import com.digital.rewe.academy.medicalrecord.data.service.DoctorService;
-import com.digital.rewe.academy.medicalrecord.dto.DoctorCreateDTO;
 import com.digital.rewe.academy.medicalrecord.dto.DoctorDTO;
-import jakarta.websocket.server.PathParam;
+import jakarta.validation.constraints.Positive;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,7 +30,7 @@ public class DoctorController {
     }
 
     @GetMapping("/{id}")
-    public DoctorDTO getDoctor(@PathVariable Long id) {
+    public DoctorDTO getDoctor(@PathVariable @Positive Long id) {
         return doctorService.getDoctor(id);
     }
 
@@ -46,27 +45,27 @@ public class DoctorController {
     }
 
     @PostMapping(params = {"address-id"})
-    public DoctorDTO createDoctorWithExistingAddress(@RequestBody DoctorDTO doctorDTO, @RequestParam("address-id") Long addressId) {
+    public DoctorDTO createDoctorWithExistingAddress(@RequestBody DoctorDTO doctorDTO, @RequestParam("address-id") @Positive Long addressId) {
         return doctorService.createDoctorWithExistingAddress(doctorDTO, addressId);
     }
 
     @PutMapping("/{id}")
-    public DoctorDTO updateDoctor(@RequestBody DoctorDTO doctorDTO, @PathVariable Long id) {
+    public DoctorDTO updateDoctor(@RequestBody DoctorDTO doctorDTO, @PathVariable @Positive Long id) {
         return this.doctorService.updateDoctor(doctorDTO, id);
     }
 
     @PatchMapping(params = {"add-specialty"}, path="/{doctorId}")
-    public DoctorDTO addSpecialty(@PathVariable Long doctorId, @RequestParam("add-specialty") Long specialtyId) {
+    public DoctorDTO addSpecialty(@PathVariable @Positive Long doctorId, @RequestParam("add-specialty") @Positive Long specialtyId) {
         return this.doctorService.addSpecialty(doctorId, specialtyId);
     }
 
     @PatchMapping(params = {"remove-specialty"}, path="/{doctorId}")
-    public DoctorDTO removeSpecialty(@PathVariable Long doctorId, @RequestParam("remove-specialty") Long specialtyId) {
+    public DoctorDTO removeSpecialty(@PathVariable @Positive Long doctorId, @RequestParam("remove-specialty") @Positive Long specialtyId) {
         return this.doctorService.removeSpecialty(doctorId, specialtyId);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteDoctor(@PathVariable Long id) {
+    public void deleteDoctor(@PathVariable @Positive Long id) {
         this.doctorService.deleteDoctor(id);
     }
 }

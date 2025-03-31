@@ -32,7 +32,7 @@ public class DiagnoseServiceImpl implements DiagnoseService {
     @Override
     public DiagnoseDTO getDiagnose(Long id) {
         return diagnoseMapper.toDiagnoseDTO(diagnoseRepository.findById(id)
-            .orElseThrow(() -> new EntityNotFoundException("Diagnose with id: " + id + " not found")));
+            .orElseThrow(() -> new EntityNotFoundException("Diagnose with id " + id + " not found")));
     }
 
     @Override
