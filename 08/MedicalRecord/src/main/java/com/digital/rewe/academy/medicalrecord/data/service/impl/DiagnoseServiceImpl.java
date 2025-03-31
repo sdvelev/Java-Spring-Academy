@@ -26,7 +26,7 @@ public class DiagnoseServiceImpl implements DiagnoseService {
 
     @Override
     public List<DiagnoseDTO> getDiagnosesByRank() {
-        return diagnoseMapper.toDiagnoseDTOCollection(diagnoseRepository.findAllByMedicalVisitSetIsNotNullOrderByMedicalVisitSetDesc());
+        return diagnoseMapper.toDiagnoseDTOCollection(diagnoseRepository.findDiagnosesWithFrequencyDecreasingOrder());
     }
 
     @Override
