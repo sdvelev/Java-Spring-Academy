@@ -1,6 +1,7 @@
 package com.digital.rewe.academy.medicalrecord.data.service;
 
 import com.digital.rewe.academy.medicalrecord.data.entity.Patient;
+import com.digital.rewe.academy.medicalrecord.dto.PatientCountPerGeneralPractitionerDTO;
 import com.digital.rewe.academy.medicalrecord.dto.PatientDTO;
 
 import java.util.List;
@@ -13,6 +14,8 @@ public interface PatientService {
     List<PatientDTO> getPatientsWithGeneralPractitioner(Long generalPractitionerId);
 
     Long getCountByGeneralPractitionerId(Long generalPractitionerId);
+
+    List<PatientCountPerGeneralPractitionerDTO> getCountPerGeneralPractitioner();
 
     PatientDTO getPatient(Long id);
 

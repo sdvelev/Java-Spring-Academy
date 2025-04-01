@@ -1,6 +1,7 @@
 package com.digital.rewe.academy.medicalrecord.web.api;
 
 import com.digital.rewe.academy.medicalrecord.data.service.PatientService;
+import com.digital.rewe.academy.medicalrecord.dto.PatientCountPerGeneralPractitionerDTO;
 import com.digital.rewe.academy.medicalrecord.dto.PatientDTO;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Positive;
@@ -43,6 +44,11 @@ public class PatientController {
     @GetMapping("/count/general-practitioner/{generalPractitionerId}")
     public Long getCountByGeneralPractitionerId(@PathVariable @Valid @Positive Long generalPractitionerId) {
         return patientService.getCountByGeneralPractitionerId(generalPractitionerId);
+    }
+
+    @GetMapping("/count/general-practitioner")
+    public List<PatientCountPerGeneralPractitionerDTO> getCountPerGeneralPractitioner() {
+        return patientService.getCountPerGeneralPractitioner();
     }
 
     @GetMapping("/{id}")

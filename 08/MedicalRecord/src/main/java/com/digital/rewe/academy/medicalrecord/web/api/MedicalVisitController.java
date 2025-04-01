@@ -1,8 +1,10 @@
 package com.digital.rewe.academy.medicalrecord.web.api;
 
 import com.digital.rewe.academy.medicalrecord.data.service.MedicalVisitService;
+import com.digital.rewe.academy.medicalrecord.dto.MedicalVisitCountPerDoctorDTO;
 import com.digital.rewe.academy.medicalrecord.dto.MedicalVisitCreateDTO;
 import com.digital.rewe.academy.medicalrecord.dto.MedicalVisitDTO;
+import com.digital.rewe.academy.medicalrecord.dto.MedicalVisitsPerPatientsDTO;
 import com.digital.rewe.academy.medicalrecord.exception.InvalidDateRangeException;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
@@ -44,10 +46,21 @@ public class MedicalVisitController {
         return medicalVisitService.getMedicalVisitsCountByDoctorId(doctorId);
     }
 
+    @GetMapping("/count/doctor")
+    public List<MedicalVisitCountPerDoctorDTO> getMedicalVisitsCountPerDoctor() {
+        return medicalVisitService.getMedicalVisitsCountPerDoctor();
+    }
+
     @GetMapping("/patient/{patientId}")
     public List<MedicalVisitDTO> getMedicalVisitsByPatientId(@PathVariable @Valid @Positive Long patientId) {
         return medicalVisitService.getMedicalVisitsByPatientId(patientId);
     }
+
+    @GetMapping("/patient")
+    public List<MedicalVisitsPerPatientsDTO> getMedicalVisitsPerPatients() {
+        return medicalVisitService.getMedicalVisitsPerPatients();
+    }
+
 
     @GetMapping(path = "/period", params = {"start-date", "end-date"})
     public List<MedicalVisitDTO> getMedicalVisitsByPeriod(@RequestParam("start-date") @Valid @NotNull LocalDate startDate,

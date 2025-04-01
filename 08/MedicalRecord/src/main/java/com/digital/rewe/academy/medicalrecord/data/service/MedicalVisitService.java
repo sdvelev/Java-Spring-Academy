@@ -1,8 +1,10 @@
 package com.digital.rewe.academy.medicalrecord.data.service;
 
 import com.digital.rewe.academy.medicalrecord.data.entity.MedicalVisit;
+import com.digital.rewe.academy.medicalrecord.dto.MedicalVisitCountPerDoctorDTO;
 import com.digital.rewe.academy.medicalrecord.dto.MedicalVisitCreateDTO;
 import com.digital.rewe.academy.medicalrecord.dto.MedicalVisitDTO;
+import com.digital.rewe.academy.medicalrecord.dto.MedicalVisitsPerPatientsDTO;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -14,7 +16,11 @@ public interface MedicalVisitService {
 
     Long getMedicalVisitsCountByDoctorId(Long doctorId);
 
+    List<MedicalVisitCountPerDoctorDTO> getMedicalVisitsCountPerDoctor();
+
     List<MedicalVisitDTO> getMedicalVisitsByPatientId(Long patientId);
+
+    List<MedicalVisitsPerPatientsDTO> getMedicalVisitsPerPatients();
 
     List<MedicalVisitDTO> getMedicalVisitsByPeriod(LocalDate startDate, LocalDate endDate);
 

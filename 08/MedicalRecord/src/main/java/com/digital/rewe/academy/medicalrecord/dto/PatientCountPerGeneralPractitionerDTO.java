@@ -1,0 +1,18 @@
+package com.digital.rewe.academy.medicalrecord.dto;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class PatientCountPerGeneralPractitionerDTO {
+
+    @JsonProperty("generalPractitionerId")
+    private Long generalPractitionerId;
+
+    @JsonProperty("patientsCount")
+    private Long patientsCount;
+}

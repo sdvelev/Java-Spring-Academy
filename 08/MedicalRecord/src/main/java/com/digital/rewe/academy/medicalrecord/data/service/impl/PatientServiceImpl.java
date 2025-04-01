@@ -8,6 +8,7 @@ import com.digital.rewe.academy.medicalrecord.data.service.PatientService;
 import com.digital.rewe.academy.medicalrecord.data.service.PersonService;
 import com.digital.rewe.academy.medicalrecord.dto.AddressDTO;
 import com.digital.rewe.academy.medicalrecord.dto.GeneralPractitionerDTO;
+import com.digital.rewe.academy.medicalrecord.dto.PatientCountPerGeneralPractitionerDTO;
 import com.digital.rewe.academy.medicalrecord.dto.PatientDTO;
 import com.digital.rewe.academy.medicalrecord.exception.PatientNotFoundException;
 import com.digital.rewe.academy.medicalrecord.mapper.AddressMapper;
@@ -52,6 +53,11 @@ public class PatientServiceImpl implements PatientService {
     @Override
     public Long getCountByGeneralPractitionerId(Long generalPractitionerId) {
         return patientRepository.countByGeneralPractitionerId(generalPractitionerId);
+    }
+
+    @Override
+    public List<PatientCountPerGeneralPractitionerDTO> getCountPerGeneralPractitioner() {
+        return patientRepository.findPatientCountPerGp();
     }
 
     @Override

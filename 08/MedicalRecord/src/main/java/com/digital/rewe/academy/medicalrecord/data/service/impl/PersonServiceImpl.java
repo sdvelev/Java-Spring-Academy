@@ -66,9 +66,9 @@ public class PersonServiceImpl implements PersonService {
             personToUpdate.setLastName(personDTO.getLastName());
         }
 
-//        if (personDTO.getPersonalIdNumber() != null) {
-//            personToUpdate.setPersonalIdNumber(personDTO.getPersonalIdNumber());
-//        }
+        if (personDTO.getPersonalIdNumber() != null) {
+            personToUpdate.setPersonalIdNumber(personDTO.getPersonalIdNumber());
+        }
 
         if (personDTO.getBirthDate() != null) {
             personToUpdate.setBirthDate(personDTO.getBirthDate());

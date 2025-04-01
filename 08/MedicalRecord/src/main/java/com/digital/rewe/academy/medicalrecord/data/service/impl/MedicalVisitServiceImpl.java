@@ -9,8 +9,10 @@ import com.digital.rewe.academy.medicalrecord.data.service.PatientService;
 import com.digital.rewe.academy.medicalrecord.data.service.TreatmentService;
 import com.digital.rewe.academy.medicalrecord.dto.DiagnoseDTO;
 import com.digital.rewe.academy.medicalrecord.dto.DoctorDTO;
+import com.digital.rewe.academy.medicalrecord.dto.MedicalVisitCountPerDoctorDTO;
 import com.digital.rewe.academy.medicalrecord.dto.MedicalVisitCreateDTO;
 import com.digital.rewe.academy.medicalrecord.dto.MedicalVisitDTO;
+import com.digital.rewe.academy.medicalrecord.dto.MedicalVisitsPerPatientsDTO;
 import com.digital.rewe.academy.medicalrecord.dto.PatientDTO;
 import com.digital.rewe.academy.medicalrecord.dto.TreatmentDTO;
 import com.digital.rewe.academy.medicalrecord.exception.MedicalVisitNotFoundException;
@@ -62,8 +64,18 @@ public class MedicalVisitServiceImpl implements MedicalVisitService {
     }
 
     @Override
+    public List<MedicalVisitCountPerDoctorDTO> getMedicalVisitsCountPerDoctor() {
+        return medicalVisitRepository.findMedicalVisitCountPerDoctor();
+    }
+
+    @Override
     public List<MedicalVisitDTO> getMedicalVisitsByPatientId(Long patientId) {
         return medicalVisitMapper.toMedicalVisitDTOCollection(medicalVisitRepository.findByPatientId(patientId));
+    }
+
+    @Override
+    public List<MedicalVisitsPerPatientsDTO> getMedicalVisitsPerPatients() {
+        return medicalVisitRepository.findMedicalVisitsPerPatients();
     }
 
     @Override
