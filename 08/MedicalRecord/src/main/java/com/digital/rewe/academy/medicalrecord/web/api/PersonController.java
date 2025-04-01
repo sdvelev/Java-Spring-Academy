@@ -3,6 +3,7 @@ package com.digital.rewe.academy.medicalrecord.web.api;
 import com.digital.rewe.academy.medicalrecord.data.service.PersonService;
 import com.digital.rewe.academy.medicalrecord.dto.PersonCreateDTO;
 import com.digital.rewe.academy.medicalrecord.dto.PersonDTO;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.Positive;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -29,22 +30,22 @@ public class PersonController {
     }
 
     @GetMapping("/{id}")
-    public PersonDTO getPerson(@PathVariable @Positive Long id) {
+    public PersonDTO getPerson(@PathVariable @Valid @Positive Long id) {
         return personService.getPerson(id);
     }
 
     @PostMapping
-    public PersonDTO createPerson(@RequestBody PersonCreateDTO personCreateDTO) {
+    public PersonDTO createPerson(@RequestBody @Valid PersonCreateDTO personCreateDTO) {
         return personService.createPerson(personCreateDTO);
     }
 
     @PutMapping("/{id}")
-    public PersonDTO updatePerson(@RequestBody PersonDTO person, @PathVariable @Positive Long id) {
+    public PersonDTO updatePerson(@RequestBody @Valid PersonDTO person, @PathVariable @Positive Long id) {
         return this.personService.updatePerson(person, id);
     }
 
     @DeleteMapping("/{id}")
-    public void deletePerson(@PathVariable @Positive Long id) {
+    public void deletePerson(@PathVariable @Valid @Positive Long id) {
         this.personService.deletePerson(id);
     }
 }

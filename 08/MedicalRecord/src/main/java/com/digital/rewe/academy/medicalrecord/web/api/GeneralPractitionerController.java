@@ -3,6 +3,7 @@ package com.digital.rewe.academy.medicalrecord.web.api;
 import com.digital.rewe.academy.medicalrecord.data.service.GeneralPractitionerService;
 import com.digital.rewe.academy.medicalrecord.dto.DoctorDTO;
 import com.digital.rewe.academy.medicalrecord.dto.GeneralPractitionerDTO;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.Positive;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -30,29 +31,29 @@ public class GeneralPractitionerController {
     }
 
     @GetMapping("/{id}")
-    public GeneralPractitionerDTO getGeneralPractitioner(@PathVariable Long id) {
+    public GeneralPractitionerDTO getGeneralPractitioner(@PathVariable @Valid Long id) {
         return generalPractitionerService.getGeneralPractitioner(id);
     }
 
     @PostMapping()
-    public GeneralPractitionerDTO createGeneralPractitioner(@RequestBody GeneralPractitionerDTO generalPractitionerDTO) {
+    public GeneralPractitionerDTO createGeneralPractitioner(@RequestBody @Valid GeneralPractitionerDTO generalPractitionerDTO) {
         return generalPractitionerService.createGeneralPractitioner(generalPractitionerDTO);
     }
 
     @PostMapping(params = {"permanent-address-id", "practice-address-id"})
-    public GeneralPractitionerDTO createGeneralPractitionerWithExistingAddress(@RequestBody GeneralPractitionerDTO generalPractitionerDTO,
-                                                                               @RequestParam("permanent-address-id") @Positive Long permanentAddressId,
-                                                                               @RequestParam("practice-address-id") @Positive Long practiceAddressId) {
+    public GeneralPractitionerDTO createGeneralPractitionerWithExistingAddress(@RequestBody @Valid GeneralPractitionerDTO generalPractitionerDTO,
+                                                                               @RequestParam("permanent-address-id") @Valid @Positive Long permanentAddressId,
+                                                                               @RequestParam("practice-address-id") @Valid @Positive Long practiceAddressId) {
         return generalPractitionerService.createGeneralPractitionerWithExistingAddresses(generalPractitionerDTO, permanentAddressId, practiceAddressId);
     }
 
     @PutMapping("/{id}")
-    public DoctorDTO updateGeneralPractitioner(@RequestBody GeneralPractitionerDTO generalPractitionerDTO, @PathVariable @Positive Long id) {
+    public DoctorDTO updateGeneralPractitioner(@RequestBody @Valid GeneralPractitionerDTO generalPractitionerDTO, @PathVariable @Valid @Positive Long id) {
         return this.generalPractitionerService.updateGeneralPractitioner(generalPractitionerDTO, id);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteGeneralPractitioner(@PathVariable @Positive Long id) {
+    public void deleteGeneralPractitioner(@PathVariable @Valid @Positive Long id) {
         this.generalPractitionerService.deleteGeneralPractitioner(id);
     }
 }

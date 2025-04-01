@@ -3,6 +3,8 @@ package com.digital.rewe.academy.medicalrecord.web.api;
 import com.digital.rewe.academy.medicalrecord.data.service.MedicalVisitService;
 import com.digital.rewe.academy.medicalrecord.dto.MedicalVisitCreateDTO;
 import com.digital.rewe.academy.medicalrecord.dto.MedicalVisitDTO;
+import com.digital.rewe.academy.medicalrecord.exception.InvalidDateRangeException;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import lombok.RequiredArgsConstructor;
@@ -33,65 +35,78 @@ public class MedicalVisitController {
     }
 
     @GetMapping("/{id}")
-    public MedicalVisitDTO getMedicalVisit(@PathVariable @Positive Long id) {
+    public MedicalVisitDTO getMedicalVisit(@PathVariable @Valid @Positive Long id) {
         return medicalVisitService.getMedicalVisit(id);
     }
 
     @GetMapping("/count/doctor/{doctorId}")
-    public Long getMedicalVisitsCountByDoctorId(@PathVariable @Positive Long doctorId) {
+    public Long getMedicalVisitsCountByDoctorId(@PathVariable @Valid @Positive Long doctorId) {
         return medicalVisitService.getMedicalVisitsCountByDoctorId(doctorId);
     }
 
     @GetMapping("/patient/{patientId}")
-    public List<MedicalVisitDTO> getMedicalVisitsByPatientId(@PathVariable @Positive Long patientId) {
+    public List<MedicalVisitDTO> getMedicalVisitsByPatientId(@PathVariable @Valid @Positive Long patientId) {
         return medicalVisitService.getMedicalVisitsByPatientId(patientId);
     }
 
     @GetMapping(path = "/period", params = {"start-date", "end-date"})
-    public List<MedicalVisitDTO> getMedicalVisitsByPeriod(@RequestParam("start-date") @NotNull LocalDate startDate,
-                                                          @RequestParam("end-date") @NotNull LocalDate endDate) {
+    public List<MedicalVisitDTO> getMedicalVisitsByPeriod(@RequestParam("start-date") @Valid @NotNull LocalDate startDate,
+                                                          @RequestParam("end-date") @Valid @NotNull LocalDate endDate) {
+        if (startDate.isAfter(endDate)) {
+            throw new InvalidDateRangeException("The start date must be before the end date.");
+        }
+
         return medicalVisitService.getMedicalVisitsByPeriod(startDate, endDate);
     }
 
     @GetMapping(path = "/doctor/{doctorId}/period", params = {"start-date", "end-date"})
-    public List<MedicalVisitDTO> getMedicalVisitsByPeriodAndDoctorId(@PathVariable @Positive Long doctorId,
-                                                                     @RequestParam("start-date") @NotNull LocalDate startDate,
-                                                                     @RequestParam("end-date") @NotNull LocalDate endDate) {
+    public List<MedicalVisitDTO> getMedicalVisitsByPeriodAndDoctorId(@PathVariable @Valid @Positive Long doctorId,
+                                                                     @RequestParam("start-date") @Valid @NotNull LocalDate startDate,
+                                                                     @RequestParam("end-date") @Valid @NotNull LocalDate endDate) {
+        if (startDate.isAfter(endDate)) {
+            throw new InvalidDateRangeException("The start date must be before the end date.");
+        }
+
         return medicalVisitService.getMedicalVisitsByPeriodAndDoctorId(doctorId, startDate, endDate);
     }
 
     @PostMapping()
-    public MedicalVisitDTO createMedicalVisit(@RequestBody MedicalVisitCreateDTO medicalVisitCreateDTO) {
+    public MedicalVisitDTO createMedicalVisit(@RequestBody @Valid MedicalVisitCreateDTO medicalVisitCreateDTO) {
         return medicalVisitService.createMedicalVisit(medicalVisitCreateDTO);
     }
 
     @PutMapping("/{id}")
-    public MedicalVisitDTO updateMedicalVisit(@RequestBody MedicalVisitDTO medicalVisitDTO, @PathVariable @Positive Long id) {
+    public MedicalVisitDTO updateMedicalVisit(@RequestBody @Valid MedicalVisitDTO medicalVisitDTO,
+                                              @PathVariable @Valid @Positive Long id) {
         return this.medicalVisitService.updateMedicalVisit(medicalVisitDTO, id);
     }
 
     @PatchMapping(params = {"add-diagnose"}, path="/{doctorId}")
-    public MedicalVisitDTO addDiagnose(@PathVariable @Positive Long doctorId, @RequestParam("add-diagnose") @Positive Long diagnoseId) {
+    public MedicalVisitDTO addDiagnose(@PathVariable @Valid @Positive Long doctorId,
+                                       @RequestParam("add-diagnose") @Valid @Positive Long diagnoseId) {
         return this.medicalVisitService.addDiagnose(doctorId, diagnoseId);
     }
 
     @PatchMapping(params = {"remove-diagnose"}, path="/{doctorId}")
-    public MedicalVisitDTO removeDiagnose(@PathVariable @Positive Long doctorId, @RequestParam("remove-diagnose") @Positive Long diagnoseId) {
+    public MedicalVisitDTO removeDiagnose(@PathVariable @Valid @Positive Long doctorId,
+                                          @RequestParam("remove-diagnose") @Valid @Positive Long diagnoseId) {
         return this.medicalVisitService.removeDiagnose(doctorId, diagnoseId);
     }
 
     @PatchMapping(params = {"add-treatment"}, path="/{doctorId}")
-    public MedicalVisitDTO addTreatment(@PathVariable @Positive Long doctorId, @RequestParam("add-treatment") @Positive Long treatmentId) {
+    public MedicalVisitDTO addTreatment(@PathVariable @Valid @Positive Long doctorId,
+                                        @RequestParam("add-treatment") @Valid @Positive Long treatmentId) {
         return this.medicalVisitService.addTreatment(doctorId, treatmentId);
     }
 
     @PatchMapping(params = {"remove-treatment"}, path="/{doctorId}")
-    public MedicalVisitDTO removeTreatment(@PathVariable @Positive Long doctorId, @RequestParam("remove-treatment") @Positive Long treatmentId) {
+    public MedicalVisitDTO removeTreatment(@PathVariable @Valid @Positive Long doctorId,
+                                           @RequestParam("remove-treatment") @Valid @Positive Long treatmentId) {
         return this.medicalVisitService.removeTreatment(doctorId, treatmentId);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteMedicalVisit(@PathVariable @Positive Long id) {
+    public void deleteMedicalVisit(@PathVariable @Valid @Positive Long id) {
         this.medicalVisitService.deleteMedicalVisit(id);
     }
 }

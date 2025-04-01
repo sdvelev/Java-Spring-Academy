@@ -2,6 +2,7 @@ package com.digital.rewe.academy.medicalrecord.web.api;
 
 import com.digital.rewe.academy.medicalrecord.data.service.TreatmentService;
 import com.digital.rewe.academy.medicalrecord.dto.TreatmentDTO;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.Positive;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -28,22 +29,23 @@ public class TreatmentController {
     }
 
     @GetMapping("/{id}")
-    public TreatmentDTO getTreatment(@PathVariable @Positive Long id) {
+    public TreatmentDTO getTreatment(@PathVariable @Valid @Positive Long id) {
         return treatmentService.getTreatment(id);
     }
 
     @PostMapping
-    public TreatmentDTO createTreatment(@RequestBody TreatmentDTO treatmentDTO) {
+    public TreatmentDTO createTreatment(@RequestBody @Valid TreatmentDTO treatmentDTO) {
         return treatmentService.createTreatment(treatmentDTO);
     }
 
     @PutMapping("/{id}")
-    public TreatmentDTO updateTreatment(@RequestBody TreatmentDTO treatmentDTO, @PathVariable @Positive Long id) {
+    public TreatmentDTO updateTreatment(@RequestBody @Valid TreatmentDTO treatmentDTO,
+                                        @PathVariable @Valid @Positive Long id) {
         return this.treatmentService.updateTreatment(treatmentDTO, id);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteTreatment(@PathVariable Long id) {
+    public void deleteTreatment(@PathVariable @Valid Long id) {
         this.treatmentService.deleteTreatment(id);
     }
 }

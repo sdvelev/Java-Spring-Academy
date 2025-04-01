@@ -2,6 +2,7 @@ package com.digital.rewe.academy.medicalrecord.web.api;
 
 import com.digital.rewe.academy.medicalrecord.data.service.DiagnoseService;
 import com.digital.rewe.academy.medicalrecord.dto.DiagnoseDTO;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.Positive;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -33,22 +34,22 @@ public class DiagnoseController {
     }
 
     @GetMapping("/{id}")
-    public DiagnoseDTO getDiagnose(@PathVariable @Positive Long id) {
+    public DiagnoseDTO getDiagnose(@PathVariable @Valid @Positive Long id) {
         return diagnoseService.getDiagnose(id);
     }
 
     @PostMapping
-    public DiagnoseDTO createDiagnose(@RequestBody DiagnoseDTO diagnoseDTO) {
+    public DiagnoseDTO createDiagnose(@RequestBody @Valid DiagnoseDTO diagnoseDTO) {
         return diagnoseService.createDiagnose(diagnoseDTO);
     }
 
     @PutMapping("/{id}")
-    public DiagnoseDTO updateDiagnose(@RequestBody DiagnoseDTO diagnoseDTO, @PathVariable @Positive Long id) {
+    public DiagnoseDTO updateDiagnose(@RequestBody @Valid DiagnoseDTO diagnoseDTO, @PathVariable @Valid @Positive Long id) {
         return this.diagnoseService.updateDiagnose(diagnoseDTO, id);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteDiagnose(@PathVariable @Positive Long id) {
+    public void deleteDiagnose(@PathVariable @Valid @Positive Long id) {
         this.diagnoseService.deleteDiagnose(id);
     }
 }

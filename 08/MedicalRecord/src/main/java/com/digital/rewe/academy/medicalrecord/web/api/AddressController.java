@@ -2,6 +2,7 @@ package com.digital.rewe.academy.medicalrecord.web.api;
 
 import com.digital.rewe.academy.medicalrecord.data.service.AddressService;
 import com.digital.rewe.academy.medicalrecord.dto.AddressDTO;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.Positive;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -28,22 +29,22 @@ public class AddressController {
     }
 
     @GetMapping("/{id}")
-    public AddressDTO getAddress(@PathVariable @Positive Long id) {
+    public AddressDTO getAddress(@Valid @PathVariable @Positive Long id) {
         return addressService.getAddress(id);
     }
 
     @PostMapping
-    public AddressDTO createAddress(@RequestBody AddressDTO addressDTO) {
+    public AddressDTO createAddress(@RequestBody @Valid AddressDTO addressDTO) {
         return addressService.createAddress(addressDTO);
     }
 
     @PutMapping("/{id}")
-    public AddressDTO updateAddress(@RequestBody AddressDTO addressDTO, @PathVariable @Positive Long id) {
+    public AddressDTO updateAddress(@RequestBody @Valid AddressDTO addressDTO, @PathVariable @Valid @Positive Long id) {
         return this.addressService.updateAddress(addressDTO, id);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteAddress(@PathVariable @Positive Long id) {
+    public void deleteAddress(@PathVariable @Valid @Positive Long id) {
         this.addressService.deleteAddress(id);
     }
 }
