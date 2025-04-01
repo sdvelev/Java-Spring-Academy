@@ -13,12 +13,12 @@ import com.digital.rewe.academy.medicalrecord.dto.MedicalVisitCreateDTO;
 import com.digital.rewe.academy.medicalrecord.dto.MedicalVisitDTO;
 import com.digital.rewe.academy.medicalrecord.dto.PatientDTO;
 import com.digital.rewe.academy.medicalrecord.dto.TreatmentDTO;
+import com.digital.rewe.academy.medicalrecord.exception.MedicalVisitNotFoundException;
 import com.digital.rewe.academy.medicalrecord.mapper.DiagnoseMapper;
 import com.digital.rewe.academy.medicalrecord.mapper.DoctorMapper;
 import com.digital.rewe.academy.medicalrecord.mapper.MedicalVisitMapper;
 import com.digital.rewe.academy.medicalrecord.mapper.PatientMapper;
 import com.digital.rewe.academy.medicalrecord.mapper.TreatmentMapper;
-import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -53,7 +53,7 @@ public class MedicalVisitServiceImpl implements MedicalVisitService {
     @Override
     public MedicalVisitDTO getMedicalVisit(Long id) {
         return medicalVisitMapper.toMedicalVisitDTO(medicalVisitRepository.findById(id)
-            .orElseThrow(() -> new EntityNotFoundException("Medical visit with id " + id + " not found")));
+            .orElseThrow(() -> new MedicalVisitNotFoundException("Such a medical visit not found", id)));
     }
 
     @Override
@@ -101,7 +101,7 @@ public class MedicalVisitServiceImpl implements MedicalVisitService {
             return medicalVisitMapper.toMedicalVisitDTO(medicalVisitRepository.save(medicalVisitToUpdate));
         }
 
-        throw new EntityNotFoundException("Medical visit with id " + id + " not found");
+        throw new MedicalVisitNotFoundException("Such a medical visit not found", id);
     }
 
     @Override
@@ -129,7 +129,7 @@ public class MedicalVisitServiceImpl implements MedicalVisitService {
             return medicalVisitMapper.toMedicalVisitDTO(medicalVisitRepository.save(medicalVisitToUpdate));
         }
 
-        throw new EntityNotFoundException("Medical visit with id " + medicalVisitId + " not found");
+        throw new MedicalVisitNotFoundException("Such a medical visit not found", medicalVisitId);
     }
 
     @Override
@@ -142,7 +142,7 @@ public class MedicalVisitServiceImpl implements MedicalVisitService {
             return medicalVisitMapper.toMedicalVisitDTO(medicalVisitRepository.save(medicalVisitToUpdate));
         }
 
-        throw new EntityNotFoundException("Medical visit with id " + medicalVisitId + " not found");
+        throw new MedicalVisitNotFoundException("Such a medical visit not found", medicalVisitId);
     }
 
     @Override
@@ -155,7 +155,7 @@ public class MedicalVisitServiceImpl implements MedicalVisitService {
             return medicalVisitMapper.toMedicalVisitDTO(medicalVisitRepository.save(medicalVisitToUpdate));
         }
 
-        throw new EntityNotFoundException("Medical visit with id " + medicalVisitId + " not found");
+        throw new MedicalVisitNotFoundException("Such a medical visit not found", medicalVisitId);
     }
 
     @Override
@@ -168,6 +168,6 @@ public class MedicalVisitServiceImpl implements MedicalVisitService {
             return medicalVisitMapper.toMedicalVisitDTO(medicalVisitRepository.save(medicalVisitToUpdate));
         }
 
-        throw new EntityNotFoundException("Medical visit with id " + medicalVisitId + " not found");
+        throw new MedicalVisitNotFoundException("Such a medical visit not found", medicalVisitId);
     }
 }

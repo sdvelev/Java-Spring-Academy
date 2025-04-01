@@ -4,8 +4,8 @@ import com.digital.rewe.academy.medicalrecord.data.entity.Specialty;
 import com.digital.rewe.academy.medicalrecord.data.repo.SpecialtyRepository;
 import com.digital.rewe.academy.medicalrecord.data.service.SpecialtyService;
 import com.digital.rewe.academy.medicalrecord.dto.SpecialtyDTO;
+import com.digital.rewe.academy.medicalrecord.exception.SpecialtyNotFoundException;
 import com.digital.rewe.academy.medicalrecord.mapper.SpecialtyMapper;
-import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -27,7 +27,7 @@ public class SpecialtyServiceImpl implements SpecialtyService {
     @Override
     public SpecialtyDTO getSpecialty(Long id) {
         return specialtyMapper.toSpecialtyDTO(specialtyRepository.findById(id)
-            .orElseThrow(() -> new EntityNotFoundException("Specialty with id " + id + " not found")));
+            .orElseThrow(() -> new SpecialtyNotFoundException("Such a specialty not found", id)));
     }
 
     @Override
@@ -43,7 +43,7 @@ public class SpecialtyServiceImpl implements SpecialtyService {
             return specialtyMapper.toSpecialtyDTO(specialtyRepository.save(specialtyToUpdate));
         }
 
-        throw new EntityNotFoundException("Specialty with id " + id + " not found");
+        throw new SpecialtyNotFoundException("Such specialty not found", id);
     }
 
     @Override

@@ -4,8 +4,8 @@ import com.digital.rewe.academy.medicalrecord.data.entity.Treatment;
 import com.digital.rewe.academy.medicalrecord.data.repo.TreatmentRepository;
 import com.digital.rewe.academy.medicalrecord.data.service.TreatmentService;
 import com.digital.rewe.academy.medicalrecord.dto.TreatmentDTO;
+import com.digital.rewe.academy.medicalrecord.exception.TreatmentNotFoundException;
 import com.digital.rewe.academy.medicalrecord.mapper.TreatmentMapper;
-import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -27,7 +27,7 @@ public class TreatmentServiceImpl implements TreatmentService {
     @Override
     public TreatmentDTO getTreatment(Long id) {
         return treatmentMapper.toTreatmentDTO(treatmentRepository.findById(id)
-            .orElseThrow(() -> new EntityNotFoundException("Treatment with id " + id + " not found")));
+            .orElseThrow(() -> new TreatmentNotFoundException("Such a treatment not found", id)));
     }
 
     @Override
@@ -43,7 +43,7 @@ public class TreatmentServiceImpl implements TreatmentService {
             return treatmentMapper.toTreatmentDTO(treatmentRepository.save(treatmentToUpdate));
         }
 
-        throw new EntityNotFoundException("Treatment with id " + id + " not found");
+        throw new TreatmentNotFoundException("Such a treatment not found", id);
     }
 
     @Override

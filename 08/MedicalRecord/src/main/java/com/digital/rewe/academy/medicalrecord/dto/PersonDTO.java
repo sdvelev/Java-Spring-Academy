@@ -27,9 +27,9 @@ public class PersonDTO extends BaseEntityDTO {
     @NotBlank(message = "The last name of a person cannot be null, empty or blank")
     private String lastName;
 
-    @JsonProperty("personalIdNumber")
-    @NotBlank(message = "The personal ID number of a person cannot be null, empty or blank")
-    private String personalIdNumber;
+//    @JsonProperty("personalIdNumber")
+//    @NotBlank(message = "The personal ID number of a person cannot be null, empty or blank")
+//    private String personalIdNumber;
 
     @JsonProperty("birthdate")
     @NotNull(message = "The birthdate of a person cannot be null")

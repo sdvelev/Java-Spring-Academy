@@ -6,10 +6,11 @@ import com.digital.rewe.academy.medicalrecord.data.repo.SickLeaveRepository;
 import com.digital.rewe.academy.medicalrecord.data.service.MedicalVisitService;
 import com.digital.rewe.academy.medicalrecord.data.service.SickLeaveService;
 import com.digital.rewe.academy.medicalrecord.dto.SickLeaveDTO;
+import com.digital.rewe.academy.medicalrecord.exception.SickLeaveNotFoundException;
+import com.digital.rewe.academy.medicalrecord.exception.UnpaidHealthInsuranceException;
 import com.digital.rewe.academy.medicalrecord.mapper.MedicalVisitMapper;
 import com.digital.rewe.academy.medicalrecord.mapper.SickLeaveMapper;
 import com.digital.rewe.academy.medicalrecord.util.MonthCountProjection;
-import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -36,7 +37,7 @@ public class SickLeaveServiceImpl implements SickLeaveService {
     @Override
     public SickLeaveDTO getSickLeave(Long id) {
         return sickLeaveMapper.toSickLeaveDTO(sickLeaveRepository.findById(id)
-            .orElseThrow(() -> new EntityNotFoundException("Sick leave with id " + id + " not found")));
+            .orElseThrow(() -> new SickLeaveNotFoundException("Such a sick leave not found", id)));
     }
 
     @Override
@@ -46,8 +47,8 @@ public class SickLeaveServiceImpl implements SickLeaveService {
             .getMedicalVisit(sickLeaveDTO.getMedicalVisitId()));
         if (relevantMedicalVisit != null && relevantMedicalVisit.getPatient().getLastPaidHealthInsurance().isBefore(
             LocalDate.now().minusMonths(BOUNDARY_MONTH_PERIOD_HEALTH_INSURANCE_PAYMENTS))) {
-            throw new RuntimeException("Sick leave of person with id " +
-                relevantMedicalVisit.getPatient().getId() + " cannot be issued");
+            throw new UnpaidHealthInsuranceException("Sick leave cannot be issued of person with id",
+                relevantMedicalVisit.getPatient().getId());
         }
         sickLeaveToAdd.setMedicalVisit(relevantMedicalVisit);
         return sickLeaveMapper.toSickLeaveDTO(sickLeaveRepository.save(sickLeaveToAdd));
@@ -61,7 +62,7 @@ public class SickLeaveServiceImpl implements SickLeaveService {
             return sickLeaveMapper.toSickLeaveDTO(sickLeaveRepository.save(sickLeaveToUpdate));
         }
 
-        throw new EntityNotFoundException("Sick leave with id " + id + " not found");
+        throw new SickLeaveNotFoundException("Such a sick leave not found", id);
     }
 
     @Override

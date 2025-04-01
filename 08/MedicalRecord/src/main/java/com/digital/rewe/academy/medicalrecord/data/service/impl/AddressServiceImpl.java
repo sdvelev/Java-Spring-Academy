@@ -4,8 +4,8 @@ import com.digital.rewe.academy.medicalrecord.data.entity.Address;
 import com.digital.rewe.academy.medicalrecord.data.repo.AddressRepository;
 import com.digital.rewe.academy.medicalrecord.data.service.AddressService;
 import com.digital.rewe.academy.medicalrecord.dto.AddressDTO;
+import com.digital.rewe.academy.medicalrecord.exception.AddressNotFoundException;
 import com.digital.rewe.academy.medicalrecord.mapper.AddressMapper;
-import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -27,7 +27,7 @@ public class AddressServiceImpl implements AddressService {
     @Override
     public AddressDTO getAddress(Long id) {
         return addressMapper.toAddressDTO(addressRepository.findById(id)
-            .orElseThrow(() -> new EntityNotFoundException("Address with id " + id + " not found")));
+            .orElseThrow(() -> new AddressNotFoundException("Such an address not found", id)));
     }
 
     @Override
@@ -43,7 +43,7 @@ public class AddressServiceImpl implements AddressService {
             return addressMapper.toAddressDTO(addressRepository.save(addressToUpdate));
         }
 
-        throw new EntityNotFoundException("Address with id " + id + " not found");
+        throw new AddressNotFoundException("Such an address not found", id);
     }
 
     @Override

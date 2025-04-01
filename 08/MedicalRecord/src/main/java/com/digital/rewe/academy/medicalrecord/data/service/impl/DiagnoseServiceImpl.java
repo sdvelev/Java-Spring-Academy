@@ -4,8 +4,8 @@ import com.digital.rewe.academy.medicalrecord.data.entity.Diagnose;
 import com.digital.rewe.academy.medicalrecord.data.repo.DiagnoseRepository;
 import com.digital.rewe.academy.medicalrecord.data.service.DiagnoseService;
 import com.digital.rewe.academy.medicalrecord.dto.DiagnoseDTO;
+import com.digital.rewe.academy.medicalrecord.exception.DiagnoseNotFoundException;
 import com.digital.rewe.academy.medicalrecord.mapper.DiagnoseMapper;
-import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -32,7 +32,7 @@ public class DiagnoseServiceImpl implements DiagnoseService {
     @Override
     public DiagnoseDTO getDiagnose(Long id) {
         return diagnoseMapper.toDiagnoseDTO(diagnoseRepository.findById(id)
-            .orElseThrow(() -> new EntityNotFoundException("Diagnose with id " + id + " not found")));
+            .orElseThrow(() -> new DiagnoseNotFoundException("Such a diagnose not found", id)));
     }
 
     @Override
@@ -48,7 +48,7 @@ public class DiagnoseServiceImpl implements DiagnoseService {
             return diagnoseMapper.toDiagnoseDTO(diagnoseRepository.save(diagnoseToUpdate));
         }
 
-        throw new EntityNotFoundException("Diagnose with id " + id + " not found");
+        throw new DiagnoseNotFoundException("Such a diagnose not found", id);
     }
 
     @Override

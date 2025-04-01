@@ -7,9 +7,9 @@ import com.digital.rewe.academy.medicalrecord.data.service.DoctorService;
 import com.digital.rewe.academy.medicalrecord.data.service.GeneralPractitionerService;
 import com.digital.rewe.academy.medicalrecord.dto.AddressDTO;
 import com.digital.rewe.academy.medicalrecord.dto.GeneralPractitionerDTO;
+import com.digital.rewe.academy.medicalrecord.exception.GeneralPractitionerNotFoundException;
 import com.digital.rewe.academy.medicalrecord.mapper.AddressMapper;
 import com.digital.rewe.academy.medicalrecord.mapper.GeneralPractitionerMapper;
-import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -37,7 +37,7 @@ public class GeneralPractitionerImpl implements GeneralPractitionerService {
     @Override
     public GeneralPractitionerDTO getGeneralPractitioner(Long id) {
         return generalPractitionerMapper.toGeneralPractitionerDTO(generalPractitionerRepository.findById(id)
-            .orElseThrow(() -> new EntityNotFoundException("General practitioner with id " + id + " not found")));
+            .orElseThrow(() -> new GeneralPractitionerNotFoundException("Such a general practitioner not found", id)));
     }
 
     @Override
@@ -77,7 +77,7 @@ public class GeneralPractitionerImpl implements GeneralPractitionerService {
             return generalPractitionerMapper.toGeneralPractitionerDTO(generalPractitionerRepository.save(generalPractitionerToUpdate));
         }
 
-        throw new EntityNotFoundException("General practitioner with id " + id + " not found");
+        throw new GeneralPractitionerNotFoundException("Such a general practitioner not found", id);
     }
 
     @Override

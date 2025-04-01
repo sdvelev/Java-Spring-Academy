@@ -6,8 +6,8 @@ import com.digital.rewe.academy.medicalrecord.data.service.AddressService;
 import com.digital.rewe.academy.medicalrecord.data.service.PersonService;
 import com.digital.rewe.academy.medicalrecord.dto.PersonCreateDTO;
 import com.digital.rewe.academy.medicalrecord.dto.PersonDTO;
+import com.digital.rewe.academy.medicalrecord.exception.PersonNotFoundException;
 import com.digital.rewe.academy.medicalrecord.mapper.PersonMapper;
-import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -31,7 +31,7 @@ public class PersonServiceImpl implements PersonService {
     @Override
     public PersonDTO getPerson(Long id) {
         return personMapper.toPersonDTO(personRepository.findById(id)
-            .orElseThrow(() -> new EntityNotFoundException("Person with id " + id + " not found")));
+            .orElseThrow(() -> new PersonNotFoundException("Such a person not found", id)));
     }
 
     @Override
@@ -49,7 +49,7 @@ public class PersonServiceImpl implements PersonService {
             return personMapper.toPersonDTO(personRepository.save(personToUpdate));
         }
 
-        throw new EntityNotFoundException("Person with id " + id + " not found");
+        throw new PersonNotFoundException("Such a person not found", id);
     }
 
     @Override
@@ -66,9 +66,9 @@ public class PersonServiceImpl implements PersonService {
             personToUpdate.setLastName(personDTO.getLastName());
         }
 
-        if (personDTO.getPersonalIdNumber() != null) {
-            personToUpdate.setPersonalIdNumber(personDTO.getPersonalIdNumber());
-        }
+//        if (personDTO.getPersonalIdNumber() != null) {
+//            personToUpdate.setPersonalIdNumber(personDTO.getPersonalIdNumber());
+//        }
 
         if (personDTO.getBirthDate() != null) {
             personToUpdate.setBirthDate(personDTO.getBirthDate());

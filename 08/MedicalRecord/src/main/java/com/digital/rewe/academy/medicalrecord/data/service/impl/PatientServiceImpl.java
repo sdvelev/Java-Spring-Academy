@@ -9,10 +9,10 @@ import com.digital.rewe.academy.medicalrecord.data.service.PersonService;
 import com.digital.rewe.academy.medicalrecord.dto.AddressDTO;
 import com.digital.rewe.academy.medicalrecord.dto.GeneralPractitionerDTO;
 import com.digital.rewe.academy.medicalrecord.dto.PatientDTO;
+import com.digital.rewe.academy.medicalrecord.exception.PatientNotFoundException;
 import com.digital.rewe.academy.medicalrecord.mapper.AddressMapper;
 import com.digital.rewe.academy.medicalrecord.mapper.GeneralPractitionerMapper;
 import com.digital.rewe.academy.medicalrecord.mapper.PatientMapper;
-import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -57,7 +57,7 @@ public class PatientServiceImpl implements PatientService {
     @Override
     public PatientDTO getPatient(Long id) {
         return patientMapper.toPatientDTO(patientRepository.findById(id)
-            .orElseThrow(() -> new EntityNotFoundException("Patient with id " + id + " not found")));
+            .orElseThrow(() -> new PatientNotFoundException("Such a patient not found", id)));
     }
 
     @Override
@@ -89,7 +89,7 @@ public class PatientServiceImpl implements PatientService {
             return patientMapper.toPatientDTO(patientRepository.save(patientToUpdate));
         }
 
-        throw new EntityNotFoundException("Doctor with id " + id + " not found");
+        throw new PatientNotFoundException("Such a patient not found", id);
     }
 
     @Override
@@ -117,7 +117,7 @@ public class PatientServiceImpl implements PatientService {
             return patientMapper.toPatientDTO(patientRepository.save(patientToSave));
         }
 
-        throw new EntityNotFoundException("Patient with id " + patientId + " not found");
+        throw new PatientNotFoundException("Such a patient not found", patientId);
     }
 
     @Override
@@ -129,6 +129,6 @@ public class PatientServiceImpl implements PatientService {
             return patientMapper.toPatientDTO(patientRepository.save(patientToSave));
         }
 
-        throw new EntityNotFoundException("Patient with id " + patientId + " not found");
+        throw new PatientNotFoundException("Such a patient not found", patientId);
     }
 }

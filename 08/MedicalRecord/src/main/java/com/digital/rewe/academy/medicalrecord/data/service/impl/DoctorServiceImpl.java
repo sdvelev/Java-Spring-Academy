@@ -9,10 +9,10 @@ import com.digital.rewe.academy.medicalrecord.data.service.SpecialtyService;
 import com.digital.rewe.academy.medicalrecord.dto.AddressDTO;
 import com.digital.rewe.academy.medicalrecord.dto.DoctorDTO;
 import com.digital.rewe.academy.medicalrecord.dto.SpecialtyDTO;
+import com.digital.rewe.academy.medicalrecord.exception.DoctorNotFoundException;
 import com.digital.rewe.academy.medicalrecord.mapper.AddressMapper;
 import com.digital.rewe.academy.medicalrecord.mapper.DoctorMapper;
 import com.digital.rewe.academy.medicalrecord.mapper.SpecialtyMapper;
-import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -43,7 +43,7 @@ public class DoctorServiceImpl implements DoctorService {
     @Override
     public DoctorDTO getDoctor(Long id) {
         return doctorMapper.toDoctorDTO(doctorRepository.findById(id)
-            .orElseThrow(() -> new EntityNotFoundException("Doctor with id: " + id + " not found")));
+            .orElseThrow(() -> new DoctorNotFoundException("Such a doctor not found", id)));
     }
 
     @Override
@@ -79,7 +79,7 @@ public class DoctorServiceImpl implements DoctorService {
             return doctorMapper.toDoctorDTO(doctorRepository.save(doctorToUpdate));
         }
 
-        throw new EntityNotFoundException("Doctor with id " + id + " not found");
+        throw new DoctorNotFoundException("Such a doctor not found", id);
     }
 
     @Override
@@ -107,7 +107,7 @@ public class DoctorServiceImpl implements DoctorService {
             return doctorMapper.toDoctorDTO(doctorRepository.save(doctorToSave));
         }
 
-        throw new EntityNotFoundException("Doctor with id " + doctorId + " not found");
+        throw new DoctorNotFoundException("Such a doctor not found", doctorId);
     }
 
     @Override
@@ -120,6 +120,6 @@ public class DoctorServiceImpl implements DoctorService {
             return doctorMapper.toDoctorDTO(doctorRepository.save(doctorToSave));
         }
 
-        throw new EntityNotFoundException("Doctor with id " + doctorId + " not found");
+        throw new DoctorNotFoundException("Such a doctor not found", doctorId);
     }
 }
