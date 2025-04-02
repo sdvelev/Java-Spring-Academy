@@ -1,12 +1,12 @@
-package com.digital.rewe.academy.medicalrecord.data.service.impl;
+package com.digital.rewe.academy.medicalrecord.service.impl;
 
 import com.digital.rewe.academy.medicalrecord.data.entity.MedicalVisit;
 import com.digital.rewe.academy.medicalrecord.data.repo.MedicalVisitRepository;
-import com.digital.rewe.academy.medicalrecord.data.service.DiagnoseService;
-import com.digital.rewe.academy.medicalrecord.data.service.DoctorService;
-import com.digital.rewe.academy.medicalrecord.data.service.MedicalVisitService;
-import com.digital.rewe.academy.medicalrecord.data.service.PatientService;
-import com.digital.rewe.academy.medicalrecord.data.service.TreatmentService;
+import com.digital.rewe.academy.medicalrecord.service.DiagnoseService;
+import com.digital.rewe.academy.medicalrecord.service.DoctorService;
+import com.digital.rewe.academy.medicalrecord.service.MedicalVisitService;
+import com.digital.rewe.academy.medicalrecord.service.PatientService;
+import com.digital.rewe.academy.medicalrecord.service.TreatmentService;
 import com.digital.rewe.academy.medicalrecord.dto.DiagnoseDTO;
 import com.digital.rewe.academy.medicalrecord.dto.DoctorDTO;
 import com.digital.rewe.academy.medicalrecord.dto.MedicalVisitCountPerDoctorDTO;

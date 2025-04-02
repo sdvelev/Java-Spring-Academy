@@ -1,10 +1,10 @@
-package com.digital.rewe.academy.medicalrecord.data.service.impl;
+package com.digital.rewe.academy.medicalrecord.service.impl;
 
 import com.digital.rewe.academy.medicalrecord.data.entity.MedicalVisit;
 import com.digital.rewe.academy.medicalrecord.data.entity.SickLeave;
 import com.digital.rewe.academy.medicalrecord.data.repo.SickLeaveRepository;
-import com.digital.rewe.academy.medicalrecord.data.service.MedicalVisitService;
-import com.digital.rewe.academy.medicalrecord.data.service.SickLeaveService;
+import com.digital.rewe.academy.medicalrecord.service.MedicalVisitService;
+import com.digital.rewe.academy.medicalrecord.service.SickLeaveService;
 import com.digital.rewe.academy.medicalrecord.dto.SickLeaveDTO;
 import com.digital.rewe.academy.medicalrecord.exception.SickLeaveNotFoundException;
 import com.digital.rewe.academy.medicalrecord.exception.UnpaidHealthInsuranceException;

@@ -1,4 +1,4 @@
-package com.digital.rewe.academy.medicalrecord.data.service;
+package com.digital.rewe.academy.medicalrecord.service;
 
 import com.digital.rewe.academy.medicalrecord.data.entity.MedicalVisit;
 import com.digital.rewe.academy.medicalrecord.dto.MedicalVisitCountPerDoctorDTO;

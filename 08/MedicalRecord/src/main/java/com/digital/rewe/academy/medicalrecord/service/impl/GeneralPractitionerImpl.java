@@ -1,10 +1,10 @@
-package com.digital.rewe.academy.medicalrecord.data.service.impl;
+package com.digital.rewe.academy.medicalrecord.service.impl;
 
 import com.digital.rewe.academy.medicalrecord.data.entity.GeneralPractitioner;
 import com.digital.rewe.academy.medicalrecord.data.repo.GeneralPractitionerRepository;
-import com.digital.rewe.academy.medicalrecord.data.service.AddressService;
-import com.digital.rewe.academy.medicalrecord.data.service.DoctorService;
-import com.digital.rewe.academy.medicalrecord.data.service.GeneralPractitionerService;
+import com.digital.rewe.academy.medicalrecord.service.AddressService;
+import com.digital.rewe.academy.medicalrecord.service.DoctorService;
+import com.digital.rewe.academy.medicalrecord.service.GeneralPractitionerService;
 import com.digital.rewe.academy.medicalrecord.dto.AddressDTO;
 import com.digital.rewe.academy.medicalrecord.dto.GeneralPractitionerDTO;
 import com.digital.rewe.academy.medicalrecord.exception.GeneralPractitionerNotFoundException;

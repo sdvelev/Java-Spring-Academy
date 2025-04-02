@@ -1,4 +1,4 @@
-package com.digital.rewe.academy.medicalrecord.data.service;
+package com.digital.rewe.academy.medicalrecord.service;
 
 import com.digital.rewe.academy.medicalrecord.data.entity.Treatment;
 import com.digital.rewe.academy.medicalrecord.dto.TreatmentDTO;

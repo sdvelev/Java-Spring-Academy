@@ -1,9 +1,9 @@
-package com.digital.rewe.academy.medicalrecord.data.service.impl;
+package com.digital.rewe.academy.medicalrecord.service.impl;
 
 import com.digital.rewe.academy.medicalrecord.data.entity.Person;
 import com.digital.rewe.academy.medicalrecord.data.repo.PersonRepository;
-import com.digital.rewe.academy.medicalrecord.data.service.AddressService;
-import com.digital.rewe.academy.medicalrecord.data.service.PersonService;
+import com.digital.rewe.academy.medicalrecord.service.AddressService;
+import com.digital.rewe.academy.medicalrecord.service.PersonService;
 import com.digital.rewe.academy.medicalrecord.dto.PersonCreateDTO;
 import com.digital.rewe.academy.medicalrecord.dto.PersonDTO;
 import com.digital.rewe.academy.medicalrecord.exception.PersonNotFoundException;

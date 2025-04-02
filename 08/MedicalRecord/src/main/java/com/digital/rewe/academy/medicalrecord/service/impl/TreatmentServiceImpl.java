@@ -1,8 +1,8 @@
-package com.digital.rewe.academy.medicalrecord.data.service.impl;
+package com.digital.rewe.academy.medicalrecord.service.impl;
 
 import com.digital.rewe.academy.medicalrecord.data.entity.Treatment;
 import com.digital.rewe.academy.medicalrecord.data.repo.TreatmentRepository;
-import com.digital.rewe.academy.medicalrecord.data.service.TreatmentService;
+import com.digital.rewe.academy.medicalrecord.service.TreatmentService;
 import com.digital.rewe.academy.medicalrecord.dto.TreatmentDTO;
 import com.digital.rewe.academy.medicalrecord.exception.TreatmentNotFoundException;
 import com.digital.rewe.academy.medicalrecord.mapper.TreatmentMapper;

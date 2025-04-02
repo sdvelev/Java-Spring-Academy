@@ -1,6 +1,6 @@
 package com.digital.rewe.academy.medicalrecord.web.api;
 
-import com.digital.rewe.academy.medicalrecord.data.service.SickLeaveService;
+import com.digital.rewe.academy.medicalrecord.service.SickLeaveService;
 import com.digital.rewe.academy.medicalrecord.dto.SickLeaveDTO;
 import com.digital.rewe.academy.medicalrecord.util.MonthCountProjection;
 import jakarta.validation.Valid;

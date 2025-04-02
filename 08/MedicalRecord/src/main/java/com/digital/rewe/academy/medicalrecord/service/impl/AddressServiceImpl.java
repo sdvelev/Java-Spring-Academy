@@ -1,8 +1,8 @@
-package com.digital.rewe.academy.medicalrecord.data.service.impl;
+package com.digital.rewe.academy.medicalrecord.service.impl;
 
 import com.digital.rewe.academy.medicalrecord.data.entity.Address;
 import com.digital.rewe.academy.medicalrecord.data.repo.AddressRepository;
-import com.digital.rewe.academy.medicalrecord.data.service.AddressService;
+import com.digital.rewe.academy.medicalrecord.service.AddressService;
 import com.digital.rewe.academy.medicalrecord.dto.AddressDTO;
 import com.digital.rewe.academy.medicalrecord.exception.AddressNotFoundException;
 import com.digital.rewe.academy.medicalrecord.mapper.AddressMapper;

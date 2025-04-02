@@ -1,6 +1,6 @@
 package com.digital.rewe.academy.medicalrecord.web.api;
 
-import com.digital.rewe.academy.medicalrecord.data.service.SpecialtyService;
+import com.digital.rewe.academy.medicalrecord.service.SpecialtyService;
 import com.digital.rewe.academy.medicalrecord.dto.SpecialtyDTO;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Positive;

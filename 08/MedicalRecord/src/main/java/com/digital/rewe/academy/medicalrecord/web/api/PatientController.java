@@ -1,6 +1,6 @@
 package com.digital.rewe.academy.medicalrecord.web.api;
 
-import com.digital.rewe.academy.medicalrecord.data.service.PatientService;
+import com.digital.rewe.academy.medicalrecord.service.PatientService;
 import com.digital.rewe.academy.medicalrecord.dto.PatientCountPerGeneralPractitionerDTO;
 import com.digital.rewe.academy.medicalrecord.dto.PatientDTO;
 import jakarta.validation.Valid;

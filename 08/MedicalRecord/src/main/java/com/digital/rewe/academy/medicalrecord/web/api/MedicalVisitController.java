@@ -1,6 +1,6 @@
 package com.digital.rewe.academy.medicalrecord.web.api;
 
-import com.digital.rewe.academy.medicalrecord.data.service.MedicalVisitService;
+import com.digital.rewe.academy.medicalrecord.service.MedicalVisitService;
 import com.digital.rewe.academy.medicalrecord.dto.MedicalVisitCountPerDoctorDTO;
 import com.digital.rewe.academy.medicalrecord.dto.MedicalVisitCreateDTO;
 import com.digital.rewe.academy.medicalrecord.dto.MedicalVisitDTO;

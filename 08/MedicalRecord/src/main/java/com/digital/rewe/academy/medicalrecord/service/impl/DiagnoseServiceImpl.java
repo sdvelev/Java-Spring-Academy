@@ -1,8 +1,8 @@
-package com.digital.rewe.academy.medicalrecord.data.service.impl;
+package com.digital.rewe.academy.medicalrecord.service.impl;
 
 import com.digital.rewe.academy.medicalrecord.data.entity.Diagnose;
 import com.digital.rewe.academy.medicalrecord.data.repo.DiagnoseRepository;
-import com.digital.rewe.academy.medicalrecord.data.service.DiagnoseService;
+import com.digital.rewe.academy.medicalrecord.service.DiagnoseService;
 import com.digital.rewe.academy.medicalrecord.dto.DiagnoseDTO;
 import com.digital.rewe.academy.medicalrecord.exception.DiagnoseNotFoundException;
 import com.digital.rewe.academy.medicalrecord.mapper.DiagnoseMapper;

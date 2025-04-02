@@ -1,8 +1,8 @@
-package com.digital.rewe.academy.medicalrecord.data.service.impl;
+package com.digital.rewe.academy.medicalrecord.service.impl;
 
 import com.digital.rewe.academy.medicalrecord.data.entity.Specialty;
 import com.digital.rewe.academy.medicalrecord.data.repo.SpecialtyRepository;
-import com.digital.rewe.academy.medicalrecord.data.service.SpecialtyService;
+import com.digital.rewe.academy.medicalrecord.service.SpecialtyService;
 import com.digital.rewe.academy.medicalrecord.dto.SpecialtyDTO;
 import com.digital.rewe.academy.medicalrecord.exception.SpecialtyNotFoundException;
 import com.digital.rewe.academy.medicalrecord.mapper.SpecialtyMapper;
