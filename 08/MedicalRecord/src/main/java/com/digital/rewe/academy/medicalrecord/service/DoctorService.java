@@ -1,6 +1,7 @@
 package com.digital.rewe.academy.medicalrecord.service;
 
 import com.digital.rewe.academy.medicalrecord.data.entity.Doctor;
+import com.digital.rewe.academy.medicalrecord.dto.DoctorCreateDTO;
 import com.digital.rewe.academy.medicalrecord.dto.DoctorDTO;
 
 import java.util.List;
@@ -12,9 +13,9 @@ public interface DoctorService {
 
     List<DoctorDTO> getDoctorWithMostSickLeaves();
 
-    DoctorDTO createDoctor(DoctorDTO doctorDTO);
+    DoctorDTO createDoctor(DoctorCreateDTO doctorCreateDTO);
 
-    DoctorDTO createDoctorWithExistingAddress(DoctorDTO doctorDTO, Long addressId);
+//    DoctorDTO createDoctorWithExistingAddress(DoctorDTO doctorDTO, Long addressId);
 
     DoctorDTO updateDoctor(DoctorDTO doctorDTO, Long id);
 

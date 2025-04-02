@@ -1,10 +1,15 @@
 package com.digital.rewe.academy.medicalrecord.service.impl;
 
 import com.digital.rewe.academy.medicalrecord.data.entity.Doctor;
+import com.digital.rewe.academy.medicalrecord.data.entity.Role;
+import com.digital.rewe.academy.medicalrecord.data.entity.User;
 import com.digital.rewe.academy.medicalrecord.data.repo.DoctorRepository;
+import com.digital.rewe.academy.medicalrecord.dto.DoctorCreateDTO;
+import com.digital.rewe.academy.medicalrecord.dto.PersonDTO;
 import com.digital.rewe.academy.medicalrecord.service.AddressService;
 import com.digital.rewe.academy.medicalrecord.service.DoctorService;
 import com.digital.rewe.academy.medicalrecord.service.PersonService;
+import com.digital.rewe.academy.medicalrecord.service.RoleService;
 import com.digital.rewe.academy.medicalrecord.service.SpecialtyService;
 import com.digital.rewe.academy.medicalrecord.dto.AddressDTO;
 import com.digital.rewe.academy.medicalrecord.dto.DoctorDTO;
@@ -13,12 +18,16 @@ import com.digital.rewe.academy.medicalrecord.exception.DoctorNotFoundException;
 import com.digital.rewe.academy.medicalrecord.mapper.AddressMapper;
 import com.digital.rewe.academy.medicalrecord.mapper.DoctorMapper;
 import com.digital.rewe.academy.medicalrecord.mapper.SpecialtyMapper;
+import com.digital.rewe.academy.medicalrecord.service.UserService;
+import com.digital.rewe.academy.medicalrecord.util.UserRole;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -34,6 +43,9 @@ public class DoctorServiceImpl implements DoctorService {
 
     private final SpecialtyService specialtyService;
     private final SpecialtyMapper specialtyMapper;
+
+    private final UserService userService;
+    private final RoleService roleService;
 
     @Override
     public List<DoctorDTO> getDoctors() {
@@ -53,23 +65,26 @@ public class DoctorServiceImpl implements DoctorService {
 
     @Override
     @Transactional
-    public DoctorDTO createDoctor(DoctorDTO doctorDTO) {
-        Doctor doctorToSave = new Doctor();
-        doctorToSave = setDoctorNonNullFields(doctorDTO, doctorToSave);
+    public DoctorDTO createDoctor(DoctorCreateDTO doctorCreateDTO) {
+        DoctorDTO doctorDTOToSave = doctorMapper.toDoctorDTO(doctorCreateDTO);
+        doctorDTOToSave.setPermanentAddressDTO(addressService.getAddress(doctorCreateDTO.getPermanentAddressId()));
+        Doctor savedDoctor = doctorRepository.save(doctorMapper.toDoctor(doctorDTOToSave));
 
-        AddressDTO addressToSave = addressService.createAddress(doctorDTO.getPermanentAddressDTO());
-        doctorToSave.setPermanentAddress(addressMapper.toAddress(addressToSave));
-        return doctorMapper.toDoctorDTO(doctorRepository.save(doctorToSave));
+        Role roleToAdd = roleService.getRoleByName(UserRole.DOCTOR.name());
+        User savedUser = userService.findUserById(savedDoctor.getId());
+        roleToAdd.getUsers().add(savedUser);
+        roleService.saveRole(roleToAdd);
+        return doctorMapper.toDoctorDTO(savedDoctor);
     }
 
-    @Override
-    public DoctorDTO createDoctorWithExistingAddress(DoctorDTO doctorDTO, Long addressId) {
-        Doctor doctorToSave = new Doctor();
-        doctorToSave = setDoctorNonNullFields(doctorDTO, doctorToSave);
-
-        doctorToSave.setPermanentAddress(addressMapper.toAddress(addressService.getAddress(addressId)));
-        return doctorMapper.toDoctorDTO(doctorRepository.save(doctorToSave));
-    }
+//    @Override
+//    public DoctorDTO createDoctorWithExistingAddress(DoctorDTO doctorDTO, Long addressId) {
+//        Doctor doctorToSave = new Doctor();
+//        doctorToSave = setDoctorNonNullFields(doctorDTO, doctorToSave);
+//
+//        doctorToSave.setPermanentAddress(addressMapper.toAddress(addressService.getAddress(addressId)));
+//        return doctorMapper.toDoctorDTO(doctorRepository.save(doctorToSave));
+//    }
 
     @Override
     public DoctorDTO updateDoctor(DoctorDTO doctorDTO, Long id) {

@@ -10,7 +10,7 @@ import org.mapstruct.factory.Mappers;
 import java.util.Collection;
 import java.util.List;
 
-@Mapper(componentModel = "spring", uses = {AddressMapper.class})
+@Mapper(componentModel = "spring", uses = {AddressMapper.class, PasswordEncoderMapper.class})
 public interface PersonMapper {
     PersonMapper INSTANCE = Mappers.getMapper(PersonMapper.class);
 
@@ -20,6 +20,7 @@ public interface PersonMapper {
     @Mapping(source = "permanentAddressDTO", target = "permanentAddress")
     Person toPerson(PersonDTO personDTO);
 
+    @Mapping(source = "unencryptedPassword", target = "password", qualifiedBy = EncodedMapping.class)
     PersonDTO toPersonDTO(PersonCreateDTO personCreateDTO);
 
     List<PersonDTO> toPersonDTOCollection(Collection<Person> personCollection);

@@ -47,6 +47,9 @@ public class PersonDTO extends BaseEntityDTO {
     @JsonProperty("username")
     private String username;
 
+    @JsonProperty("password")
+    private String password;
+
     @JsonProperty("permanentAddressDTO")
     private AddressDTO permanentAddressDTO;
 }

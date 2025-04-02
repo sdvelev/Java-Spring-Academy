@@ -1,5 +1,6 @@
 package com.digital.rewe.academy.medicalrecord.web.api;
 
+import com.digital.rewe.academy.medicalrecord.dto.DoctorCreateDTO;
 import com.digital.rewe.academy.medicalrecord.service.DoctorService;
 import com.digital.rewe.academy.medicalrecord.dto.DoctorDTO;
 import jakarta.validation.Valid;
@@ -41,15 +42,15 @@ public class DoctorController {
     }
 
     @PostMapping()
-    public DoctorDTO createDoctor(@RequestBody @Valid DoctorDTO doctorDTO) {
-        return doctorService.createDoctor(doctorDTO);
+    public DoctorDTO createDoctor(@RequestBody @Valid DoctorCreateDTO doctorCreateDTO) {
+        return doctorService.createDoctor(doctorCreateDTO);
     }
 
-    @PostMapping(params = {"address-id"})
-    public DoctorDTO createDoctorWithExistingAddress(@RequestBody @Valid DoctorDTO doctorDTO,
-                                                     @RequestParam("address-id") @Valid @Positive Long addressId) {
-        return doctorService.createDoctorWithExistingAddress(doctorDTO, addressId);
-    }
+//    @PostMapping(params = {"address-id"})
+//    public DoctorDTO createDoctorWithExistingAddress(@RequestBody @Valid DoctorDTO doctorDTO,
+//                                                     @RequestParam("address-id") @Valid @Positive Long addressId) {
+//        return doctorService.createDoctorWithExistingAddress(doctorDTO, addressId);
+//    }
 
     @PutMapping("/{id}")
     public DoctorDTO updateDoctor(@RequestBody @Valid DoctorDTO doctorDTO,

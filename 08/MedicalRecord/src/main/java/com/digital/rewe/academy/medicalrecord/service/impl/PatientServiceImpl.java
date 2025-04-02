@@ -1,7 +1,12 @@
 package com.digital.rewe.academy.medicalrecord.service.impl;
 
+import com.digital.rewe.academy.medicalrecord.data.entity.GeneralPractitioner;
 import com.digital.rewe.academy.medicalrecord.data.entity.Patient;
+import com.digital.rewe.academy.medicalrecord.data.entity.Role;
+import com.digital.rewe.academy.medicalrecord.data.entity.User;
 import com.digital.rewe.academy.medicalrecord.data.repo.PatientRepository;
+import com.digital.rewe.academy.medicalrecord.dto.DoctorDTO;
+import com.digital.rewe.academy.medicalrecord.dto.PatientCreateDTO;
 import com.digital.rewe.academy.medicalrecord.service.AddressService;
 import com.digital.rewe.academy.medicalrecord.service.GeneralPractitionerService;
 import com.digital.rewe.academy.medicalrecord.service.PatientService;
@@ -14,7 +19,12 @@ import com.digital.rewe.academy.medicalrecord.exception.PatientNotFoundException
 import com.digital.rewe.academy.medicalrecord.mapper.AddressMapper;
 import com.digital.rewe.academy.medicalrecord.mapper.GeneralPractitionerMapper;
 import com.digital.rewe.academy.medicalrecord.mapper.PatientMapper;
+import com.digital.rewe.academy.medicalrecord.service.RoleService;
+import com.digital.rewe.academy.medicalrecord.service.UserService;
+import com.digital.rewe.academy.medicalrecord.util.UserRole;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.annotations.ColumnTransformers;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -31,6 +41,9 @@ public class PatientServiceImpl implements PatientService {
     private final AddressMapper addressMapper;
 
     private final PersonService personService;
+
+    private final UserService userService;
+    private final RoleService roleService;
 
     private final GeneralPractitionerService generalPractitionerService;
     private final GeneralPractitionerMapper generalPractitionerMapper;
@@ -67,25 +80,29 @@ public class PatientServiceImpl implements PatientService {
     }
 
     @Override
-    public PatientDTO createPatient(PatientDTO patientDTO) {
-        Patient patientToSave = new Patient();
-        patientToSave = setPatientNonNullFields(patientDTO, patientToSave);
+    @Transactional
+    public PatientDTO createPatient(PatientCreateDTO patientCreateDTO) {
+        PatientDTO patientDTOToSave = patientMapper.toPatientDTO(patientCreateDTO);
+        patientDTOToSave.setPermanentAddressDTO(addressService.getAddress(patientCreateDTO.getPermanentAddressId()));
+        Patient savedPatient = patientRepository.save(patientMapper.toPatient(patientDTOToSave));
 
-        AddressDTO addressToSave = addressService.createAddress(patientDTO.getPermanentAddressDTO());
-        patientToSave.setPermanentAddress(addressMapper.toAddress(addressToSave));
+        Role roleToAdd = roleService.getRoleByName(UserRole.PATIENT.name());
+        User savedUser = userService.findUserById(savedPatient.getId());
+        roleToAdd.getUsers().add(savedUser);
+        roleService.saveRole(roleToAdd);
 
-        return patientMapper.toPatientDTO(patientRepository.save(patientToSave));
+        return patientMapper.toPatientDTO(savedPatient);
     }
 
-    @Override
-    public PatientDTO createPatientWithExistingAddress(PatientDTO patientDTO, Long addressId) {
-        Patient patientToSave = new Patient();
-        patientToSave = setPatientNonNullFields(patientDTO, patientToSave);
-
-        patientToSave.setPermanentAddress(addressMapper.toAddress(addressService.getAddress(addressId)));
-
-        return patientMapper.toPatientDTO(patientRepository.save(patientToSave));
-    }
+//    @Override
+//    public PatientDTO createPatientWithExistingAddress(PatientDTO patientDTO, Long addressId) {
+//        Patient patientToSave = new Patient();
+//        patientToSave = setPatientNonNullFields(patientDTO, patientToSave);
+//
+//        patientToSave.setPermanentAddress(addressMapper.toAddress(addressService.getAddress(addressId)));
+//
+//        return patientMapper.toPatientDTO(patientRepository.save(patientToSave));
+//    }
 
     @Override
     public PatientDTO updatePatient(PatientDTO patientDTO, Long id) {

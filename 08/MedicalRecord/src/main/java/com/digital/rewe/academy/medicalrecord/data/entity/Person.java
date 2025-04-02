@@ -19,8 +19,7 @@ import java.time.LocalDate;
 @Entity(name = "person")
 @Getter
 @Setter
-@Inheritance(strategy = InheritanceType.JOINED)
-public class Person extends BaseEntity {
+public class Person extends User {
 
     @Column(name = "first_name")
     @NotBlank(message = "The first name of a person cannot be null, empty or blank")
@@ -50,11 +49,11 @@ public class Person extends BaseEntity {
     @Email(message = "The email of a person must be valid")
     private String email;
 
-    @Column(name = "username", length = 50)
-    private String username;
-
-    @Column(name = "password", length = 50)
-    private String password;
+//    @Column(name = "username", length = 50)
+//    private String username;
+//
+//    @Column(name = "password", length = 50)
+//    private String password;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "address_id", nullable = false)

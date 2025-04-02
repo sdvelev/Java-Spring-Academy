@@ -46,7 +46,12 @@ public class PersonCreateDTO {
     private String email;
 
     @JsonProperty("username")
+    @NotBlank(message = "The username of a user cannot be null, empty or blank")
     private String username;
+
+    @JsonProperty("unencryptedPassword")
+    @NotBlank(message = "The password of a user cannot be null, empty or blank")
+    private String unencryptedPassword;
 
     @JsonProperty("permanentAddressId")
     @NotNull(message = "The provided permanent address id cannot be null")

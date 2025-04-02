@@ -1,7 +1,12 @@
 package com.digital.rewe.academy.medicalrecord.service.impl;
 
+import com.digital.rewe.academy.medicalrecord.data.entity.Doctor;
 import com.digital.rewe.academy.medicalrecord.data.entity.GeneralPractitioner;
+import com.digital.rewe.academy.medicalrecord.data.entity.Role;
+import com.digital.rewe.academy.medicalrecord.data.entity.User;
 import com.digital.rewe.academy.medicalrecord.data.repo.GeneralPractitionerRepository;
+import com.digital.rewe.academy.medicalrecord.dto.DoctorDTO;
+import com.digital.rewe.academy.medicalrecord.dto.GeneralPractitionerCreateDTO;
 import com.digital.rewe.academy.medicalrecord.service.AddressService;
 import com.digital.rewe.academy.medicalrecord.service.DoctorService;
 import com.digital.rewe.academy.medicalrecord.service.GeneralPractitionerService;
@@ -10,6 +15,9 @@ import com.digital.rewe.academy.medicalrecord.dto.GeneralPractitionerDTO;
 import com.digital.rewe.academy.medicalrecord.exception.GeneralPractitionerNotFoundException;
 import com.digital.rewe.academy.medicalrecord.mapper.AddressMapper;
 import com.digital.rewe.academy.medicalrecord.mapper.GeneralPractitionerMapper;
+import com.digital.rewe.academy.medicalrecord.service.RoleService;
+import com.digital.rewe.academy.medicalrecord.service.UserService;
+import com.digital.rewe.academy.medicalrecord.util.UserRole;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -29,6 +37,9 @@ public class GeneralPractitionerImpl implements GeneralPractitionerService {
 
     private final DoctorService doctorService;
 
+    private final UserService userService;
+    private final RoleService roleService;
+
     @Override
     public List<GeneralPractitionerDTO> getGeneralPractitioners() {
         return generalPractitionerMapper.toGeneralPractitionerDTOCollection(generalPractitionerRepository.findAll());
@@ -42,31 +53,32 @@ public class GeneralPractitionerImpl implements GeneralPractitionerService {
 
     @Override
     @Transactional
-    public GeneralPractitionerDTO createGeneralPractitioner(GeneralPractitionerDTO generalPractitionerDTO) {
-        GeneralPractitioner generalPractitionerToSave = new GeneralPractitioner();
-        generalPractitionerToSave = setGeneralPractitionerNonNullFields(generalPractitionerDTO, generalPractitionerToSave);
+    public GeneralPractitionerDTO createGeneralPractitioner(GeneralPractitionerCreateDTO generalPractitionerCreateDTO) {
+        GeneralPractitionerDTO generalPractitionerDTOToSave = generalPractitionerMapper.toGeneralPractitionerDTO(generalPractitionerCreateDTO);
+        generalPractitionerDTOToSave.setPermanentAddressDTO(addressService.getAddress(generalPractitionerCreateDTO.getPermanentAddressId()));
+        generalPractitionerDTOToSave.setPracticeAddressDTO(addressService.getAddress(generalPractitionerCreateDTO.getPracticeAddressId()));
+        GeneralPractitioner savedGeneralPractitioner = generalPractitionerRepository.save(generalPractitionerMapper.toGeneralPractitioner(generalPractitionerDTOToSave));
 
-        AddressDTO permanentAddressToSave = addressService.createAddress(generalPractitionerDTO.getPermanentAddressDTO());
-        generalPractitionerToSave.setPermanentAddress(addressMapper.toAddress(permanentAddressToSave));
+        Role roleToAdd = roleService.getRoleByName(UserRole.DOCTOR.name());
+        User savedUser = userService.findUserById(savedGeneralPractitioner.getId());
+        roleToAdd.getUsers().add(savedUser);
+        roleService.saveRole(roleToAdd);
 
-        AddressDTO practiceAddressToSave = addressService.createAddress(generalPractitionerDTO.getPracticeAddressDTO());
-        generalPractitionerToSave.setPracticeAddress(addressMapper.toAddress(practiceAddressToSave));
-
-        return generalPractitionerMapper.toGeneralPractitionerDTO(generalPractitionerRepository.save(generalPractitionerToSave));
+        return generalPractitionerMapper.toGeneralPractitionerDTO(savedGeneralPractitioner);
     }
 
-    @Override
-    public GeneralPractitionerDTO createGeneralPractitionerWithExistingAddresses(
-        GeneralPractitionerDTO generalPractitionerDTO, Long permanentAddressId, Long practiceAddressId) {
-        GeneralPractitioner generalPractitionerToSave = new GeneralPractitioner();
-
-        generalPractitionerToSave = setGeneralPractitionerNonNullFields(generalPractitionerDTO, generalPractitionerToSave);
-
-        generalPractitionerToSave.setPermanentAddress(addressMapper.toAddress(addressService.getAddress(permanentAddressId)));
-        generalPractitionerToSave.setPracticeAddress(addressMapper.toAddress(addressService.getAddress(practiceAddressId)));
-
-        return generalPractitionerMapper.toGeneralPractitionerDTO(generalPractitionerRepository.save(generalPractitionerToSave));
-    }
+//    @Override
+//    public GeneralPractitionerDTO createGeneralPractitionerWithExistingAddresses(
+//        GeneralPractitionerDTO generalPractitionerDTO, Long permanentAddressId, Long practiceAddressId) {
+//        GeneralPractitioner generalPractitionerToSave = new GeneralPractitioner();
+//
+//        generalPractitionerToSave = setGeneralPractitionerNonNullFields(generalPractitionerDTO, generalPractitionerToSave);
+//
+//        generalPractitionerToSave.setPermanentAddress(addressMapper.toAddress(addressService.getAddress(permanentAddressId)));
+//        generalPractitionerToSave.setPracticeAddress(addressMapper.toAddress(addressService.getAddress(practiceAddressId)));
+//
+//        return generalPractitionerMapper.toGeneralPractitionerDTO(generalPractitionerRepository.save(generalPractitionerToSave));
+//    }
 
     @Override
     public GeneralPractitionerDTO updateGeneralPractitioner(GeneralPractitionerDTO generalPractitionerDTO, Long id) {
