@@ -39,7 +39,7 @@ public class SpecialtyController {
     }
 
     @PutMapping("/{id}")
-    public SpecialtyDTO updateSpecialty(@RequestBody @Valid SpecialtyDTO specialtyDTO, @PathVariable @Valid @Positive Long id) {
+    public SpecialtyDTO updateSpecialty(@RequestBody SpecialtyDTO specialtyDTO, @PathVariable @Valid @Positive Long id) {
         return this.specialtyService.updateSpecialty(specialtyDTO, id);
     }
 

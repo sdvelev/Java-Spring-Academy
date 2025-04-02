@@ -39,7 +39,7 @@ public class TreatmentController {
     }
 
     @PutMapping("/{id}")
-    public TreatmentDTO updateTreatment(@RequestBody @Valid TreatmentDTO treatmentDTO,
+    public TreatmentDTO updateTreatment(@RequestBody TreatmentDTO treatmentDTO,
                                         @PathVariable @Valid @Positive Long id) {
         return this.treatmentService.updateTreatment(treatmentDTO, id);
     }

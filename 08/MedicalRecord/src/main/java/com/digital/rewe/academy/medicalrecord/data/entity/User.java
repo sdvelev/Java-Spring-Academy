@@ -30,13 +30,13 @@ public class User extends BaseEntity implements UserDetails {
     @ManyToMany(mappedBy = "users", fetch = FetchType.EAGER)
     private Set<Role> authorities;
 
-    @Column(name = "accountNonExpired", nullable = false, columnDefinition = "BOOLEAN DEFAULT TRUE")
+    @Column(name = "account_non_expired", nullable = false, columnDefinition = "BOOLEAN DEFAULT TRUE")
     private boolean accountNonExpired = true;
 
-    @Column(name = "accountNonLocked", nullable = false, columnDefinition = "BOOLEAN DEFAULT TRUE")
+    @Column(name = "account_non_locked", nullable = false, columnDefinition = "BOOLEAN DEFAULT TRUE")
     private boolean accountNonLocked = true;
 
-    @Column(name = "credentialsNonExpired", nullable = false, columnDefinition = "BOOLEAN DEFAULT TRUE")
+    @Column(name = "credentials_non_expired", nullable = false, columnDefinition = "BOOLEAN DEFAULT TRUE")
     private boolean credentialsNonExpired = true;
 
     @Column(name = "enabled", nullable = false, columnDefinition = "BOOLEAN DEFAULT TRUE")

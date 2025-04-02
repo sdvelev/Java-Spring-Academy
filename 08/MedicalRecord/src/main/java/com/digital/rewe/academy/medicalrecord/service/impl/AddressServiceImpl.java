@@ -7,6 +7,7 @@ import com.digital.rewe.academy.medicalrecord.dto.AddressDTO;
 import com.digital.rewe.academy.medicalrecord.exception.AddressNotFoundException;
 import com.digital.rewe.academy.medicalrecord.mapper.AddressMapper;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,22 +21,26 @@ public class AddressServiceImpl implements AddressService {
     private final AddressMapper addressMapper;
 
     @Override
+    @PreAuthorize("hasAnyAuthority('DOCTOR', 'ADMIN')")
     public List<AddressDTO> getAddresses() {
         return addressMapper.toAddressDTOCollection(addressRepository.findAll());
     }
 
     @Override
+    @PreAuthorize("hasAnyAuthority('DOCTOR', 'ADMIN')")
     public AddressDTO getAddress(Long id) {
         return addressMapper.toAddressDTO(addressRepository.findById(id)
             .orElseThrow(() -> new AddressNotFoundException("Such an address not found", id)));
     }
 
     @Override
+    @PreAuthorize("hasAnyAuthority('DOCTOR', 'ADMIN')")
     public AddressDTO createAddress(AddressDTO addressDTO) {
         return addressMapper.toAddressDTO(addressRepository.save(addressMapper.toAddress(addressDTO)));
     }
 
     @Override
+    @PreAuthorize("hasAnyAuthority('DOCTOR', 'ADMIN')")
     public AddressDTO updateAddress(AddressDTO addressDTO, Long id) {
         Optional<Address> optionalAddressToUpdate = addressRepository.findById(id);
         if (optionalAddressToUpdate.isPresent()) {
@@ -47,6 +52,7 @@ public class AddressServiceImpl implements AddressService {
     }
 
     @Override
+    @PreAuthorize("hasAnyAuthority('DOCTOR', 'ADMIN')")
     public Address setAddressNonNullFields(AddressDTO addressDTO, Address addressToUpdate) {
         if (addressDTO.getPopulatedPlace() != null) {
             addressToUpdate.setPopulatedPlace(addressDTO.getPopulatedPlace());
@@ -96,6 +102,7 @@ public class AddressServiceImpl implements AddressService {
     }
 
     @Override
+    @PreAuthorize("hasAnyAuthority('DOCTOR', 'ADMIN')")
     public void deleteAddress(Long id) {
         this.addressRepository.deleteById(id);
     }

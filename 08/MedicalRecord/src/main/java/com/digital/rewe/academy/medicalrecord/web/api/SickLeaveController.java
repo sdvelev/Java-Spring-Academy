@@ -45,7 +45,7 @@ public class SickLeaveController {
     }
 
     @PutMapping("/{id}")
-    public SickLeaveDTO updateSickLeave(@RequestBody @Valid SickLeaveDTO sickLeaveDTO,
+    public SickLeaveDTO updateSickLeave(@RequestBody SickLeaveDTO sickLeaveDTO,
                                         @PathVariable @Valid @Positive Long id) {
         return this.sickLeaveService.updateSickLeave(sickLeaveDTO, id);
     }

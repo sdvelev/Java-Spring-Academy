@@ -89,7 +89,7 @@ public class MedicalVisitController {
     }
 
     @PutMapping("/{id}")
-    public MedicalVisitDTO updateMedicalVisit(@RequestBody @Valid MedicalVisitDTO medicalVisitDTO,
+    public MedicalVisitDTO updateMedicalVisit(@RequestBody MedicalVisitDTO medicalVisitDTO,
                                               @PathVariable @Valid @Positive Long id) {
         return this.medicalVisitService.updateMedicalVisit(medicalVisitDTO, id);
     }

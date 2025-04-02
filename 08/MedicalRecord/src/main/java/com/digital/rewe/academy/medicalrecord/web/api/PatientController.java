@@ -69,7 +69,7 @@ public class PatientController {
 //    }
 
     @PutMapping("/{id}")
-    public PatientDTO updatePatient(@RequestBody @Valid PatientDTO patientDTO, @PathVariable @Valid @Positive Long id) {
+    public PatientDTO updatePatient(@RequestBody PatientDTO patientDTO, @PathVariable @Valid @Positive Long id) {
         return this.patientService.updatePatient(patientDTO, id);
     }
 

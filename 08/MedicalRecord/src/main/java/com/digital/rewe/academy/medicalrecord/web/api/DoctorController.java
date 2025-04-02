@@ -53,7 +53,7 @@ public class DoctorController {
 //    }
 
     @PutMapping("/{id}")
-    public DoctorDTO updateDoctor(@RequestBody @Valid DoctorDTO doctorDTO,
+    public DoctorDTO updateDoctor(@RequestBody DoctorDTO doctorDTO,
                                   @PathVariable @Valid @Positive Long id) {
         return this.doctorService.updateDoctor(doctorDTO, id);
     }

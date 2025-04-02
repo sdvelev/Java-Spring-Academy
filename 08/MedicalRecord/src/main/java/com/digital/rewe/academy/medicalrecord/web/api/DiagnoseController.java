@@ -44,7 +44,7 @@ public class DiagnoseController {
     }
 
     @PutMapping("/{id}")
-    public DiagnoseDTO updateDiagnose(@RequestBody @Valid DiagnoseDTO diagnoseDTO, @PathVariable @Valid @Positive Long id) {
+    public DiagnoseDTO updateDiagnose(@RequestBody DiagnoseDTO diagnoseDTO, @PathVariable @Valid @Positive Long id) {
         return this.diagnoseService.updateDiagnose(diagnoseDTO, id);
     }
 

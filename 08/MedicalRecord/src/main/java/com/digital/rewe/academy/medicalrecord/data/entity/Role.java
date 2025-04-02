@@ -8,6 +8,9 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 
@@ -16,6 +19,9 @@ import java.util.Set;
 
 @Entity(name = "role")
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 public class Role implements GrantedAuthority {
 
     @Id

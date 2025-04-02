@@ -7,6 +7,7 @@ import com.digital.rewe.academy.medicalrecord.dto.DiagnoseDTO;
 import com.digital.rewe.academy.medicalrecord.exception.DiagnoseNotFoundException;
 import com.digital.rewe.academy.medicalrecord.mapper.DiagnoseMapper;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,27 +21,32 @@ public class DiagnoseServiceImpl implements DiagnoseService {
     private final DiagnoseMapper diagnoseMapper;
 
     @Override
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'DOCTOR')")
     public List<DiagnoseDTO> getDiagnoses() {
         return diagnoseMapper.toDiagnoseDTOCollection(diagnoseRepository.findAll());
     }
 
     @Override
+    @PreAuthorize("hasAuthority('ADMIN')")
     public List<DiagnoseDTO> getDiagnosesByRank() {
         return diagnoseMapper.toDiagnoseDTOCollection(diagnoseRepository.findDiagnosesWithFrequencyDecreasingOrder());
     }
 
     @Override
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'DOCTOR')")
     public DiagnoseDTO getDiagnose(Long id) {
         return diagnoseMapper.toDiagnoseDTO(diagnoseRepository.findById(id)
             .orElseThrow(() -> new DiagnoseNotFoundException("Such a diagnose not found", id)));
     }
 
     @Override
+    @PreAuthorize("hasAuthority('ADMIN')")
     public DiagnoseDTO createDiagnose(DiagnoseDTO diagnoseDTO) {
         return diagnoseMapper.toDiagnoseDTO(diagnoseRepository.save(diagnoseMapper.toDiagnose(diagnoseDTO)));
     }
 
     @Override
+    @PreAuthorize("hasAuthority('ADMIN')")
     public DiagnoseDTO updateDiagnose(DiagnoseDTO diagnoseDTO, Long id) {
         Optional<Diagnose> optionalDiagnoseToUpdate = diagnoseRepository.findById(id);
         if (optionalDiagnoseToUpdate.isPresent()) {
@@ -52,11 +58,13 @@ public class DiagnoseServiceImpl implements DiagnoseService {
     }
 
     @Override
+    @PreAuthorize("hasAuthority('ADMIN')")
     public void deleteDiagnose(Long id) {
         this.diagnoseRepository.deleteById(id);
     }
 
     @Override
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'DOCTOR', 'PATIENT')")
     public Diagnose setDiagnoseNonNullFields(DiagnoseDTO diagnoseDTO, Diagnose diagnoseToUpdate) {
         if (diagnoseDTO.getIcdCode() != null) {
             diagnoseToUpdate.setIcdCode(diagnoseDTO.getIcdCode());

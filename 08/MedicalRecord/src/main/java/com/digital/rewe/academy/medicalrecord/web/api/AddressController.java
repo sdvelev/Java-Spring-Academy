@@ -39,7 +39,7 @@ public class AddressController {
     }
 
     @PutMapping("/{id}")
-    public AddressDTO updateAddress(@RequestBody @Valid AddressDTO addressDTO, @PathVariable @Valid @Positive Long id) {
+    public AddressDTO updateAddress(@RequestBody AddressDTO addressDTO, @PathVariable @Valid @Positive Long id) {
         return this.addressService.updateAddress(addressDTO, id);
     }
 

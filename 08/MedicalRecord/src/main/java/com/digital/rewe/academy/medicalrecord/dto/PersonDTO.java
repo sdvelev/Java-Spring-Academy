@@ -1,5 +1,6 @@
 package com.digital.rewe.academy.medicalrecord.dto;
 
+import com.digital.rewe.academy.medicalrecord.data.entity.Role;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -10,6 +11,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.Set;
 
 @Data
 @AllArgsConstructor

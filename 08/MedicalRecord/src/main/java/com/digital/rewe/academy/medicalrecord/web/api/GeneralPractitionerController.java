@@ -50,7 +50,7 @@ public class GeneralPractitionerController {
 //    }
 
     @PutMapping("/{id}")
-    public DoctorDTO updateGeneralPractitioner(@RequestBody @Valid GeneralPractitionerDTO generalPractitionerDTO, @PathVariable @Valid @Positive Long id) {
+    public DoctorDTO updateGeneralPractitioner(@RequestBody GeneralPractitionerDTO generalPractitionerDTO, @PathVariable @Valid @Positive Long id) {
         return this.generalPractitionerService.updateGeneralPractitioner(generalPractitionerDTO, id);
     }
 

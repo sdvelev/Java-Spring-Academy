@@ -158,6 +158,7 @@ public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
                     .requestMatchers(HttpMethod.GET, "/api/treatments/**").hasAnyAuthority("ADMIN", "DOCTOR")
                     .requestMatchers("/api/treatments/**").hasAuthority("ADMIN")
                     .requestMatchers(HttpMethod.POST, "/api/sick-leaves").hasAnyAuthority("ADMIN", "DOCTOR")
+                    .requestMatchers(HttpMethod.PUT,"/api/sick-leaves/*").hasAnyAuthority("ADMIN", "DOCTOR")
                     .requestMatchers(HttpMethod.GET, "/api/sick-leaves/**").hasAnyAuthority("ADMIN", "DOCTOR")
                     .requestMatchers("/api/sick-leaves/**").hasAuthority("ADMIN")
                     .anyRequest().authenticated()

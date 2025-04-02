@@ -40,7 +40,7 @@ public class PersonController {
     }
 
     @PutMapping("/{id}")
-    public PersonDTO updatePerson(@RequestBody @Valid PersonDTO person, @PathVariable @Positive Long id) {
+    public PersonDTO updatePerson(@RequestBody PersonDTO person, @PathVariable @Positive Long id) {
         return this.personService.updatePerson(person, id);
     }
 
