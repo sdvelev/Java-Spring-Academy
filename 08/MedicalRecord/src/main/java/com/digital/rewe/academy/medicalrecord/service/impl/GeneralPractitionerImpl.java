@@ -40,7 +40,7 @@ public class GeneralPractitionerImpl implements GeneralPractitionerService {
     private final RoleService roleService;
 
     @Override
-    @PreAuthorize("hasAnyAuthority('ADMIN')")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public List<GeneralPractitionerDTO> getGeneralPractitioners() {
         return generalPractitionerMapper.toGeneralPractitionerDTOCollection(generalPractitionerRepository.findAll());
     }

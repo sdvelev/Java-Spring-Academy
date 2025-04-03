@@ -66,14 +66,14 @@ public class DoctorServiceImpl implements DoctorService {
     }
 
     @Override
-    @PreAuthorize("hasAnyAuthority('ADMIN')")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public List<DoctorDTO> getDoctorWithMostSickLeaves() {
         return doctorMapper.toDoctorDTOCollection(doctorRepository.findDoctorWithMostSickLeaves());
     }
 
     @Override
     @Transactional
-    @PreAuthorize("hasAnyAuthority('ADMIN')")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public DoctorDTO createDoctor(DoctorCreateDTO doctorCreateDTO) {
         DoctorDTO doctorDTOToSave = doctorMapper.toDoctorDTO(doctorCreateDTO);
         doctorDTOToSave.setPermanentAddressDTO(addressService.getAddress(doctorCreateDTO.getPermanentAddressId()));
@@ -127,7 +127,7 @@ public class DoctorServiceImpl implements DoctorService {
     }
 
     @Override
-    @PreAuthorize("hasAnyAuthority('ADMIN')")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public DoctorDTO addSpecialty(Long doctorId, Long specialtyId) {
         Optional<Doctor> optionalDoctorToAddSpecialty = doctorRepository.findById(doctorId);
         if (optionalDoctorToAddSpecialty.isPresent()) {
@@ -141,7 +141,7 @@ public class DoctorServiceImpl implements DoctorService {
     }
 
     @Override
-    @PreAuthorize("hasAnyAuthority('ADMIN')")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public DoctorDTO removeSpecialty(Long doctorId, Long specialtyId) {
         Optional<Doctor> optionalDoctorToRemoveSpecialty = doctorRepository.findById(doctorId);
         if (optionalDoctorToRemoveSpecialty.isPresent()) {
