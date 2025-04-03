@@ -5,6 +5,7 @@ import com.digital.rewe.academy.medicalrecord.exception.ObjectNotFoundException;
 import com.digital.rewe.academy.medicalrecord.exception.UnpaidHealthInsuranceException;
 import jakarta.validation.ConstraintViolationException;
 import jakarta.validation.ValidationException;
+import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -12,14 +13,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
-import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.Map;
 
 @RestControllerAdvice
 public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionHandler {
@@ -28,6 +26,7 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
     public ResponseEntity<Object> handleAuthenticationException(Exception ex, WebRequest request) {
         return new ResponseEntity<Object>("Authentication Failed", new HttpHeaders(), HttpStatus.UNAUTHORIZED);
     }
+
     @ExceptionHandler({AccessDeniedException.class})
     public ResponseEntity<Object> handleAccessDeniedException(Exception exception, WebRequest request) {
         return new ResponseEntity<Object>("Access denied for this user", new HttpHeaders(), HttpStatus.FORBIDDEN);
@@ -85,10 +84,10 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
         return handleExceptionInternal(exception, responseBody, new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
     }
 
-    @ExceptionHandler(DataIntegrityViolationException.class)
-    public ResponseEntity<Object> handleDataIntegrityViolationException(DataIntegrityViolationException exception, WebRequest request) {
+    @ExceptionHandler(DataAccessException.class)
+    public ResponseEntity<Object> handleDataAccessException(DataAccessException exception, WebRequest request) {
         LinkedHashMap<String, String> responseBody = new LinkedHashMap<>();
-        responseBody.put("Type:", "DataIntegrityViolationException");
+        responseBody.put("Type:", "DataAccessException");
         responseBody.put("Description:", request.getDescription(false));
         responseBody.put("Status Code:", String.valueOf(HttpStatus.CONFLICT));
         responseBody.put("Message:", exception.getMessage());

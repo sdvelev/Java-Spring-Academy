@@ -46,12 +46,6 @@ public class DoctorController {
         return doctorService.createDoctor(doctorCreateDTO);
     }
 
-//    @PostMapping(params = {"address-id"})
-//    public DoctorDTO createDoctorWithExistingAddress(@RequestBody @Valid DoctorDTO doctorDTO,
-//                                                     @RequestParam("address-id") @Valid @Positive Long addressId) {
-//        return doctorService.createDoctorWithExistingAddress(doctorDTO, addressId);
-//    }
-
     @PutMapping("/{id}")
     public DoctorDTO updateDoctor(@RequestBody DoctorDTO doctorDTO,
                                   @PathVariable @Valid @Positive Long id) {

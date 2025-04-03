@@ -6,6 +6,7 @@ import com.digital.rewe.academy.medicalrecord.dto.SpecialtyDTO;
 import java.util.List;
 
 public interface SpecialtyService {
+
     List<SpecialtyDTO> getSpecialties();
 
     SpecialtyDTO getSpecialty(Long id);

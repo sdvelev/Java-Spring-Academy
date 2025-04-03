@@ -2,6 +2,7 @@ package com.digital.rewe.academy.medicalrecord.data.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.ForeignKey;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -35,28 +36,13 @@ public class Role implements GrantedAuthority {
     @JoinTable(
         name = "user_has_role",
         joinColumns = @JoinColumn(name = "role_id"),
-        inverseJoinColumns = @JoinColumn(name = "user_id"))
+        inverseJoinColumns = @JoinColumn(name = "user_id", foreignKey = @ForeignKey(name = "FK_user_has_role_user_id",
+            foreignKeyDefinition = "FOREIGN KEY (user_id) REFERENCES user(id) ON DELETE CASCADE")))
     private Set<User> users;
 
-    /**
-     * If the <code>GrantedAuthority</code> can be represented as a <code>String</code>
-     * and that <code>String</code> is sufficient in precision to be relied upon for an
-     * access control decision by an {@link AccessDecisionManager} (or delegate), this
-     * method should return such a <code>String</code>.
-     * <p>
-     * If the <code>GrantedAuthority</code> cannot be expressed with sufficient precision
-     * as a <code>String</code>, <code>null</code> should be returned. Returning
-     * <code>null</code> will require an <code>AccessDecisionManager</code> (or delegate)
-     * to specifically support the <code>GrantedAuthority</code> implementation, so
-     * returning <code>null</code> should be avoided unless actually required.
-     *
-     * @return a representation of the granted authority (or <code>null</code> if the
-     * granted authority cannot be expressed as a <code>String</code> with sufficient
-     * precision).
-     */
     @Override
     public String getAuthority() {
-        return this.authority;
+        return authority;
     }
 
     public Set<User> getUsers() {

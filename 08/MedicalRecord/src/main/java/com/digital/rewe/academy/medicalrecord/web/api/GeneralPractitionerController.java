@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -41,13 +40,6 @@ public class GeneralPractitionerController {
                                                             GeneralPractitionerCreateDTO generalPractitionerCreateDTO) {
         return generalPractitionerService.createGeneralPractitioner(generalPractitionerCreateDTO);
     }
-
-//    @PostMapping(params = {"permanent-address-id", "practice-address-id"})
-//    public GeneralPractitionerDTO createGeneralPractitionerWithExistingAddress(@RequestBody @Valid GeneralPractitionerDTO generalPractitionerDTO,
-//                                                                               @RequestParam("permanent-address-id") @Valid @Positive Long permanentAddressId,
-//                                                                               @RequestParam("practice-address-id") @Valid @Positive Long practiceAddressId) {
-//        return generalPractitionerService.createGeneralPractitionerWithExistingAddresses(generalPractitionerDTO, permanentAddressId, practiceAddressId);
-//    }
 
     @PutMapping("/{id}")
     public DoctorDTO updateGeneralPractitioner(@RequestBody GeneralPractitionerDTO generalPractitionerDTO, @PathVariable @Valid @Positive Long id) {

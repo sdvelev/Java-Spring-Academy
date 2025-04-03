@@ -11,7 +11,7 @@ import java.util.Collection;
 import java.util.List;
 
 @Mapper(componentModel = "spring", uses = {GeneralPractitionerMapper.class, DoctorMapper.class,
-    SpecialtyMapper.class, PersonMapper.class, AddressMapper.class, PasswordEncoderMapper.class})
+                SpecialtyMapper.class, PersonMapper.class, AddressMapper.class, PasswordEncoderMapper.class})
 public interface PatientMapper {
     PatientMapper INSTANCE = Mappers.getMapper(PatientMapper.class);
 

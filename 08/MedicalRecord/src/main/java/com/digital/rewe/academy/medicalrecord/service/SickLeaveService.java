@@ -7,6 +7,7 @@ import com.digital.rewe.academy.medicalrecord.util.MonthCountProjection;
 import java.util.List;
 
 public interface SickLeaveService {
+
     List<SickLeaveDTO> getSickLeaves();
 
     SickLeaveDTO getSickLeave(Long id);

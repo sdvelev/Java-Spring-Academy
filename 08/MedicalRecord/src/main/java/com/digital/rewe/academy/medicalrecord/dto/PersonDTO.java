@@ -1,6 +1,5 @@
 package com.digital.rewe.academy.medicalrecord.dto;
 
-import com.digital.rewe.academy.medicalrecord.data.entity.Role;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -11,7 +10,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
-import java.util.Set;
 
 @Data
 @AllArgsConstructor
@@ -28,10 +26,6 @@ public class PersonDTO extends BaseEntityDTO {
     @JsonProperty("lastName")
     @NotBlank(message = "The last name of a person cannot be null, empty or blank")
     private String lastName;
-
-    @JsonProperty("personalIdNumber")
-    @NotBlank(message = "The personal ID number of a person cannot be null, empty or blank")
-    private String personalIdNumber;
 
     @JsonProperty("birthdate")
     @NotNull(message = "The birthdate of a person cannot be null")

@@ -5,7 +5,6 @@ import com.digital.rewe.academy.medicalrecord.data.entity.Role;
 import com.digital.rewe.academy.medicalrecord.data.entity.SickLeave;
 import com.digital.rewe.academy.medicalrecord.data.entity.User;
 import com.digital.rewe.academy.medicalrecord.data.repo.SickLeaveRepository;
-import com.digital.rewe.academy.medicalrecord.exception.DoctorNotFoundException;
 import com.digital.rewe.academy.medicalrecord.service.MedicalVisitService;
 import com.digital.rewe.academy.medicalrecord.service.SickLeaveService;
 import com.digital.rewe.academy.medicalrecord.dto.SickLeaveDTO;
@@ -21,7 +20,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 

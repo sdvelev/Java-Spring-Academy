@@ -6,6 +6,7 @@ import com.digital.rewe.academy.medicalrecord.dto.DiagnoseDTO;
 import java.util.List;
 
 public interface DiagnoseService {
+
     List<DiagnoseDTO> getDiagnoses();
 
     List<DiagnoseDTO> getDiagnosesByRank();

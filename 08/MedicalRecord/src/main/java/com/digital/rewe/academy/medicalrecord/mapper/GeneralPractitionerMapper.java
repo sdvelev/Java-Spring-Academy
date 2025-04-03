@@ -1,8 +1,6 @@
 package com.digital.rewe.academy.medicalrecord.mapper;
 
 import com.digital.rewe.academy.medicalrecord.data.entity.GeneralPractitioner;
-import com.digital.rewe.academy.medicalrecord.dto.DoctorCreateDTO;
-import com.digital.rewe.academy.medicalrecord.dto.DoctorDTO;
 import com.digital.rewe.academy.medicalrecord.dto.GeneralPractitionerCreateDTO;
 import com.digital.rewe.academy.medicalrecord.dto.GeneralPractitionerDTO;
 import org.mapstruct.Mapper;

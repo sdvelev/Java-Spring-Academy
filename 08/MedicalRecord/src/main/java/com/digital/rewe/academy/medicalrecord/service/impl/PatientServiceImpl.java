@@ -1,24 +1,18 @@
 package com.digital.rewe.academy.medicalrecord.service.impl;
 
-import com.digital.rewe.academy.medicalrecord.data.entity.Doctor;
-import com.digital.rewe.academy.medicalrecord.data.entity.GeneralPractitioner;
 import com.digital.rewe.academy.medicalrecord.data.entity.Patient;
 import com.digital.rewe.academy.medicalrecord.data.entity.Role;
 import com.digital.rewe.academy.medicalrecord.data.entity.User;
 import com.digital.rewe.academy.medicalrecord.data.repo.PatientRepository;
-import com.digital.rewe.academy.medicalrecord.dto.DoctorDTO;
 import com.digital.rewe.academy.medicalrecord.dto.PatientCreateDTO;
-import com.digital.rewe.academy.medicalrecord.exception.PersonNotFoundException;
 import com.digital.rewe.academy.medicalrecord.service.AddressService;
 import com.digital.rewe.academy.medicalrecord.service.GeneralPractitionerService;
 import com.digital.rewe.academy.medicalrecord.service.PatientService;
 import com.digital.rewe.academy.medicalrecord.service.PersonService;
-import com.digital.rewe.academy.medicalrecord.dto.AddressDTO;
 import com.digital.rewe.academy.medicalrecord.dto.GeneralPractitionerDTO;
 import com.digital.rewe.academy.medicalrecord.dto.PatientCountPerGeneralPractitionerDTO;
 import com.digital.rewe.academy.medicalrecord.dto.PatientDTO;
 import com.digital.rewe.academy.medicalrecord.exception.PatientNotFoundException;
-import com.digital.rewe.academy.medicalrecord.mapper.AddressMapper;
 import com.digital.rewe.academy.medicalrecord.mapper.GeneralPractitionerMapper;
 import com.digital.rewe.academy.medicalrecord.mapper.PatientMapper;
 import com.digital.rewe.academy.medicalrecord.service.RoleService;
@@ -26,7 +20,6 @@ import com.digital.rewe.academy.medicalrecord.service.UserService;
 import com.digital.rewe.academy.medicalrecord.util.UserRole;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.hibernate.annotations.ColumnTransformers;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -43,15 +36,15 @@ public class PatientServiceImpl implements PatientService {
     private final PatientMapper patientMapper;
 
     private final AddressService addressService;
-    private final AddressMapper addressMapper;
 
     private final PersonService personService;
 
-    private final UserService userService;
-    private final RoleService roleService;
-
     private final GeneralPractitionerService generalPractitionerService;
     private final GeneralPractitionerMapper generalPractitionerMapper;
+
+    private final UserService userService;
+
+    private final RoleService roleService;
 
     @Override
     @PreAuthorize("hasAnyAuthority('DOCTOR', 'ADMIN')")
@@ -105,11 +98,13 @@ public class PatientServiceImpl implements PatientService {
 
     @Override
     @Transactional
-    @PreAuthorize("hasAnyAuthority('ADMIN', 'DOCTOR')")
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
     public PatientDTO createPatient(PatientCreateDTO patientCreateDTO) {
         PatientDTO patientDTOToSave = patientMapper.toPatientDTO(patientCreateDTO);
         patientDTOToSave.setPermanentAddressDTO(addressService.getAddress(patientCreateDTO.getPermanentAddressId()));
-        Patient savedPatient = patientRepository.save(patientMapper.toPatient(patientDTOToSave));
+        Patient patientToSave = patientMapper.toPatient(patientDTOToSave);
+        patientToSave.setPersonalIdNumber(patientCreateDTO.getPersonalIdNumber());
+        Patient savedPatient = patientRepository.save(patientToSave);
 
         Role roleToAdd = roleService.getRoleByName(UserRole.PATIENT.name());
         User savedUser = userService.findUserById(savedPatient.getId());
@@ -119,18 +114,8 @@ public class PatientServiceImpl implements PatientService {
         return patientMapper.toPatientDTO(savedPatient);
     }
 
-//    @Override
-//    public PatientDTO createPatientWithExistingAddress(PatientDTO patientDTO, Long addressId) {
-//        Patient patientToSave = new Patient();
-//        patientToSave = setPatientNonNullFields(patientDTO, patientToSave);
-//
-//        patientToSave.setPermanentAddress(addressMapper.toAddress(addressService.getAddress(addressId)));
-//
-//        return patientMapper.toPatientDTO(patientRepository.save(patientToSave));
-//    }
-
     @Override
-    @PreAuthorize("hasAnyAuthority('ADMIN', 'DOCTOR')")
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
     public PatientDTO updatePatient(PatientDTO patientDTO, Long id) {
         Optional<Patient> optionalPatientToUpdate = patientRepository.findById(id);
         if (optionalPatientToUpdate.isPresent()) {
@@ -142,7 +127,7 @@ public class PatientServiceImpl implements PatientService {
     }
 
     @Override
-    @PreAuthorize("hasAnyAuthority('ADMIN', 'DOCTOR')")
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
     public void deletePatient(Long id) {
         this.patientRepository.deleteById(id);
     }

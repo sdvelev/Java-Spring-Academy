@@ -10,6 +10,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 public interface MedicalVisitService {
+
     List<MedicalVisitDTO> getMedicalVisits();
 
     MedicalVisitDTO getMedicalVisit(Long id);

@@ -58,7 +58,7 @@ public class SpecialtyServiceImpl implements SpecialtyService {
     }
 
     @Override
-    @PreAuthorize("hasAuthority('ADMIN', 'DOCTOR', 'PATIENT')")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'DOCTOR', 'PATIENT')")
     public Specialty setSpecialtyNonNullFields(SpecialtyDTO specialtyDTO, Specialty specialtyToUpdate) {
         if (specialtyDTO.getSpecialtyName() != null) {
             specialtyToUpdate.setSpecialtyName(specialtyDTO.getSpecialtyName());

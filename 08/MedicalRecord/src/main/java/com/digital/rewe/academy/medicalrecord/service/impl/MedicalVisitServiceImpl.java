@@ -4,7 +4,6 @@ import com.digital.rewe.academy.medicalrecord.data.entity.MedicalVisit;
 import com.digital.rewe.academy.medicalrecord.data.entity.Role;
 import com.digital.rewe.academy.medicalrecord.data.entity.User;
 import com.digital.rewe.academy.medicalrecord.data.repo.MedicalVisitRepository;
-import com.digital.rewe.academy.medicalrecord.exception.DoctorNotFoundException;
 import com.digital.rewe.academy.medicalrecord.service.DiagnoseService;
 import com.digital.rewe.academy.medicalrecord.service.DoctorService;
 import com.digital.rewe.academy.medicalrecord.service.MedicalVisitService;
@@ -69,6 +68,7 @@ public class MedicalVisitServiceImpl implements MedicalVisitService {
             return medicalVisitMapper.toMedicalVisitDTO(medicalVisitRepository.findById(id)
                 .orElseThrow(() -> new MedicalVisitNotFoundException("Such a medical visit not found", id)));
         }
+
         MedicalVisit medicalVisitToReturn = medicalVisitRepository.findById(id)
             .orElseThrow(() -> new MedicalVisitNotFoundException("Such a medical visit not found", id));
         if (currentUser != null && currentUser.getAuthorities()

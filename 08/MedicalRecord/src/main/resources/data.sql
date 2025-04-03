@@ -1,3 +1,25 @@
+-- Insert dummy data for Role
+INSERT INTO role (id, authority) VALUES
+(1, 'PATIENT'),
+(2, 'DOCTOR'),
+(3, 'ADMIN');
+
+-- Insert dummy data for User
+INSERT INTO user (id, username, password) VALUES
+(1, 'john.doe', '$2a$12$ub2Ywu949Wg22BmObfUfTugosAPDmT7iFYvQsD1VCMBRIxsjYws4a'),
+(2, 'jane.smith', '$2a$12$UJ4Hfr8XLdLxzKJtC8tfoeyNmOPdResD6pzip48nGkWrXg9GFFch.'),
+(3, 'alice.jones', '$2a$12$aI9ym4OjL6K/FGUrGDyTkOX1m0ipmq7D1Uf3bYGee..AxLK6mm1Kq'),
+(4, 'bob.brown', '$2a$12$Hy2SlG7fuuvctlOEbgkIKOPdCW1QcSUevMq5HNz6iypOW5sh5A6G6'),
+(5, 'admin', '$2a$12$djR8aMCP5L9.DH/ZN7kZ1uiRYBSbxooxN5ZLVVBtwAZ7/gvUK8W7u');
+
+-- Insert dummy data for UserHasRole                                                                                                                                            (4, '1995-04-04', 'bob.brown@example.com', 'Bob', 'Brown', 'D', 'password', '2233445566', '555-6789', 'bobbrown', 2);
+INSERT INTO user_has_role(user_id, role_id) VALUES
+(1, 2),
+(2, 2),
+(3, 1),
+(4, 1),
+(5, 3);
+
 -- Insert dummy data for Address
 INSERT INTO address (id, apartment_number, country_name, district, dwelling_number, entrance, floor_number, municipality, populated_place, postal_code, region, street_name) VALUES
 (1, '101', 'USA', 'District 1', '10', 'A', '1', 'Municipality 1', 'Springfield', '62701', 'Region 1', 'Main St'),
@@ -6,11 +28,11 @@ INSERT INTO address (id, apartment_number, country_name, district, dwelling_numb
 (4, '404', 'USA', 'District 4', '40', 'D', '4', 'Municipality 4', 'Springfield', '62704', 'Region 4', 'Pine St');
 
 -- Insert dummy data for Person
-INSERT INTO person (id, birthdate, email, first_name, last_name, middle_name, password, personal_id_number, phone_number, username, address_id) VALUES
-(1, '1980-01-01', 'john.doe@example.com', 'John', 'Doe', 'A', 'password', '1234567890', '555-1234', 'johndoe', 1),
-(2, '1990-02-02', 'jane.smith@example.com', 'Jane', 'Smith', 'B', 'password', '0987654321', '555-5678', 'janesmith', 2),
-(3, '1985-03-03', 'alice.jones@example.com', 'Alice', 'Jones', 'C', 'password', '1122334455', '555-7890', 'alicejones', 1),
-(4, '1995-04-04', 'bob.brown@example.com', 'Bob', 'Brown', 'D', 'password', '2233445566', '555-6789', 'bobbrown', 2);
+INSERT INTO person (id, birthdate, email, first_name, last_name, middle_name, personal_id_number, phone_number, address_id) VALUES
+(1, '1980-01-01', 'john.doe@example.com', 'John', 'Doe', 'A', '1234567890', '555-1234', 1),
+(2, '1990-02-02', 'jane.smith@example.com', 'Jane', 'Smith', 'B', '0987654321', '555-5678', 2),
+(3, '1985-03-03', 'alice.jones@example.com', 'Alice', 'Jones', 'C', '1122334455', '555-7890', 1),
+(4, '1995-04-04', 'bob.brown@example.com', 'Bob', 'Brown', 'D', '2233445566', '555-6789', 2);
 
 -- Insert dummy data for Specialty
 INSERT INTO specialty (id, description, specialty_name) VALUES

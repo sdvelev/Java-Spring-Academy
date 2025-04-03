@@ -8,6 +8,7 @@ import com.digital.rewe.academy.medicalrecord.dto.PatientDTO;
 import java.util.List;
 
 public interface PatientService {
+
     List<PatientDTO> getPatients();
 
     List<PatientDTO> getPatientsWithSpecificDiagnose(Long diagnoseId);
@@ -21,8 +22,6 @@ public interface PatientService {
     PatientDTO getPatient(Long id);
 
     PatientDTO createPatient(PatientCreateDTO patientCreateDTO);
-
-//    PatientDTO createPatientWithExistingAddress(PatientDTO patientDTO, Long addressId);
 
     PatientDTO updatePatient(PatientDTO patientDTO, Long id);
 

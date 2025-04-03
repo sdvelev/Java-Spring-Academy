@@ -7,15 +7,12 @@ import com.digital.rewe.academy.medicalrecord.dto.GeneralPractitionerDTO;
 import java.util.List;
 
 public interface GeneralPractitionerService {
+
     List<GeneralPractitionerDTO> getGeneralPractitioners();
 
     GeneralPractitionerDTO getGeneralPractitioner(Long id);
 
     GeneralPractitionerDTO createGeneralPractitioner(GeneralPractitionerCreateDTO generalPractitionerCreateDTO);
-
-//    GeneralPractitionerDTO createGeneralPractitionerWithExistingAddresses(GeneralPractitionerDTO generalPractitionerDTO,
-//                                                                          Long permanentAddressId,
-//                                                                          Long practiceAddressId);
 
     GeneralPractitionerDTO updateGeneralPractitioner(GeneralPractitionerDTO generalPractitionerDTO, Long id);
 

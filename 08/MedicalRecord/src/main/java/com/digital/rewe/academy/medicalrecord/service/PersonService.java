@@ -7,6 +7,7 @@ import com.digital.rewe.academy.medicalrecord.dto.PersonDTO;
 import java.util.List;
 
 public interface PersonService {
+
     List<PersonDTO> getPersons();
 
     PersonDTO getPerson(Long id);

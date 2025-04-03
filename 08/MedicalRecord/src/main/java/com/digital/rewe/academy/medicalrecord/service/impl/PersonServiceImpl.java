@@ -14,8 +14,6 @@ import com.digital.rewe.academy.medicalrecord.util.UserRole;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
@@ -52,11 +50,13 @@ public class PersonServiceImpl implements PersonService {
     }
 
     @Override
-    @PreAuthorize("hasAnyAuthority('DOCTOR', 'ADMIN', 'PATIENT')")
+    @PreAuthorize("hasAnyAuthority('DOCTOR', 'ADMIN')")
     public PersonDTO createPerson(PersonCreateDTO personCreateDTO) {
         PersonDTO personDTOToSave = personMapper.toPersonDTO(personCreateDTO);
         personDTOToSave.setPermanentAddressDTO(addressService.getAddress(personCreateDTO.getPermanentAddressId()));
-        return personMapper.toPersonDTO(personRepository.save(personMapper.toPerson(personDTOToSave)));
+        Person personToSave = personMapper.toPerson(personDTOToSave);
+        personToSave.setPersonalIdNumber(personCreateDTO.getPersonalIdNumber());
+        return personMapper.toPersonDTO(personRepository.save(personToSave));
     }
 
     @Override
@@ -84,10 +84,6 @@ public class PersonServiceImpl implements PersonService {
 
         if (personDTO.getLastName() != null) {
             personToUpdate.setLastName(personDTO.getLastName());
-        }
-
-        if (personDTO.getPersonalIdNumber() != null) {
-            personToUpdate.setPersonalIdNumber(personDTO.getPersonalIdNumber());
         }
 
         if (personDTO.getBirthDate() != null) {
