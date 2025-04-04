@@ -105,22 +105,23 @@ public class MedicalVisitServiceTest {
     @Test
     @WithMockUser(authorities = {"ADMIN"})
     void testGetMedicalVisitsSuccessfully() {
-        MedicalVisit firstMedicalVisit = new MedicalVisit();
-        firstMedicalVisit.setId(1L);
-        firstMedicalVisit.setDateOfVisit(LocalDate.of(2025, 4, 3));
-        Doctor doctor = new Doctor();
-        doctor.setFirstName("John");
-        doctor.setLastName("Doe");
-        doctor.setId(1L);
-        Patient patient = new Patient();
-        patient.setId(2L);
-        patient.setFirstName("Alice");
-        patient.setLastName("Jones");
+        MedicalVisit firstMedicalVisit = Mockito.mock(MedicalVisit.class);
+        Mockito.when(firstMedicalVisit.getId()).thenReturn(1L);
+        Mockito.when(firstMedicalVisit.getDateOfVisit()).thenReturn(LocalDate.of(2025, 4, 3));
+        Doctor doctor = Mockito.mock(Doctor.class);
+        Mockito.when(doctor.getFirstName()).thenReturn("John");
+        Mockito.when(doctor.getLastName()).thenReturn("Doe");
+        Mockito.when(doctor.getId()).thenReturn(1L);
+        Patient patient = Mockito.mock(Patient.class);
+        Mockito.when(patient.getId()).thenReturn(2L);
+        Mockito.when(patient.getFirstName()).thenReturn("Alice");
+        Mockito.when(patient.getLastName()).thenReturn("Jones");
 
-        firstMedicalVisit.setDoctor(doctor);
-        firstMedicalVisit.setPatient(patient);
+        Mockito.when(firstMedicalVisit.getDoctor()).thenReturn(doctor);
+        Mockito.when(firstMedicalVisit.getPatient()).thenReturn(patient);
 
         Mockito.when(medicalVisitRepository.findAll()).thenReturn(List.of(firstMedicalVisit));
+
         List<MedicalVisitDTO> result = medicalVisitService.getMedicalVisits();
 
         assertEquals(1, result.size(),
@@ -139,32 +140,33 @@ public class MedicalVisitServiceTest {
 
     @Test
     void testGetMedicalVisitByAdminSuccessfully() {
-        MedicalVisit firstMedicalVisit = new MedicalVisit();
-        firstMedicalVisit.setId(1L);
-        firstMedicalVisit.setDateOfVisit(LocalDate.of(2025, 4, 3));
-        Doctor doctor = new Doctor();
-        doctor.setFirstName("John");
-        doctor.setLastName("Doe");
-        doctor.setId(1L);
-        Patient patient = new Patient();
-        patient.setId(2L);
-        patient.setFirstName("Alice");
-        patient.setLastName("Jones");
+        MedicalVisit firstMedicalVisit = Mockito.mock(MedicalVisit.class);
+        Mockito.when(firstMedicalVisit.getId()).thenReturn(1L);
+        Mockito.when(firstMedicalVisit.getDateOfVisit()).thenReturn(LocalDate.of(2025, 4, 3));
+        Doctor doctor = Mockito.mock(Doctor.class);
+        Mockito.when(doctor.getFirstName()).thenReturn("John");
+        Mockito.when(doctor.getLastName()).thenReturn("Doe");
+        Mockito.when(doctor.getId()).thenReturn(1L);
+        Patient patient = Mockito.mock(Patient.class);
+        Mockito.when(patient.getId()).thenReturn(2L);
+        Mockito.when(patient.getFirstName()).thenReturn("Alice");
+        Mockito.when(patient.getLastName()).thenReturn("Jones");
 
-        firstMedicalVisit.setDoctor(doctor);
-        firstMedicalVisit.setPatient(patient);
-        firstMedicalVisit.setTreatmentSet(new HashSet<>());
+        Mockito.when(firstMedicalVisit.getDoctor()).thenReturn(doctor);
+        Mockito.when(firstMedicalVisit.getPatient()).thenReturn(patient);
+        Mockito.when(firstMedicalVisit.getTreatmentSet()).thenReturn(new HashSet<>());
+
         Mockito.when(medicalVisitRepository.findById(any())).thenReturn(Optional.of(firstMedicalVisit));
 
-        User user = new User();
-        user.setId(1L);
-        user.setUsername("admin");
-        user.setPassword("admin");
-        user.setAuthorities(Set.of(new Role(1, "ADMIN", Set.of())));
-        user.setEnabled(true);
-        user.setAccountNonExpired(true);
-        user.setAccountNonLocked(true);
-        user.setCredentialsNonExpired(true);
+        User user = Mockito.mock(User.class);
+        Mockito.when(user.getId()).thenReturn(1L);
+        Mockito.when(user.getUsername()).thenReturn("admin");
+        Mockito.when(user.getPassword()).thenReturn("admin");
+        Mockito.when(user.getAuthorities()).thenReturn(Set.of(new Role(1, "ADMIN", Set.of())));
+        Mockito.when(user.isEnabled()).thenReturn(true);
+        Mockito.when(user.isAccountNonExpired()).thenReturn(true);
+        Mockito.when(user.isAccountNonLocked()).thenReturn(true);
+        Mockito.when(user.isCredentialsNonExpired()).thenReturn(true);
 
         Authentication authentication = new UsernamePasswordAuthenticationToken(user, null,
             List.of(new SimpleGrantedAuthority("ADMIN")));
@@ -185,34 +187,32 @@ public class MedicalVisitServiceTest {
 
     @Test
     void testGetMedicalVisitByDoctorSuccessfully() {
-        MedicalVisit firstMedicalVisit = new MedicalVisit();
-        firstMedicalVisit.setId(1L);
-        firstMedicalVisit.setDateOfVisit(LocalDate.of(2025, 4, 3));
-        Doctor doctor = new Doctor();
-        doctor.setFirstName("John");
-        doctor.setLastName("Doe");
-        doctor.setId(1L);
-        Patient patient = new Patient();
-        patient.setId(2L);
-        patient.setFirstName("Alice");
-        patient.setLastName("Jones");
+        MedicalVisit firstMedicalVisit = Mockito.mock(MedicalVisit.class);
+        Mockito.when(firstMedicalVisit.getId()).thenReturn(1L);
+        Mockito.when(firstMedicalVisit.getDateOfVisit()).thenReturn(LocalDate.of(2025, 4, 3));
+        Doctor doctor = Mockito.mock(Doctor.class);
+        Mockito.when(doctor.getFirstName()).thenReturn("John");
+        Mockito.when(doctor.getLastName()).thenReturn("Doe");
+        Mockito.when(doctor.getId()).thenReturn(1L);
+        Patient patient = Mockito.mock(Patient.class);
+        Mockito.when(patient.getId()).thenReturn(2L);
+        Mockito.when(patient.getFirstName()).thenReturn("Alice");
+        Mockito.when(patient.getLastName()).thenReturn("Jones");
 
-        firstMedicalVisit.setDoctor(doctor);
-        firstMedicalVisit.setPatient(patient);
-
-        firstMedicalVisit.setTreatmentSet(new HashSet<>());
+        Mockito.when(firstMedicalVisit.getDoctor()).thenReturn(doctor);
+        Mockito.when(firstMedicalVisit.getPatient()).thenReturn(patient);
 
         Mockito.when(medicalVisitRepository.findById(any())).thenReturn(Optional.of(firstMedicalVisit));
 
-        User user = new User();
-        user.setId(1L);
-        user.setUsername("doctor");
-        user.setPassword("doctor");
-        user.setAuthorities(Set.of(new Role(1, "DOCTOR", Set.of())));
-        user.setEnabled(true);
-        user.setAccountNonExpired(true);
-        user.setAccountNonLocked(true);
-        user.setCredentialsNonExpired(true);
+        User user = Mockito.mock(User.class);
+        Mockito.when(user.getId()).thenReturn(1L);
+        Mockito.when(user.getUsername()).thenReturn("doctor");
+        Mockito.when(user.getPassword()).thenReturn("doctor");
+        Mockito.when(user.getAuthorities()).thenReturn(Set.of(new Role(1, "DOCTOR", Set.of())));
+        Mockito.when(user.isEnabled()).thenReturn(true);
+        Mockito.when(user.isAccountNonExpired()).thenReturn(true);
+        Mockito.when(user.isAccountNonLocked()).thenReturn(true);
+        Mockito.when(user.isCredentialsNonExpired()).thenReturn(true);
 
         Authentication authentication = new UsernamePasswordAuthenticationToken(user, null,
             List.of(new SimpleGrantedAuthority("DOCTOR")));
@@ -233,34 +233,32 @@ public class MedicalVisitServiceTest {
 
     @Test
     void testGetMedicalVisitByAnotherDoctorMedicalVisitNotFoundException() {
-        MedicalVisit firstMedicalVisit = new MedicalVisit();
-        firstMedicalVisit.setId(1L);
-        firstMedicalVisit.setDateOfVisit(LocalDate.of(2025, 4, 3));
-        Doctor doctor = new Doctor();
-        doctor.setFirstName("John");
-        doctor.setLastName("Doe");
-        doctor.setId(1L);
-        Patient patient = new Patient();
-        patient.setId(2L);
-        patient.setFirstName("Alice");
-        patient.setLastName("Jones");
+        MedicalVisit firstMedicalVisit = Mockito.mock(MedicalVisit.class);
+        Mockito.when(firstMedicalVisit.getId()).thenReturn(1L);
+        Mockito.when(firstMedicalVisit.getDateOfVisit()).thenReturn(LocalDate.of(2025, 4, 3));
+        Doctor doctor = Mockito.mock(Doctor.class);
+        Mockito.when(doctor.getFirstName()).thenReturn("John");
+        Mockito.when(doctor.getLastName()).thenReturn("Doe");
+        Mockito.when(doctor.getId()).thenReturn(1L);
+        Patient patient = Mockito.mock(Patient.class);
+        Mockito.when(patient.getId()).thenReturn(2L);
+        Mockito.when(patient.getFirstName()).thenReturn("Alice");
+        Mockito.when(patient.getLastName()).thenReturn("Jones");
 
-        firstMedicalVisit.setDoctor(doctor);
-        firstMedicalVisit.setPatient(patient);
-
-        firstMedicalVisit.setTreatmentSet(new HashSet<>());
+        Mockito.when(firstMedicalVisit.getDoctor()).thenReturn(doctor);
+        Mockito.when(firstMedicalVisit.getPatient()).thenReturn(patient);
 
         Mockito.when(medicalVisitRepository.findById(any())).thenReturn(Optional.of(firstMedicalVisit));
 
-        User user = new User();
-        user.setId(3L);
-        user.setUsername("doctor");
-        user.setPassword("doctor");
-        user.setAuthorities(Set.of(new Role(1, "DOCTOR", Set.of())));
-        user.setEnabled(true);
-        user.setAccountNonExpired(true);
-        user.setAccountNonLocked(true);
-        user.setCredentialsNonExpired(true);
+        User user = Mockito.mock(User.class);
+        Mockito.when(user.getId()).thenReturn(3L);
+        Mockito.when(user.getUsername()).thenReturn("doctor");
+        Mockito.when(user.getPassword()).thenReturn("doctor");
+        Mockito.when(user.getAuthorities()).thenReturn(Set.of(new Role(1, "DOCTOR", Set.of())));
+        Mockito.when(user.isEnabled()).thenReturn(true);
+        Mockito.when(user.isAccountNonExpired()).thenReturn(true);
+        Mockito.when(user.isAccountNonLocked()).thenReturn(true);
+        Mockito.when(user.isCredentialsNonExpired()).thenReturn(true);
 
         Authentication authentication = new UsernamePasswordAuthenticationToken(user, null,
             List.of(new SimpleGrantedAuthority("DOCTOR")));
@@ -272,34 +270,32 @@ public class MedicalVisitServiceTest {
 
     @Test
     void testGetMedicalVisitByPatientSuccessfully() {
-        MedicalVisit firstMedicalVisit = new MedicalVisit();
-        firstMedicalVisit.setId(1L);
-        firstMedicalVisit.setDateOfVisit(LocalDate.of(2025, 4, 3));
-        Doctor doctor = new Doctor();
-        doctor.setFirstName("John");
-        doctor.setLastName("Doe");
-        doctor.setId(1L);
-        Patient patient = new Patient();
-        patient.setId(2L);
-        patient.setFirstName("Alice");
-        patient.setLastName("Jones");
+        MedicalVisit firstMedicalVisit = Mockito.mock(MedicalVisit.class);
+        Mockito.when(firstMedicalVisit.getId()).thenReturn(1L);
+        Mockito.when(firstMedicalVisit.getDateOfVisit()).thenReturn(LocalDate.of(2025, 4, 3));
+        Doctor doctor = Mockito.mock(Doctor.class);
+        Mockito.when(doctor.getFirstName()).thenReturn("John");
+        Mockito.when(doctor.getLastName()).thenReturn("Doe");
+        Mockito.when(doctor.getId()).thenReturn(1L);
+        Patient patient = Mockito.mock(Patient.class);
+        Mockito.when(patient.getId()).thenReturn(2L);
+        Mockito.when(patient.getFirstName()).thenReturn("Alice");
+        Mockito.when(patient.getLastName()).thenReturn("Jones");
 
-        firstMedicalVisit.setDoctor(doctor);
-        firstMedicalVisit.setPatient(patient);
-
-        firstMedicalVisit.setTreatmentSet(new HashSet<>());
+        Mockito.when(firstMedicalVisit.getDoctor()).thenReturn(doctor);
+        Mockito.when(firstMedicalVisit.getPatient()).thenReturn(patient);
 
         Mockito.when(medicalVisitRepository.findById(any())).thenReturn(Optional.of(firstMedicalVisit));
 
-        User user = new User();
-        user.setId(2L);
-        user.setUsername("patient");
-        user.setPassword("patient");
-        user.setAuthorities(Set.of(new Role(1, "PATIENT", Set.of())));
-        user.setEnabled(true);
-        user.setAccountNonExpired(true);
-        user.setAccountNonLocked(true);
-        user.setCredentialsNonExpired(true);
+        User user = Mockito.mock(User.class);
+        Mockito.when(user.getId()).thenReturn(2L);
+        Mockito.when(user.getUsername()).thenReturn("patient");
+        Mockito.when(user.getPassword()).thenReturn("patient");
+        Mockito.when(user.getAuthorities()).thenReturn(Set.of(new Role(1, "PATIENT", Set.of())));
+        Mockito.when(user.isEnabled()).thenReturn(true);
+        Mockito.when(user.isAccountNonExpired()).thenReturn(true);
+        Mockito.when(user.isAccountNonLocked()).thenReturn(true);
+        Mockito.when(user.isCredentialsNonExpired()).thenReturn(true);
 
         Authentication authentication = new UsernamePasswordAuthenticationToken(user, null,
             List.of(new SimpleGrantedAuthority("PATIENT")));
@@ -320,34 +316,32 @@ public class MedicalVisitServiceTest {
 
     @Test
     void testGetMedicalVisitByAnotherPatientMedicalVisitNotFoundException() {
-        MedicalVisit firstMedicalVisit = new MedicalVisit();
-        firstMedicalVisit.setId(1L);
-        firstMedicalVisit.setDateOfVisit(LocalDate.of(2025, 4, 3));
-        Doctor doctor = new Doctor();
-        doctor.setFirstName("John");
-        doctor.setLastName("Doe");
-        doctor.setId(1L);
-        Patient patient = new Patient();
-        patient.setId(2L);
-        patient.setFirstName("Alice");
-        patient.setLastName("Jones");
+        MedicalVisit firstMedicalVisit = Mockito.mock(MedicalVisit.class);
+        Mockito.when(firstMedicalVisit.getId()).thenReturn(1L);
+        Mockito.when(firstMedicalVisit.getDateOfVisit()).thenReturn(LocalDate.of(2025, 4, 3));
+        Doctor doctor = Mockito.mock(Doctor.class);
+        Mockito.when(doctor.getFirstName()).thenReturn("John");
+        Mockito.when(doctor.getLastName()).thenReturn("Doe");
+        Mockito.when(doctor.getId()).thenReturn(1L);
+        Patient patient = Mockito.mock(Patient.class);
+        Mockito.when(patient.getId()).thenReturn(2L);
+        Mockito.when(patient.getFirstName()).thenReturn("Alice");
+        Mockito.when(patient.getLastName()).thenReturn("Jones");
 
-        firstMedicalVisit.setDoctor(doctor);
-        firstMedicalVisit.setPatient(patient);
-
-        firstMedicalVisit.setTreatmentSet(new HashSet<>());
+        Mockito.when(firstMedicalVisit.getDoctor()).thenReturn(doctor);
+        Mockito.when(firstMedicalVisit.getPatient()).thenReturn(patient);
 
         Mockito.when(medicalVisitRepository.findById(any())).thenReturn(Optional.of(firstMedicalVisit));
 
-        User user = new User();
-        user.setId(3L);
-        user.setUsername("patient");
-        user.setPassword("patient");
-        user.setAuthorities(Set.of(new Role(1, "PATIENT", Set.of())));
-        user.setEnabled(true);
-        user.setAccountNonExpired(true);
-        user.setAccountNonLocked(true);
-        user.setCredentialsNonExpired(true);
+        User user = Mockito.mock(User.class);
+        Mockito.when(user.getId()).thenReturn(3L);
+        Mockito.when(user.getUsername()).thenReturn("patient");
+        Mockito.when(user.getPassword()).thenReturn("patient");
+        Mockito.when(user.getAuthorities()).thenReturn(Set.of(new Role(1, "PATIENT", Set.of())));
+        Mockito.when(user.isEnabled()).thenReturn(true);
+        Mockito.when(user.isAccountNonExpired()).thenReturn(true);
+        Mockito.when(user.isAccountNonLocked()).thenReturn(true);
+        Mockito.when(user.isCredentialsNonExpired()).thenReturn(true);
 
         Authentication authentication = new UsernamePasswordAuthenticationToken(user, null,
             List.of(new SimpleGrantedAuthority("PATIENT")));
@@ -422,20 +416,20 @@ public class MedicalVisitServiceTest {
     @Test
     @WithMockUser(authorities = {"ADMIN"})
     void testGetMedicalVisitsByPatientIdSuccessfully() {
-        MedicalVisit firstMedicalVisit = new MedicalVisit();
-        firstMedicalVisit.setId(1L);
-        firstMedicalVisit.setDateOfVisit(LocalDate.of(2025, 4, 3));
-        Doctor doctor = new Doctor();
-        doctor.setFirstName("John");
-        doctor.setLastName("Doe");
-        doctor.setId(1L);
-        Patient patient = new Patient();
-        patient.setId(2L);
-        patient.setFirstName("Alice");
-        patient.setLastName("Jones");
+        MedicalVisit firstMedicalVisit = Mockito.mock(MedicalVisit.class);
+        Mockito.when(firstMedicalVisit.getId()).thenReturn(1L);
+        Mockito.when(firstMedicalVisit.getDateOfVisit()).thenReturn(LocalDate.of(2025, 4, 3));
+        Doctor doctor = Mockito.mock(Doctor.class);
+        Mockito.when(doctor.getFirstName()).thenReturn("John");
+        Mockito.when(doctor.getLastName()).thenReturn("Doe");
+        Mockito.when(doctor.getId()).thenReturn(1L);
+        Patient patient = Mockito.mock(Patient.class);
+        Mockito.when(patient.getId()).thenReturn(2L);
+        Mockito.when(patient.getFirstName()).thenReturn("Alice");
+        Mockito.when(patient.getLastName()).thenReturn("Jones");
 
-        firstMedicalVisit.setDoctor(doctor);
-        firstMedicalVisit.setPatient(patient);
+        Mockito.when(firstMedicalVisit.getDoctor()).thenReturn(doctor);
+        Mockito.when(firstMedicalVisit.getPatient()).thenReturn(patient);
 
         Mockito.when(medicalVisitRepository.findByPatientId(2L)).thenReturn(List.of(firstMedicalVisit));
         List<MedicalVisitDTO> result = medicalVisitService.getMedicalVisitsByPatientId(2L);
@@ -491,20 +485,20 @@ public class MedicalVisitServiceTest {
     @Test
     @WithMockUser(authorities = {"ADMIN"})
     void testGetMedicalVisitsGetMedicalVisitsByPeriodSuccessfully() {
-        MedicalVisit firstMedicalVisit = new MedicalVisit();
-        firstMedicalVisit.setId(1L);
-        firstMedicalVisit.setDateOfVisit(LocalDate.of(2025, 4, 3));
-        Doctor doctor = new Doctor();
-        doctor.setFirstName("John");
-        doctor.setLastName("Doe");
-        doctor.setId(1L);
-        Patient patient = new Patient();
-        patient.setId(2L);
-        patient.setFirstName("Alice");
-        patient.setLastName("Jones");
+        MedicalVisit firstMedicalVisit = Mockito.mock(MedicalVisit.class);
+        Mockito.when(firstMedicalVisit.getId()).thenReturn(1L);
+        Mockito.when(firstMedicalVisit.getDateOfVisit()).thenReturn(LocalDate.of(2025, 4, 3));
+        Doctor doctor = Mockito.mock(Doctor.class);
+        Mockito.when(doctor.getFirstName()).thenReturn("John");
+        Mockito.when(doctor.getLastName()).thenReturn("Doe");
+        Mockito.when(doctor.getId()).thenReturn(1L);
+        Patient patient = Mockito.mock(Patient.class);
+        Mockito.when(patient.getId()).thenReturn(2L);
+        Mockito.when(patient.getFirstName()).thenReturn("Alice");
+        Mockito.when(patient.getLastName()).thenReturn("Jones");
 
-        firstMedicalVisit.setDoctor(doctor);
-        firstMedicalVisit.setPatient(patient);
+        Mockito.when(firstMedicalVisit.getDoctor()).thenReturn(doctor);
+        Mockito.when(firstMedicalVisit.getPatient()).thenReturn(patient);
 
         Mockito.when(medicalVisitRepository.findByDateOfVisitBetween(LocalDate.of(2025, 4, 1),
             LocalDate.of(2025, 4, 10))).thenReturn(List.of(firstMedicalVisit));
@@ -566,8 +560,8 @@ public class MedicalVisitServiceTest {
         Mockito.when(patientService.getPatient(2L)).thenReturn(new PatientDTO());
         Mockito.when(doctorService.getDoctor(1L)).thenReturn(new DoctorDTO());
 
-        MedicalVisit medicalVisitToReturn = new MedicalVisit();
-        medicalVisitToReturn.setDateOfVisit(dateOfVisit);
+        MedicalVisit medicalVisitToReturn = Mockito.mock(MedicalVisit.class);
+        Mockito.when(medicalVisitToReturn.getDateOfVisit()).thenReturn(dateOfVisit);
         Mockito.when(medicalVisitRepository.save(any())).thenReturn(medicalVisitToReturn);
 
         MedicalVisitDTO result = medicalVisitService.createMedicalVisit(medicalVisitCreateDTO);
@@ -585,8 +579,8 @@ public class MedicalVisitServiceTest {
         Mockito.when(patientService.getPatient(2L)).thenReturn(new PatientDTO());
         Mockito.when(doctorService.getDoctor(1L)).thenReturn(new DoctorDTO());
 
-        MedicalVisit medicalVisitToReturn = new MedicalVisit();
-        medicalVisitToReturn.setDateOfVisit(dateOfVisit);
+        MedicalVisit medicalVisitToReturn = Mockito.mock(MedicalVisit.class);
+        Mockito.when(medicalVisitToReturn.getDateOfVisit()).thenReturn(dateOfVisit);
         Mockito.when(medicalVisitRepository.save(any())).thenReturn(medicalVisitToReturn);
 
         MedicalVisitDTO result = medicalVisitService.createMedicalVisit(medicalVisitCreateDTO);
@@ -648,33 +642,33 @@ public class MedicalVisitServiceTest {
 
     @Test
     void testAddDiagnoseSuccessfullyByDoctor() {
-        MedicalVisit firstMedicalVisit = new MedicalVisit();
-        firstMedicalVisit.setId(1L);
-        firstMedicalVisit.setDateOfVisit(LocalDate.of(2025, 4, 3));
-        Doctor doctor = new Doctor();
-        doctor.setFirstName("John");
-        doctor.setLastName("Doe");
-        doctor.setId(1L);
-        Patient patient = new Patient();
-        patient.setId(2L);
-        patient.setFirstName("Alice");
-        patient.setLastName("Jones");
+        MedicalVisit firstMedicalVisit = Mockito.mock(MedicalVisit.class);
+        Mockito.when(firstMedicalVisit.getId()).thenReturn(1L);
+        Mockito.when(firstMedicalVisit.getDateOfVisit()).thenReturn(LocalDate.of(2025, 4, 3));
+        Doctor doctor = Mockito.mock(Doctor.class);
+        Mockito.when(doctor.getFirstName()).thenReturn("John");
+        Mockito.when(doctor.getLastName()).thenReturn("Doe");
+        Mockito.when(doctor.getId()).thenReturn(1L);
+        Patient patient = Mockito.mock(Patient.class);
+        Mockito.when(patient.getId()).thenReturn(2L);
+        Mockito.when(patient.getFirstName()).thenReturn("Alice");
+        Mockito.when(patient.getLastName()).thenReturn("Jones");
 
-        firstMedicalVisit.setDoctor(doctor);
-        firstMedicalVisit.setPatient(patient);
-        firstMedicalVisit.setDiagnoseSet(new HashSet<>());
+        Mockito.when(firstMedicalVisit.getDoctor()).thenReturn(doctor);
+        Mockito.when(firstMedicalVisit.getPatient()).thenReturn(patient);
+        Mockito.when(firstMedicalVisit.getDiagnoseSet()).thenReturn(new HashSet<>());
 
         Mockito.when(medicalVisitRepository.findById(any())).thenReturn(Optional.of(firstMedicalVisit));
 
-        User user = new User();
-        user.setId(1L);
-        user.setUsername("doctor");
-        user.setPassword("doctor");
-        user.setAuthorities(Set.of(new Role(1, "DOCTOR", Set.of())));
-        user.setEnabled(true);
-        user.setAccountNonExpired(true);
-        user.setAccountNonLocked(true);
-        user.setCredentialsNonExpired(true);
+        User user = Mockito.mock(User.class);
+        Mockito.when(user.getId()).thenReturn(1L);
+        Mockito.when(user.getUsername()).thenReturn("doctor");
+        Mockito.when(user.getPassword()).thenReturn("doctor");
+        Mockito.when(user.getAuthorities()).thenReturn(Set.of(new Role(1, "DOCTOR", Set.of())));
+        Mockito.when(user.isEnabled()).thenReturn(true);
+        Mockito.when(user.isAccountNonExpired()).thenReturn(true);
+        Mockito.when(user.isAccountNonLocked()).thenReturn(true);
+        Mockito.when(user.isCredentialsNonExpired()).thenReturn(true);
 
         Authentication authentication = new UsernamePasswordAuthenticationToken(user, null,
             List.of(new SimpleGrantedAuthority("DOCTOR")));
@@ -700,33 +694,33 @@ public class MedicalVisitServiceTest {
 
     @Test
     void testAddDiagnoseByAnotherDoctorMedicalVisitNotFoundException() {
-        MedicalVisit firstMedicalVisit = new MedicalVisit();
-        firstMedicalVisit.setId(1L);
-        firstMedicalVisit.setDateOfVisit(LocalDate.of(2025, 4, 3));
-        Doctor doctor = new Doctor();
-        doctor.setFirstName("John");
-        doctor.setLastName("Doe");
-        doctor.setId(4L);
-        Patient patient = new Patient();
-        patient.setId(2L);
-        patient.setFirstName("Alice");
-        patient.setLastName("Jones");
+        MedicalVisit firstMedicalVisit = Mockito.mock(MedicalVisit.class);
+        Mockito.when(firstMedicalVisit.getId()).thenReturn(1L);
+        Mockito.when(firstMedicalVisit.getDateOfVisit()).thenReturn(LocalDate.of(2025, 4, 3));
+        Doctor doctor = Mockito.mock(Doctor.class);
+        Mockito.when(doctor.getFirstName()).thenReturn("John");
+        Mockito.when(doctor.getLastName()).thenReturn("Doe");
+        Mockito.when(doctor.getId()).thenReturn(4L);
+        Patient patient = Mockito.mock(Patient.class);
+        Mockito.when(patient.getId()).thenReturn(2L);
+        Mockito.when(patient.getFirstName()).thenReturn("Alice");
+        Mockito.when(patient.getLastName()).thenReturn("Jones");
 
-        firstMedicalVisit.setDoctor(doctor);
-        firstMedicalVisit.setPatient(patient);
-        firstMedicalVisit.setDiagnoseSet(new HashSet<>());
+        Mockito.when(firstMedicalVisit.getDoctor()).thenReturn(doctor);
+        Mockito.when(firstMedicalVisit.getPatient()).thenReturn(patient);
+        Mockito.when(firstMedicalVisit.getDiagnoseSet()).thenReturn(new HashSet<>());
 
         Mockito.when(medicalVisitRepository.findById(any())).thenReturn(Optional.of(firstMedicalVisit));
 
-        User user = new User();
-        user.setId(1L);
-        user.setUsername("doctor");
-        user.setPassword("doctor");
-        user.setAuthorities(Set.of(new Role(1, "DOCTOR", Set.of())));
-        user.setEnabled(true);
-        user.setAccountNonExpired(true);
-        user.setAccountNonLocked(true);
-        user.setCredentialsNonExpired(true);
+        User user = Mockito.mock(User.class);
+        Mockito.when(user.getId()).thenReturn(1L);
+        Mockito.when(user.getUsername()).thenReturn("doctor");
+        Mockito.when(user.getPassword()).thenReturn("doctor");
+        Mockito.when(user.getAuthorities()).thenReturn(Set.of(new Role(1, "DOCTOR", Set.of())));
+        Mockito.when(user.isEnabled()).thenReturn(true);
+        Mockito.when(user.isAccountNonExpired()).thenReturn(true);
+        Mockito.when(user.isAccountNonLocked()).thenReturn(true);
+        Mockito.when(user.isCredentialsNonExpired()).thenReturn(true);
 
         Authentication authentication = new UsernamePasswordAuthenticationToken(user, null,
             List.of(new SimpleGrantedAuthority("ADMIN")));
@@ -740,33 +734,33 @@ public class MedicalVisitServiceTest {
 
     @Test
     void testAddDiagnoseSuccessfullyByAdmin() {
-        MedicalVisit firstMedicalVisit = new MedicalVisit();
-        firstMedicalVisit.setId(1L);
-        firstMedicalVisit.setDateOfVisit(LocalDate.of(2025, 4, 3));
-        Doctor doctor = new Doctor();
-        doctor.setFirstName("John");
-        doctor.setLastName("Doe");
-        doctor.setId(1L);
-        Patient patient = new Patient();
-        patient.setId(2L);
-        patient.setFirstName("Alice");
-        patient.setLastName("Jones");
+        MedicalVisit firstMedicalVisit = Mockito.mock(MedicalVisit.class);
+        Mockito.when(firstMedicalVisit.getId()).thenReturn(1L);
+        Mockito.when(firstMedicalVisit.getDateOfVisit()).thenReturn(LocalDate.of(2025, 4, 3));
+        Doctor doctor = Mockito.mock(Doctor.class);
+        Mockito.when(doctor.getFirstName()).thenReturn("John");
+        Mockito.when(doctor.getLastName()).thenReturn("Doe");
+        Mockito.when(doctor.getId()).thenReturn(1L);
+        Patient patient = Mockito.mock(Patient.class);
+        Mockito.when(patient.getId()).thenReturn(2L);
+        Mockito.when(patient.getFirstName()).thenReturn("Alice");
+        Mockito.when(patient.getLastName()).thenReturn("Jones");
 
-        firstMedicalVisit.setDoctor(doctor);
-        firstMedicalVisit.setPatient(patient);
-        firstMedicalVisit.setDiagnoseSet(new HashSet<>());
+        Mockito.when(firstMedicalVisit.getDoctor()).thenReturn(doctor);
+        Mockito.when(firstMedicalVisit.getPatient()).thenReturn(patient);
+        Mockito.when(firstMedicalVisit.getDiagnoseSet()).thenReturn(new HashSet<>());
 
         Mockito.when(medicalVisitRepository.findById(any())).thenReturn(Optional.of(firstMedicalVisit));
 
-        User user = new User();
-        user.setId(1L);
-        user.setUsername("admin");
-        user.setPassword("admin");
-        user.setAuthorities(Set.of(new Role(1, "ADMIN", Set.of())));
-        user.setEnabled(true);
-        user.setAccountNonExpired(true);
-        user.setAccountNonLocked(true);
-        user.setCredentialsNonExpired(true);
+        User user = Mockito.mock(User.class);
+        Mockito.when(user.getId()).thenReturn(1L);
+        Mockito.when(user.getUsername()).thenReturn("admin");
+        Mockito.when(user.getPassword()).thenReturn("admin");
+        Mockito.when(user.getAuthorities()).thenReturn(Set.of(new Role(1, "ADMIN", Set.of())));
+        Mockito.when(user.isEnabled()).thenReturn(true);
+        Mockito.when(user.isAccountNonExpired()).thenReturn(true);
+        Mockito.when(user.isAccountNonLocked()).thenReturn(true);
+        Mockito.when(user.isCredentialsNonExpired()).thenReturn(true);
 
         Authentication authentication = new UsernamePasswordAuthenticationToken(user, null,
             List.of(new SimpleGrantedAuthority("ADMIN")));
@@ -809,44 +803,44 @@ public class MedicalVisitServiceTest {
 
     @Test
     void testRemoveDiagnoseSuccessfullyByDoctor() {
-        MedicalVisit firstMedicalVisit = new MedicalVisit();
-        firstMedicalVisit.setId(1L);
-        firstMedicalVisit.setDateOfVisit(LocalDate.of(2025, 4, 3));
-        Doctor doctor = new Doctor();
-        doctor.setFirstName("John");
-        doctor.setLastName("Doe");
-        doctor.setId(1L);
-        Patient patient = new Patient();
-        patient.setId(2L);
-        patient.setFirstName("Alice");
-        patient.setLastName("Jones");
+        MedicalVisit firstMedicalVisit = Mockito.mock(MedicalVisit.class);
+        Mockito.when(firstMedicalVisit.getId()).thenReturn(1L);
+        Mockito.when(firstMedicalVisit.getDateOfVisit()).thenReturn(LocalDate.of(2025, 4, 3));
+        Doctor doctor = Mockito.mock(Doctor.class);
+        Mockito.when(doctor.getFirstName()).thenReturn("John");
+        Mockito.when(doctor.getLastName()).thenReturn("Doe");
+        Mockito.when(doctor.getId()).thenReturn(1L);
+        Patient patient = Mockito.mock(Patient.class);
+        Mockito.when(patient.getId()).thenReturn(2L);
+        Mockito.when(patient.getFirstName()).thenReturn("Alice");
+        Mockito.when(patient.getLastName()).thenReturn("Jones");
 
-        firstMedicalVisit.setDoctor(doctor);
-        firstMedicalVisit.setPatient(patient);
+        Mockito.when(firstMedicalVisit.getDoctor()).thenReturn(doctor);
+        Mockito.when(firstMedicalVisit.getPatient()).thenReturn(patient);
 
-        Mockito.when(medicalVisitRepository.findById(any())).thenReturn(Optional.of(firstMedicalVisit));
-
-        User user = new User();
-        user.setId(1L);
-        user.setUsername("doctor");
-        user.setPassword("doctor");
-        user.setAuthorities(Set.of(new Role(1, "DOCTOR", Set.of())));
-        user.setEnabled(true);
-        user.setAccountNonExpired(true);
-        user.setAccountNonLocked(true);
-        user.setCredentialsNonExpired(true);
+        User user = Mockito.mock(User.class);
+        Mockito.when(user.getId()).thenReturn(1L);
+        Mockito.when(user.getUsername()).thenReturn("doctor");
+        Mockito.when(user.getPassword()).thenReturn("doctor");
+        Mockito.when(user.getAuthorities()).thenReturn(Set.of(new Role(1, "DOCTOR", Set.of())));
+        Mockito.when(user.isEnabled()).thenReturn(true);
+        Mockito.when(user.isAccountNonExpired()).thenReturn(true);
+        Mockito.when(user.isAccountNonLocked()).thenReturn(true);
+        Mockito.when(user.isCredentialsNonExpired()).thenReturn(true);
 
         Authentication authentication = new UsernamePasswordAuthenticationToken(user, null,
             List.of(new SimpleGrantedAuthority("DOCTOR")));
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         DiagnoseDTO diagnoseDTO = new DiagnoseDTO("123456", "diagnose_description");
-                Diagnose diagnose = new Diagnose();
-                diagnose.setIcdCode("123456");
-                diagnose.setDiagnoseDescription("diagnose_description");
-                Set<Diagnose> diagnoseSetToAdd = new HashSet<>();
-                diagnoseSetToAdd.add(diagnose);
-                firstMedicalVisit.setDiagnoseSet(diagnoseSetToAdd);
+        Diagnose diagnose = new Diagnose();
+        diagnose.setIcdCode("123456");
+        diagnose.setDiagnoseDescription("diagnose_description");
+        Set<Diagnose> diagnoseSetToAdd = new HashSet<>();
+        diagnoseSetToAdd.add(diagnose);
+        Mockito.when(firstMedicalVisit.getDiagnoseSet()).thenReturn(diagnoseSetToAdd);
+
+        Mockito.when(medicalVisitRepository.findById(any())).thenReturn(Optional.of(firstMedicalVisit));
 
         Mockito.when(diagnoseService.getDiagnose(any())).thenReturn(diagnoseDTO);
         Mockito.when(medicalVisitRepository.save(any())).thenReturn(firstMedicalVisit);
@@ -863,33 +857,32 @@ public class MedicalVisitServiceTest {
 
     @Test
     void testRemoveDiagnoseByAnotherDoctorMedicalVisitNotFoundException() {
-        MedicalVisit firstMedicalVisit = new MedicalVisit();
-        firstMedicalVisit.setId(1L);
-        firstMedicalVisit.setDateOfVisit(LocalDate.of(2025, 4, 3));
-        Doctor doctor = new Doctor();
-        doctor.setFirstName("John");
-        doctor.setLastName("Doe");
-        doctor.setId(4L);
-        Patient patient = new Patient();
-        patient.setId(2L);
-        patient.setFirstName("Alice");
-        patient.setLastName("Jones");
+        MedicalVisit firstMedicalVisit = Mockito.mock(MedicalVisit.class);
+        Mockito.when(firstMedicalVisit.getId()).thenReturn(1L);
+        Mockito.when(firstMedicalVisit.getDateOfVisit()).thenReturn(LocalDate.of(2025, 4, 3));
+        Doctor doctor = Mockito.mock(Doctor.class);
+        Mockito.when(doctor.getFirstName()).thenReturn("John");
+        Mockito.when(doctor.getLastName()).thenReturn("Doe");
+        Mockito.when(doctor.getId()).thenReturn(1L);
+        Patient patient = Mockito.mock(Patient.class);
+        Mockito.when(patient.getId()).thenReturn(2L);
+        Mockito.when(patient.getFirstName()).thenReturn("Alice");
+        Mockito.when(patient.getLastName()).thenReturn("Jones");
 
-        firstMedicalVisit.setDoctor(doctor);
-        firstMedicalVisit.setPatient(patient);
-        firstMedicalVisit.setDiagnoseSet(new HashSet<>());
+        Mockito.when(firstMedicalVisit.getDoctor()).thenReturn(doctor);
+        Mockito.when(firstMedicalVisit.getPatient()).thenReturn(patient);
 
         Mockito.when(medicalVisitRepository.findById(any())).thenReturn(Optional.of(firstMedicalVisit));
 
-        User user = new User();
-        user.setId(1L);
-        user.setUsername("doctor");
-        user.setPassword("doctor");
-        user.setAuthorities(Set.of(new Role(1, "DOCTOR", Set.of())));
-        user.setEnabled(true);
-        user.setAccountNonExpired(true);
-        user.setAccountNonLocked(true);
-        user.setCredentialsNonExpired(true);
+        User user = Mockito.mock(User.class);
+        Mockito.when(user.getId()).thenReturn(4L);
+        Mockito.when(user.getUsername()).thenReturn("doctor");
+        Mockito.when(user.getPassword()).thenReturn("doctor");
+        Mockito.when(user.getAuthorities()).thenReturn(Set.of(new Role(1, "DOCTOR", Set.of())));
+        Mockito.when(user.isEnabled()).thenReturn(true);
+        Mockito.when(user.isAccountNonExpired()).thenReturn(true);
+        Mockito.when(user.isAccountNonLocked()).thenReturn(true);
+        Mockito.when(user.isCredentialsNonExpired()).thenReturn(true);
 
         Authentication authentication = new UsernamePasswordAuthenticationToken(user, null,
             List.of(new SimpleGrantedAuthority("DOCTOR")));
@@ -903,32 +896,32 @@ public class MedicalVisitServiceTest {
 
     @Test
     void testRemoveDiagnoseSuccessfullyByAdmin() {
-        MedicalVisit firstMedicalVisit = new MedicalVisit();
-        firstMedicalVisit.setId(1L);
-        firstMedicalVisit.setDateOfVisit(LocalDate.of(2025, 4, 3));
-        Doctor doctor = new Doctor();
-        doctor.setFirstName("John");
-        doctor.setLastName("Doe");
-        doctor.setId(1L);
-        Patient patient = new Patient();
-        patient.setId(2L);
-        patient.setFirstName("Alice");
-        patient.setLastName("Jones");
+        MedicalVisit firstMedicalVisit = Mockito.mock(MedicalVisit.class);
+        Mockito.when(firstMedicalVisit.getId()).thenReturn(1L);
+        Mockito.when(firstMedicalVisit.getDateOfVisit()).thenReturn(LocalDate.of(2025, 4, 3));
+        Doctor doctor = Mockito.mock(Doctor.class);
+        Mockito.when(doctor.getFirstName()).thenReturn("John");
+        Mockito.when(doctor.getLastName()).thenReturn("Doe");
+        Mockito.when(doctor.getId()).thenReturn(1L);
+        Patient patient = Mockito.mock(Patient.class);
+        Mockito.when(patient.getId()).thenReturn(2L);
+        Mockito.when(patient.getFirstName()).thenReturn("Alice");
+        Mockito.when(patient.getLastName()).thenReturn("Jones");
 
-        firstMedicalVisit.setDoctor(doctor);
-        firstMedicalVisit.setPatient(patient);
+        Mockito.when(firstMedicalVisit.getDoctor()).thenReturn(doctor);
+        Mockito.when(firstMedicalVisit.getPatient()).thenReturn(patient);
 
         Mockito.when(medicalVisitRepository.findById(any())).thenReturn(Optional.of(firstMedicalVisit));
 
-        User user = new User();
-        user.setId(1L);
-        user.setUsername("admin");
-        user.setPassword("admin");
-        user.setAuthorities(Set.of(new Role(1, "ADMIN", Set.of())));
-        user.setEnabled(true);
-        user.setAccountNonExpired(true);
-        user.setAccountNonLocked(true);
-        user.setCredentialsNonExpired(true);
+        User user = Mockito.mock(User.class);
+        Mockito.when(user.getId()).thenReturn(4L);
+        Mockito.when(user.getUsername()).thenReturn("admin");
+        Mockito.when(user.getPassword()).thenReturn("admin");
+        Mockito.when(user.getAuthorities()).thenReturn(Set.of(new Role(1, "ADMIN", Set.of())));
+        Mockito.when(user.isEnabled()).thenReturn(true);
+        Mockito.when(user.isAccountNonExpired()).thenReturn(true);
+        Mockito.when(user.isAccountNonLocked()).thenReturn(true);
+        Mockito.when(user.isCredentialsNonExpired()).thenReturn(true);
 
         Authentication authentication = new UsernamePasswordAuthenticationToken(user, null,
             List.of(new SimpleGrantedAuthority("ADMIN")));
@@ -940,7 +933,7 @@ public class MedicalVisitServiceTest {
         diagnose.setDiagnoseDescription("diagnose_description");
         Set<Diagnose> diagnoseSetToAdd = new HashSet<>();
         diagnoseSetToAdd.add(diagnose);
-        firstMedicalVisit.setDiagnoseSet(diagnoseSetToAdd);
+        Mockito.when(firstMedicalVisit.getDiagnoseSet()).thenReturn(diagnoseSetToAdd);
 
         Mockito.when(diagnoseService.getDiagnose(any())).thenReturn(diagnoseDTO);
         Mockito.when(medicalVisitRepository.save(any())).thenReturn(firstMedicalVisit);
@@ -974,36 +967,36 @@ public class MedicalVisitServiceTest {
 
     @Test
     void testAddTreatmentSuccessfullyByDoctor() {
-        MedicalVisit firstMedicalVisit = new MedicalVisit();
-        firstMedicalVisit.setId(1L);
-        firstMedicalVisit.setDateOfVisit(LocalDate.of(2025, 4, 3));
-        Doctor doctor = new Doctor();
-        doctor.setFirstName("John");
-        doctor.setLastName("Doe");
-        doctor.setId(1L);
-        Patient patient = new Patient();
-        patient.setId(2L);
-        patient.setFirstName("Alice");
-        patient.setLastName("Jones");
+        MedicalVisit firstMedicalVisit = Mockito.mock(MedicalVisit.class);
+        Mockito.when(firstMedicalVisit.getId()).thenReturn(1L);
+        Mockito.when(firstMedicalVisit.getDateOfVisit()).thenReturn(LocalDate.of(2025, 4, 3));
+        Doctor doctor = Mockito.mock(Doctor.class);
+        Mockito.when(doctor.getFirstName()).thenReturn("John");
+        Mockito.when(doctor.getLastName()).thenReturn("Doe");
+        Mockito.when(doctor.getId()).thenReturn(1L);
+        Patient patient = Mockito.mock(Patient.class);
+        Mockito.when(patient.getId()).thenReturn(2L);
+        Mockito.when(patient.getFirstName()).thenReturn("Alice");
+        Mockito.when(patient.getLastName()).thenReturn("Jones");
 
-        firstMedicalVisit.setDoctor(doctor);
-        firstMedicalVisit.setPatient(patient);
-        firstMedicalVisit.setTreatmentSet(new HashSet<>());
+        Mockito.when(firstMedicalVisit.getDoctor()).thenReturn(doctor);
+        Mockito.when(firstMedicalVisit.getPatient()).thenReturn(patient);
+        Mockito.when(firstMedicalVisit.getTreatmentSet()).thenReturn(new HashSet<>());
 
         Mockito.when(medicalVisitRepository.findById(any())).thenReturn(Optional.of(firstMedicalVisit));
 
-        User user = new User();
-        user.setId(1L);
-        user.setUsername("doctor");
-        user.setPassword("doctor");
-        user.setAuthorities(Set.of(new Role(1, "DOCTOR", Set.of())));
-        user.setEnabled(true);
-        user.setAccountNonExpired(true);
-        user.setAccountNonLocked(true);
-        user.setCredentialsNonExpired(true);
+        User user = Mockito.mock(User.class);
+        Mockito.when(user.getId()).thenReturn(1L);
+        Mockito.when(user.getUsername()).thenReturn("doctor");
+        Mockito.when(user.getPassword()).thenReturn("doctor");
+        Mockito.when(user.getAuthorities()).thenReturn(Set.of(new Role(1, "DOCTOR", Set.of())));
+        Mockito.when(user.isEnabled()).thenReturn(true);
+        Mockito.when(user.isAccountNonExpired()).thenReturn(true);
+        Mockito.when(user.isAccountNonLocked()).thenReturn(true);
+        Mockito.when(user.isCredentialsNonExpired()).thenReturn(true);
 
         Authentication authentication = new UsernamePasswordAuthenticationToken(user, null,
-            List.of(new SimpleGrantedAuthority("ADMIN")));
+            List.of(new SimpleGrantedAuthority("DOCTOR")));
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         TreatmentDTO treatmentDTO = new TreatmentDTO("treatment_name", "treatment_description");
@@ -1026,33 +1019,33 @@ public class MedicalVisitServiceTest {
 
     @Test
     void testAddTreatmentByAnotherDoctorMedicalVisitNotFoundException() {
-        MedicalVisit firstMedicalVisit = new MedicalVisit();
-        firstMedicalVisit.setId(1L);
-        firstMedicalVisit.setDateOfVisit(LocalDate.of(2025, 4, 3));
-        Doctor doctor = new Doctor();
-        doctor.setFirstName("John");
-        doctor.setLastName("Doe");
-        doctor.setId(4L);
-        Patient patient = new Patient();
-        patient.setId(2L);
-        patient.setFirstName("Alice");
-        patient.setLastName("Jones");
+        MedicalVisit firstMedicalVisit = Mockito.mock(MedicalVisit.class);
+        Mockito.when(firstMedicalVisit.getId()).thenReturn(1L);
+        Mockito.when(firstMedicalVisit.getDateOfVisit()).thenReturn(LocalDate.of(2025, 4, 3));
+        Doctor doctor = Mockito.mock(Doctor.class);
+        Mockito.when(doctor.getFirstName()).thenReturn("John");
+        Mockito.when(doctor.getLastName()).thenReturn("Doe");
+        Mockito.when(doctor.getId()).thenReturn(4L);
+        Patient patient = Mockito.mock(Patient.class);
+        Mockito.when(patient.getId()).thenReturn(2L);
+        Mockito.when(patient.getFirstName()).thenReturn("Alice");
+        Mockito.when(patient.getLastName()).thenReturn("Jones");
 
-        firstMedicalVisit.setDoctor(doctor);
-        firstMedicalVisit.setPatient(patient);
-        firstMedicalVisit.setTreatmentSet(new HashSet<>());
+        Mockito.when(firstMedicalVisit.getDoctor()).thenReturn(doctor);
+        Mockito.when(firstMedicalVisit.getPatient()).thenReturn(patient);
+        Mockito.when(firstMedicalVisit.getTreatmentSet()).thenReturn(new HashSet<>());
 
         Mockito.when(medicalVisitRepository.findById(any())).thenReturn(Optional.of(firstMedicalVisit));
 
-        User user = new User();
-        user.setId(1L);
-        user.setUsername("doctor");
-        user.setPassword("doctor");
-        user.setAuthorities(Set.of(new Role(1, "DOCTOR", Set.of())));
-        user.setEnabled(true);
-        user.setAccountNonExpired(true);
-        user.setAccountNonLocked(true);
-        user.setCredentialsNonExpired(true);
+        User user = Mockito.mock(User.class);
+        Mockito.when(user.getId()).thenReturn(1L);
+        Mockito.when(user.getUsername()).thenReturn("doctor");
+        Mockito.when(user.getPassword()).thenReturn("doctor");
+        Mockito.when(user.getAuthorities()).thenReturn(Set.of(new Role(1, "DOCTOR", Set.of())));
+        Mockito.when(user.isEnabled()).thenReturn(true);
+        Mockito.when(user.isAccountNonExpired()).thenReturn(true);
+        Mockito.when(user.isAccountNonLocked()).thenReturn(true);
+        Mockito.when(user.isCredentialsNonExpired()).thenReturn(true);
 
         Authentication authentication = new UsernamePasswordAuthenticationToken(user, null,
             List.of(new SimpleGrantedAuthority("DOCTOR")));
@@ -1066,33 +1059,33 @@ public class MedicalVisitServiceTest {
 
     @Test
     void testAddTreatmentSuccessfullyByAdmin() {
-        MedicalVisit firstMedicalVisit = new MedicalVisit();
-        firstMedicalVisit.setId(1L);
-        firstMedicalVisit.setDateOfVisit(LocalDate.of(2025, 4, 3));
-        Doctor doctor = new Doctor();
-        doctor.setFirstName("John");
-        doctor.setLastName("Doe");
-        doctor.setId(1L);
-        Patient patient = new Patient();
-        patient.setId(2L);
-        patient.setFirstName("Alice");
-        patient.setLastName("Jones");
+        MedicalVisit firstMedicalVisit = Mockito.mock(MedicalVisit.class);
+        Mockito.when(firstMedicalVisit.getId()).thenReturn(1L);
+        Mockito.when(firstMedicalVisit.getDateOfVisit()).thenReturn(LocalDate.of(2025, 4, 3));
+        Doctor doctor = Mockito.mock(Doctor.class);
+        Mockito.when(doctor.getFirstName()).thenReturn("John");
+        Mockito.when(doctor.getLastName()).thenReturn("Doe");
+        Mockito.when(doctor.getId()).thenReturn(1L);
+        Patient patient = Mockito.mock(Patient.class);
+        Mockito.when(patient.getId()).thenReturn(2L);
+        Mockito.when(patient.getFirstName()).thenReturn("Alice");
+        Mockito.when(patient.getLastName()).thenReturn("Jones");
 
-        firstMedicalVisit.setDoctor(doctor);
-        firstMedicalVisit.setPatient(patient);
-        firstMedicalVisit.setTreatmentSet(new HashSet<>());
+        Mockito.when(firstMedicalVisit.getDoctor()).thenReturn(doctor);
+        Mockito.when(firstMedicalVisit.getPatient()).thenReturn(patient);
+        Mockito.when(firstMedicalVisit.getTreatmentSet()).thenReturn(new HashSet<>());
 
         Mockito.when(medicalVisitRepository.findById(any())).thenReturn(Optional.of(firstMedicalVisit));
 
-        User user = new User();
-        user.setId(1L);
-        user.setUsername("admin");
-        user.setPassword("admin");
-        user.setAuthorities(Set.of(new Role(1, "ADMIN", Set.of())));
-        user.setEnabled(true);
-        user.setAccountNonExpired(true);
-        user.setAccountNonLocked(true);
-        user.setCredentialsNonExpired(true);
+        User user = Mockito.mock(User.class);
+        Mockito.when(user.getId()).thenReturn(1L);
+        Mockito.when(user.getUsername()).thenReturn("admin");
+        Mockito.when(user.getPassword()).thenReturn("admin");
+        Mockito.when(user.getAuthorities()).thenReturn(Set.of(new Role(1, "ADMIN", Set.of())));
+        Mockito.when(user.isEnabled()).thenReturn(true);
+        Mockito.when(user.isAccountNonExpired()).thenReturn(true);
+        Mockito.when(user.isAccountNonLocked()).thenReturn(true);
+        Mockito.when(user.isCredentialsNonExpired()).thenReturn(true);
 
         Authentication authentication = new UsernamePasswordAuthenticationToken(user, null,
             List.of(new SimpleGrantedAuthority("ADMIN")));
@@ -1135,32 +1128,32 @@ public class MedicalVisitServiceTest {
 
     @Test
     void testRemoveTreatmentSuccessfullyByDoctor() {
-        MedicalVisit firstMedicalVisit = new MedicalVisit();
-        firstMedicalVisit.setId(1L);
-        firstMedicalVisit.setDateOfVisit(LocalDate.of(2025, 4, 3));
-        Doctor doctor = new Doctor();
-        doctor.setFirstName("John");
-        doctor.setLastName("Doe");
-        doctor.setId(1L);
-        Patient patient = new Patient();
-        patient.setId(2L);
-        patient.setFirstName("Alice");
-        patient.setLastName("Jones");
+        MedicalVisit firstMedicalVisit = Mockito.mock(MedicalVisit.class);
+        Mockito.when(firstMedicalVisit.getId()).thenReturn(1L);
+        Mockito.when(firstMedicalVisit.getDateOfVisit()).thenReturn(LocalDate.of(2025, 4, 3));
+        Doctor doctor = Mockito.mock(Doctor.class);
+        Mockito.when(doctor.getFirstName()).thenReturn("John");
+        Mockito.when(doctor.getLastName()).thenReturn("Doe");
+        Mockito.when(doctor.getId()).thenReturn(1L);
+        Patient patient = Mockito.mock(Patient.class);
+        Mockito.when(patient.getId()).thenReturn(2L);
+        Mockito.when(patient.getFirstName()).thenReturn("Alice");
+        Mockito.when(patient.getLastName()).thenReturn("Jones");
 
-        firstMedicalVisit.setDoctor(doctor);
-        firstMedicalVisit.setPatient(patient);
+        Mockito.when(firstMedicalVisit.getDoctor()).thenReturn(doctor);
+        Mockito.when(firstMedicalVisit.getPatient()).thenReturn(patient);
 
         Mockito.when(medicalVisitRepository.findById(any())).thenReturn(Optional.of(firstMedicalVisit));
 
-        User user = new User();
-        user.setId(1L);
-        user.setUsername("doctor");
-        user.setPassword("doctor");
-        user.setAuthorities(Set.of(new Role(1, "DOCTOR", Set.of())));
-        user.setEnabled(true);
-        user.setAccountNonExpired(true);
-        user.setAccountNonLocked(true);
-        user.setCredentialsNonExpired(true);
+        User user = Mockito.mock(User.class);
+        Mockito.when(user.getId()).thenReturn(1L);
+        Mockito.when(user.getUsername()).thenReturn("doctor");
+        Mockito.when(user.getPassword()).thenReturn("doctor");
+        Mockito.when(user.getAuthorities()).thenReturn(Set.of(new Role(1, "DOCTOR", Set.of())));
+        Mockito.when(user.isEnabled()).thenReturn(true);
+        Mockito.when(user.isAccountNonExpired()).thenReturn(true);
+        Mockito.when(user.isAccountNonLocked()).thenReturn(true);
+        Mockito.when(user.isCredentialsNonExpired()).thenReturn(true);
 
         Authentication authentication = new UsernamePasswordAuthenticationToken(user, null,
             List.of(new SimpleGrantedAuthority("DOCTOR")));
@@ -1189,33 +1182,33 @@ public class MedicalVisitServiceTest {
 
     @Test
     void testRemoveTreatmentByAnotherDoctorMedicalVisitNotFoundException() {
-        MedicalVisit firstMedicalVisit = new MedicalVisit();
-        firstMedicalVisit.setId(1L);
-        firstMedicalVisit.setDateOfVisit(LocalDate.of(2025, 4, 3));
-        Doctor doctor = new Doctor();
-        doctor.setFirstName("John");
-        doctor.setLastName("Doe");
-        doctor.setId(4L);
-        Patient patient = new Patient();
-        patient.setId(2L);
-        patient.setFirstName("Alice");
-        patient.setLastName("Jones");
+        MedicalVisit firstMedicalVisit = Mockito.mock(MedicalVisit.class);
+        Mockito.when(firstMedicalVisit.getId()).thenReturn(1L);
+        Mockito.when(firstMedicalVisit.getDateOfVisit()).thenReturn(LocalDate.of(2025, 4, 3));
+        Doctor doctor = Mockito.mock(Doctor.class);
+        Mockito.when(doctor.getFirstName()).thenReturn("John");
+        Mockito.when(doctor.getLastName()).thenReturn("Doe");
+        Mockito.when(doctor.getId()).thenReturn(1L);
+        Patient patient = Mockito.mock(Patient.class);
+        Mockito.when(patient.getId()).thenReturn(2L);
+        Mockito.when(patient.getFirstName()).thenReturn("Alice");
+        Mockito.when(patient.getLastName()).thenReturn("Jones");
 
-        firstMedicalVisit.setDoctor(doctor);
-        firstMedicalVisit.setPatient(patient);
-        firstMedicalVisit.setTreatmentSet(new HashSet<>());
+        Mockito.when(firstMedicalVisit.getDoctor()).thenReturn(doctor);
+        Mockito.when(firstMedicalVisit.getPatient()).thenReturn(patient);
+        Mockito.when(firstMedicalVisit.getTreatmentSet()).thenReturn(new HashSet<>());
 
         Mockito.when(medicalVisitRepository.findById(any())).thenReturn(Optional.of(firstMedicalVisit));
 
-        User user = new User();
-        user.setId(1L);
-        user.setUsername("doctor");
-        user.setPassword("doctor");
-        user.setAuthorities(Set.of(new Role(1, "DOCTOR", Set.of())));
-        user.setEnabled(true);
-        user.setAccountNonExpired(true);
-        user.setAccountNonLocked(true);
-        user.setCredentialsNonExpired(true);
+        User user = Mockito.mock(User.class);
+        Mockito.when(user.getId()).thenReturn(3L);
+        Mockito.when(user.getUsername()).thenReturn("doctor");
+        Mockito.when(user.getPassword()).thenReturn("doctor");
+        Mockito.when(user.getAuthorities()).thenReturn(Set.of(new Role(1, "DOCTOR", Set.of())));
+        Mockito.when(user.isEnabled()).thenReturn(true);
+        Mockito.when(user.isAccountNonExpired()).thenReturn(true);
+        Mockito.when(user.isAccountNonLocked()).thenReturn(true);
+        Mockito.when(user.isCredentialsNonExpired()).thenReturn(true);
 
         Authentication authentication = new UsernamePasswordAuthenticationToken(user, null,
             List.of(new SimpleGrantedAuthority("DOCTOR")));
@@ -1229,32 +1222,33 @@ public class MedicalVisitServiceTest {
 
     @Test
     void testRemoveTreatmentSuccessfullyByAdmin() {
-        MedicalVisit firstMedicalVisit = new MedicalVisit();
-        firstMedicalVisit.setId(1L);
-        firstMedicalVisit.setDateOfVisit(LocalDate.of(2025, 4, 3));
-        Doctor doctor = new Doctor();
-        doctor.setFirstName("John");
-        doctor.setLastName("Doe");
-        doctor.setId(1L);
-        Patient patient = new Patient();
-        patient.setId(2L);
-        patient.setFirstName("Alice");
-        patient.setLastName("Jones");
+        MedicalVisit firstMedicalVisit = Mockito.mock(MedicalVisit.class);
+        Mockito.when(firstMedicalVisit.getId()).thenReturn(1L);
+        Mockito.when(firstMedicalVisit.getDateOfVisit()).thenReturn(LocalDate.of(2025, 4, 3));
+        Doctor doctor = Mockito.mock(Doctor.class);
+        Mockito.when(doctor.getFirstName()).thenReturn("John");
+        Mockito.when(doctor.getLastName()).thenReturn("Doe");
+        Mockito.when(doctor.getId()).thenReturn(1L);
+        Patient patient = Mockito.mock(Patient.class);
+        Mockito.when(patient.getId()).thenReturn(2L);
+        Mockito.when(patient.getFirstName()).thenReturn("Alice");
+        Mockito.when(patient.getLastName()).thenReturn("Jones");
 
-        firstMedicalVisit.setDoctor(doctor);
-        firstMedicalVisit.setPatient(patient);
+        Mockito.when(firstMedicalVisit.getDoctor()).thenReturn(doctor);
+        Mockito.when(firstMedicalVisit.getPatient()).thenReturn(patient);
+        Mockito.when(firstMedicalVisit.getTreatmentSet()).thenReturn(new HashSet<>());
 
         Mockito.when(medicalVisitRepository.findById(any())).thenReturn(Optional.of(firstMedicalVisit));
 
-        User user = new User();
-        user.setId(1L);
-        user.setUsername("admin");
-        user.setPassword("admin");
-        user.setAuthorities(Set.of(new Role(1, "ADMIN", Set.of())));
-        user.setEnabled(true);
-        user.setAccountNonExpired(true);
-        user.setAccountNonLocked(true);
-        user.setCredentialsNonExpired(true);
+        User user = Mockito.mock(User.class);
+        Mockito.when(user.getId()).thenReturn(1L);
+        Mockito.when(user.getUsername()).thenReturn("admin");
+        Mockito.when(user.getPassword()).thenReturn("admin");
+        Mockito.when(user.getAuthorities()).thenReturn(Set.of(new Role(1, "ADMIN", Set.of())));
+        Mockito.when(user.isEnabled()).thenReturn(true);
+        Mockito.when(user.isAccountNonExpired()).thenReturn(true);
+        Mockito.when(user.isAccountNonLocked()).thenReturn(true);
+        Mockito.when(user.isCredentialsNonExpired()).thenReturn(true);
 
         Authentication authentication = new UsernamePasswordAuthenticationToken(user, null,
             List.of(new SimpleGrantedAuthority("ADMIN")));
