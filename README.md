@@ -9,4 +9,4 @@
 | 5 | [pdf](assets/Task5.pdf) | [code](05/) | 
 | 6 | [pdf](assets/Task6.pdf) | [code](06/) | 
 | 7 | [pdf](assets/Task7.pdf) | [code](07/) | 
-| 📍 | Course Project [pdf](assets/Task8.pdf) | [code](08/) | 
+| 📍 | Course Project [pdf](assets/Task8.pdf) | [code](CourseProject/) | 
